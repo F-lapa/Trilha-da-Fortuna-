@@ -364,22 +364,22 @@
                                 <div id="perguntasContainer">
                                     <div class="pergunta">
                                         <div class="mb-3">
-                                            <textarea class="form-control" placeholder="Pergunta" required></textarea>
+                                            <textarea class="form-control pergunta-texto" placeholder="Pergunta" required></textarea>
                                         </div>
                                         <div class="mb-3">
-                                            <input type="text" class="form-control" placeholder="Resposta A" required>
+                                            <input type="text" class="form-control opcao-a" placeholder="Resposta A" required>
                                         </div>
                                         <div class="mb-3">
-                                            <input type="text" class="form-control" placeholder="Resposta B" required>
+                                            <input type="text" class="form-control opcao-b" placeholder="Resposta B" required>
                                         </div>
                                         <div class="mb-3">
-                                            <input type="text" class="form-control" placeholder="Resposta C" required>
+                                            <input type="text" class="form-control opcao-c" placeholder="Resposta C" required>
                                         </div>
                                         <div class="mb-3">
-                                            <input type="text" class="form-control" placeholder="Resposta D" required>
+                                            <input type="text" class="form-control opcao-d" placeholder="Resposta D" required>
                                         </div>
                                         <div class="mb-3">
-                                            <input type="text" class="form-control" placeholder="Letra da resposta correta (a, b, c, d)" required>
+                                            <input type="text" class="form-control correta" placeholder="Letra da resposta correta (a, b, c, d)" required>
                                         </div>
                                     </div>
                                 </div>
@@ -613,22 +613,22 @@
             perguntaDiv.className = 'pergunta';
             perguntaDiv.innerHTML = `
                 <div class="mb-3">
-                    <textarea class="form-control" placeholder="Pergunta" required></textarea>
+                    <textarea class="form-control pergunta-texto" placeholder="Pergunta" required></textarea>
                 </div>
                 <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="Resposta A" required>
+                    <input type="text" class="form-control opcao-a" placeholder="Resposta A" required>
                 </div>
                 <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="Resposta B" required>
+                    <input type="text" class="form-control opcao-b" placeholder="Resposta B" required>
                 </div>
                 <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="Resposta C" required>
+                    <input type="text" class="form-control opcao-c" placeholder="Resposta C" required>
                 </div>
                 <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="Resposta D" required>
+                    <input type="text" class="form-control opcao-d" placeholder="Resposta D" required>
                 </div>
                 <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="Letra da resposta correta (a, b, c, d)" required>
+                    <input type="text" class="form-control correta" placeholder="Letra da resposta correta (a, b, c, d)" required>
                 </div>
             `;
             container.appendChild(perguntaDiv);
@@ -641,19 +641,34 @@
                 const titulo = document.getElementById('tituloProva').value.trim();
                 const perguntasDivs = document.querySelectorAll('#perguntasContainer .pergunta');
                 const perguntas = Array.from(perguntasDivs).map(div => ({
-                    texto: div.querySelector('textarea').value.trim(),
+                    texto: div.querySelector('.pergunta-texto').value.trim(),
                     opcoes: {
-                        a: div.querySelector('input:nth-child(2)').value.trim(),
-                        b: div.querySelector('input:nth-child(3)').value.trim(),
-                        c: div.querySelector('input:nth-child(4)').value.trim(),
-                        d: div.querySelector('input:nth-child(5)').value.trim()
+                        a: div.querySelector('.opcao-a').value.trim(),
+                        b: div.querySelector('.opcao-b').value.trim(),
+                        c: div.querySelector('.opcao-c').value.trim(),
+                        d: div.querySelector('.opcao-d').value.trim()
                     },
-                    correta: div.querySelector('input:nth-child(6)').value.trim().toLowerCase()
+                    correta: div.querySelector('.correta').value.trim().toLowerCase()
                 }));
 
-                if (!titulo || perguntas.length === 0 || perguntas.some(p => !p.texto || !p.correta || !['a','b','c','d'].includes(p.correta))) {
-                    alert("Preencha todos os campos corretamente! A letra da resposta correta deve ser a, b, c ou d.");
+                // Validação
+                if (!titulo) {
+                    alert("O título da prova é obrigatório!");
                     return;
+                }
+                if (perguntas.length === 0) {
+                    alert("Adicione pelo menos uma pergunta!");
+                    return;
+                }
+                for (let p of perguntas) {
+                    if (!p.texto || !p.opcoes.a || !p.opcoes.b || !p.opcoes.c || !p.opcoes.d || !p.correta) {
+                        alert("Preencha todos os campos de cada pergunta!");
+                        return;
+                    }
+                    if (!['a', 'b', 'c', 'd'].includes(p.correta)) {
+                        alert("A letra da resposta correta deve ser a, b, c ou d!");
+                        return;
+                    }
                 }
 
                 const novaProva = {
@@ -663,27 +678,29 @@
                     respostas: {}
                 };
                 provas.push(novaProva);
+                console.log('Prova adicionada:', novaProva); // Depuração
                 salvarDados();
+                atualizarProvas(); // Atualizar imediatamente
                 document.getElementById('novaProvaForm').reset();
                 document.getElementById('perguntasContainer').innerHTML = `
                     <div class="pergunta">
                         <div class="mb-3">
-                            <textarea class="form-control" placeholder="Pergunta" required></textarea>
+                            <textarea class="form-control pergunta-texto" placeholder="Pergunta" required></textarea>
                         </div>
                         <div class="mb-3">
-                            <input type="text" class="form-control" placeholder="Resposta A" required>
+                            <input type="text" class="form-control opcao-a" placeholder="Resposta A" required>
                         </div>
                         <div class="mb-3">
-                            <input type="text" class="form-control" placeholder="Resposta B" required>
+                            <input type="text" class="form-control opcao-b" placeholder="Resposta B" required>
                         </div>
                         <div class="mb-3">
-                            <input type="text" class="form-control" placeholder="Resposta C" required>
+                            <input type="text" class="form-control opcao-c" placeholder="Resposta C" required>
                         </div>
                         <div class="mb-3">
-                            <input type="text" class="form-control" placeholder="Resposta D" required>
+                            <input type="text" class="form-control opcao-d" placeholder="Resposta D" required>
                         </div>
                         <div class="mb-3">
-                            <input type="text" class="form-control" placeholder="Letra da resposta correta (a, b, c, d)" required>
+                            <input type="text" class="form-control correta" placeholder="Letra da resposta correta (a, b, c, d)" required>
                         </div>
                     </div>
                 `;
@@ -728,6 +745,7 @@
                 }
                 listaProvas.appendChild(li);
             });
+            console.log('Provas atualizadas:', provas); // Depuração
         }
 
         // Função para abrir prova em modal
