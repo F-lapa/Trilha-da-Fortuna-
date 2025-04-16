@@ -1109,7 +1109,6 @@
                 };
                 provas.push(novaProva);
                 salvarDados();
-                atualizarProvas();
                 novaProvaForm.reset();
                 document.getElementById('perguntasContainer').innerHTML = `
                     <div class="pergunta">
@@ -1142,6 +1141,7 @@
                 const sucessoModal = new bootstrap.Modal(document.getElementById('sucessoModal'));
                 document.getElementById('sucessoTexto').textContent = 'Prova enviada com sucesso!';
                 sucessoModal.show();
+                atualizarProvas(); // Apenas atualiza a lista de provas, sem mudar de aba
             });
         }
 
@@ -1152,12 +1152,7 @@
                 if (sucessoModal) {
                     sucessoModal.hide();
                 }
-                atualizarProvas();
-                const provasTab = document.getElementById('provasTab');
-                if (provasTab) {
-                    const tab = new bootstrap.Tab(provasTab);
-                    tab.show();
-                }
+                // Não força a mudança para a aba Provas
             });
         }
 
@@ -1489,7 +1484,7 @@
                         curtidas: [],
                         comentarios: []
                     };
-                    feeds.push(novoFeed);
+                    feeds.unshift(novoFeed); // Adiciona ao início para exibir primeiro
                     salvarDados();
                     feedForm.reset();
                     if (successMessage) {
@@ -1514,7 +1509,7 @@
                 return;
             }
 
-            feeds.sort((a, b) => new Date(b.data) - new Date(a.data)).forEach(feed => {
+            feeds.forEach(feed => {
                 const feedPost = document.createElement('div');
                 feedPost.className = 'feed-post';
                 const isLiked = feed.curtidas.includes(usuarioLogado.username);
@@ -1559,7 +1554,8 @@
                                     <div class="comment-header">
                                         <h6>${comentario.autor}</h6>
                                         <small>${comentario.data}</small>
-                                    </div>
+FAQ sobre a Trilha da Fortuna
+                                </div>
                                     <div class="comment-body">
                                         <p>${comentario.mensagem}</p>
                                     </div>
@@ -1647,7 +1643,7 @@
                             replyForm.classList.remove('show');
                             atualizarFeed();
                         });
-                    }
+                    });
                 });
             });
 
@@ -1655,7 +1651,7 @@
                 const menus = document.querySelectorAll('.feed-post-menu-content');
                 menus.forEach(menu => {
                     if (!menu.contains(e.target) && !e.target.closest('.feed-post-menu-btn')) {
-                        menu.classList.remove('show');
+                        menuContent.classList.remove('show');
                     }
                 });
             });
