@@ -420,7 +420,6 @@
             display: none;
         }
 
-        /* Estilos para os feeds */
         .feed-container {
             max-width: 800px;
             margin: 2rem auto;
@@ -460,6 +459,7 @@
         .feed-post-body {
             font-size: 1rem;
             color: var(--text-color);
+            margin-bottom: 1rem;
         }
 
         .feed-post-menu {
@@ -516,6 +516,97 @@
         .btn-danger:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .feed-actions {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .feed-action-btn {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .feed-action-btn.liked {
+            color: var(--secondary-color);
+        }
+
+        .feed-action-btn:hover {
+            color: var(--secondary-color);
+        }
+
+        .comment-section {
+            margin-top: 1rem;
+        }
+
+        .comment-form {
+            margin-bottom: 1rem;
+        }
+
+        .comment {
+            background: var(--card-bg);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            border-left: 3px solid var(--secondary-color);
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .comment-header h6 {
+            margin: 0;
+            font-size: 1rem;
+            color: var(--primary-color);
+        }
+
+        .comment-header small {
+            color: #6b7280;
+        }
+
+        .comment-body {
+            font-size: 0.9rem;
+            color: var(--text-color);
+        }
+
+        .reply-form {
+            margin-top: 1rem;
+            margin-left: 2rem;
+            display: none;
+        }
+
+        .reply-form.show {
+            display: block;
+        }
+
+        .replies {
+            margin-left: 2rem;
+            margin-top: 1rem;
+        }
+
+        .btn-reply {
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            font-size: 0.85rem;
+            cursor: pointer;
+            margin-top: 0.5rem;
+        }
+
+        .btn-reply:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -715,7 +806,6 @@
         </section>
     </div>
 
-    <!-- Modals -->
     <div class="modal fade" id="provaModal" tabindex="-1" aria-labelledby="provaModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -1224,9 +1314,22 @@
                     delete respostas[username];
                 }
                 comprovantes = comprovantes.filter(c => c.username !== username);
+                feeds = feeds.map(feed => ({
+                    ...feed,
+                    curtidas: feed.curtidas.filter(u => u !== username),
+                    comentarios: feed.comentarios.map(comentario => ({
+                        ...comentario,
+                        autor: comentario.autor === username ? '[Usuário Removido]' : comentario.autor,
+                        respostas: comentario.respostas.map(resposta => ({
+                            ...resposta,
+                            autor: resposta.autor === username ? '[Usuário Removido]' : resposta.autor
+                        }))
+                    }))
+                }));
                 salvarDados();
                 atualizarRanking();
                 atualizarInvestimentos();
+                atualizarFeed();
                 modal.hide();
                 const sucessoModal = new bootstrap.Modal(document.getElementById('sucessoModal'));
                 document.getElementById('sucessoTexto').textContent = 'Usuário removido com sucesso!';
@@ -1382,7 +1485,9 @@
                         id: feeds.length + 1,
                         autor: usuarioLogado.nome,
                         mensagem: feedMessage,
-                        data: new Date().toLocaleString('pt-BR')
+                        data: new Date().toLocaleString('pt-BR'),
+                        curtidas: [],
+                        comentarios: []
                     };
                     feeds.push(novoFeed);
                     salvarDados();
@@ -1412,6 +1517,7 @@
             feeds.sort((a, b) => new Date(b.data) - new Date(a.data)).forEach(feed => {
                 const feedPost = document.createElement('div');
                 feedPost.className = 'feed-post';
+                const isLiked = feed.curtidas.includes(usuarioLogado.username);
                 feedPost.innerHTML = `
                     <div class="feed-post-header">
                         <div>
@@ -1432,6 +1538,55 @@
                     <div class="feed-post-body">
                         <p>${feed.mensagem}</p>
                     </div>
+                    <div class="feed-actions">
+                        <button class="feed-action-btn ${isLiked ? 'liked' : ''}" onclick="curtirFeed(${feed.id})">
+                            <i class="fas fa-heart" aria-hidden="true"></i> Curtir (${feed.curtidas.length})
+                        </button>
+                        <button class="feed-action-btn" onclick="focarComentario(${feed.id})">
+                            <i class="fas fa-comment" aria-hidden="true"></i> Comentar (${feed.comentarios.length})
+                        </button>
+                    </div>
+                    <div class="comment-section">
+                        <form class="comment-form" id="commentForm${feed.id}">
+                            <div class="mb-3">
+                                <textarea class="form-control" id="commentMessage${feed.id}" placeholder="Escreva um comentário..." required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-sm">Comentar</button>
+                        </form>
+                        <div class="comments">
+                            ${feed.comentarios.map(comentario => `
+                                <div class="comment">
+                                    <div class="comment-header">
+                                        <h6>${comentario.autor}</h6>
+                                        <small>${comentario.data}</small>
+                                    </div>
+                                    <div class="comment-body">
+                                        <p>${comentario.mensagem}</p>
+                                    </div>
+                                    <button class="btn-reply" onclick="toggleReplyForm(${feed.id}, ${comentario.id})">Responder</button>
+                                    <form class="reply-form" id="replyForm${feed.id}_${comentario.id}">
+                                        <div class="mb-3">
+                                            <textarea class="form-control" id="replyMessage${feed.id}_${comentario.id}" placeholder="Escreva uma resposta..." required></textarea>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary btn-sm">Responder</button>
+                                    </form>
+                                    <div class="replies">
+                                        ${comentario.respostas.map(resposta => `
+                                            <div class="comment">
+                                                <div class="comment-header">
+                                                    <h6>${resposta.autor}</h6>
+                                                    <small>${resposta.data}</small>
+                                                </div>
+                                                <div class="comment-body">
+                                                    <p>${resposta.mensagem}</p>
+                                                </div>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
                 `;
                 feedContainer.appendChild(feedPost);
 
@@ -1444,6 +1599,56 @@
                         });
                     }
                 }
+
+                const commentForm = feedPost.querySelector(`#commentForm${feed.id}`);
+                if (commentForm) {
+                    commentForm.addEventListener('submit', (e) => {
+                        e.preventDefault();
+                        const commentMessage = document.getElementById(`commentMessage${feed.id}`)?.value.trim();
+                        if (!commentMessage) {
+                            alert("O comentário não pode estar vazio!");
+                            return;
+                        }
+
+                        const novoComentario = {
+                            id: feed.comentarios.length + 1,
+                            autor: usuarioLogado.nome,
+                            mensagem: commentMessage,
+                            data: new Date().toLocaleString('pt-BR'),
+                            respostas: []
+                        };
+                        feed.comentarios.push(novoComentario);
+                        salvarDados();
+                        commentForm.reset();
+                        atualizarFeed();
+                    });
+                }
+
+                feed.comentarios.forEach(comentario => {
+                    const replyForm = feedPost.querySelector(`#replyForm${feed.id}_${comentario.id}`);
+                    if (replyForm) {
+                        replyForm.addEventListener('submit', (e) => {
+                            e.preventDefault();
+                            const replyMessage = document.getElementById(`replyMessage${feed.id}_${comentario.id}`)?.value.trim();
+                            if (!replyMessage) {
+                                alert("A resposta não pode estar vazia!");
+                                return;
+                            }
+
+                            const novaResposta = {
+                                id: comentario.respostas.length + 1,
+                                autor: usuarioLogado.nome,
+                                mensagem: replyMessage,
+                                data: new Date().toLocaleString('pt-BR')
+                            };
+                            comentario.respostas.push(novaResposta);
+                            salvarDados();
+                            replyForm.reset();
+                            replyForm.classList.remove('show');
+                            atualizarFeed();
+                        });
+                    }
+                });
             });
 
             document.addEventListener('click', (e) => {
@@ -1454,6 +1659,40 @@
                     }
                 });
             });
+        }
+
+        function curtirFeed(feedId) {
+            const feed = feeds.find(f => f.id === feedId);
+            if (!feed) return;
+
+            const username = usuarioLogado.username;
+            if (feed.curtidas.includes(username)) {
+                feed.curtidas = feed.curtidas.filter(u => u !== username);
+            } else {
+                feed.curtidas.push(username);
+            }
+            salvarDados();
+            atualizarFeed();
+        }
+
+        function focarComentario(feedId) {
+            const commentInput = document.getElementById(`commentMessage${feedId}`);
+            if (commentInput) {
+                commentInput.focus();
+            }
+        }
+
+        function toggleReplyForm(feedId, comentarioId) {
+            const replyForm = document.getElementById(`replyForm${feedId}_${comentarioId}`);
+            if (replyForm) {
+                replyForm.classList.toggle('show');
+                if (replyForm.classList.contains('show')) {
+                    const replyInput = document.getElementById(`replyMessage${feedId}_${comentarioId}`);
+                    if (replyInput) {
+                        replyInput.focus();
+                    }
+                }
+            }
         }
 
         function excluirFeed(feedId) {
