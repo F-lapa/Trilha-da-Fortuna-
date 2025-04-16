@@ -3,575 +3,344 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trilha da Fortuna</title>
+    <title>Login - Trilha da Fortuna</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #e9ecef, #d4e6f1);
+        :root {
+            --primary-color: #1e3a8a;
+            --secondary-color: #22c55e;
+            --accent-color: #facc15;
+            --background-color: #f3f4f6;
+            --text-color: #1f2937;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            --glow-color: rgba(34, 197, 94, 0.3);
+        }
+
+        * {
             margin: 0;
             padding: 0;
-            overflow-x: hidden;
+            box-sizing: border-box;
         }
-        header {
-            background: linear-gradient(90deg, #003087, #28a745);
-            color: white;
-            padding: 1.5rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-        }
-        header h1 {
-            font-size: 2rem;
-            margin: 0;
-            font-weight: 700;
-        }
-        header h1 i {
-            color: #ffd700;
-            margin-right: 0.5rem;
-        }
-        #logoutLink {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            padding: 0.5rem 1rem;
-            transition: color 0.3s ease;
-        }
-        #logoutLink:hover {
-            color: #ffd700;
-        }
-        .container {
-            max-width: 1100px;
-            margin: 2rem auto;
-        }
-        .tab-content {
-            background-color: white;
-            padding: 2.5rem;
-            border-radius: 15px;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
-        }
-        .nav-tabs {
-            background-color: #003087;
-            padding: 0.5rem;
-            border-radius: 10px 10px 0 0;
-        }
-        .nav-tabs .nav-link {
-            color: white;
-            font-weight: 500;
-            padding: 0.8rem 1.5rem;
-            transition: all 0.3s ease;
-            border-radius: 8px;
-        }
-        .nav-tabs .nav-link.active {
-            background-color: #28a745;
-            color: white;
-            border: none;
-        }
-        .nav-tabs .nav-link:hover {
-            background-color: #0052cc;
-        }
-        .btn-primary {
-            background-color: #28a745;
-            border-color: #28a745;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-        .btn-primary:hover {
-            background-color: #218838;
-            border-color: #218838;
-            transform: translateY(-2px);
-        }
-        .btn-secondary {
-            background-color: #003087;
-            border-color: #003087;
-        }
-        .btn-secondary:hover {
-            background-color: #00205b;
-            border-color: #00205b;
-        }
-        .form-control {
-            border-radius: 10px;
-            border: 1px solid #ced4da;
-            transition: border-color 0.3s ease;
-        }
-        .form-control:focus {
-            border-color: #28a745;
-            box-shadow: 0 0 5px rgba(40,167,69,0.3);
-        }
-        .table {
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        .table th {
-            background: linear-gradient(90deg, #003087, #0052cc);
-            color: white;
-        }
-        .table tbody tr:hover {
-            background-color: #f1faff;
-        }
-        .list-group-item {
-            border-radius: 10px;
-            margin-bottom: 0.5rem;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        .list-group-item:hover {
-            background-color: #f1faff;
-            transform: translateY(-2px);
-        }
-        .modal-content {
-            border-radius: 15px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-        }
-        .modal-header {
-            background: linear-gradient(90deg, #003087, #28a745);
-            color: white;
-            border-top-left-radius: 15px;
-            border-top-right-radius: 15px;
-        }
-        .modal-body {
-            background-color: #f8f9fa;
-        }
-        .modal-footer {
-            border-bottom-left-radius: 15px;
-            border-bottom-right-radius: 15px;
-        }
-        .question {
-            background-color: white;
-            border: 1px solid #e0e0e0;
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-            border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
-        .question p {
-            margin-bottom: 1rem;
-            font-weight: 500;
-            color: #003087;
-        }
-        .form-check-label {
-            color: #333;
-        }
-        .login-section {
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(135deg, #003087, #28a745);
-            padding: 2rem;
+            overflow: hidden;
+            position: relative;
         }
-        .login-section .card {
-            border-radius: 15px;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-            background-color: white;
-            padding: 2rem;
+
+        /* Fundo com partículas */
+        #particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Cartão de login */
+        .login-card {
+            background: var(--card-bg);
+            border-radius: 1.5rem;
+            box-shadow: var(--shadow);
+            padding: 3rem;
             max-width: 450px;
             width: 100%;
-            border: 2px solid transparent;
-            background-image: linear-gradient(white, white), linear-gradient(90deg, #003087, #28a745);
-            background-origin: border-box;
-            background-clip: padding-box, border-box;
-            transition: transform 0.3s ease;
+            z-index: 1;
+            backdrop-filter: blur(10px);
+            animation: zoomFadeIn 0.8s ease-out;
+            position: relative;
+            overflow: hidden;
         }
-        .login-section .card:hover {
-            transform: translateY(-5px);
+
+        @keyframes zoomFadeIn {
+            0% { opacity: 0; transform: scale(0.8) translateY(30px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
         }
-        .login-section .card img {
-            max-width: 150px;
+
+        /* Logo */
+        .login-card img {
+            max-width: 160px;
             margin: 0 auto 1rem;
             display: block;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px var(--glow-color);
+            transition: transform 0.5s ease, box-shadow 0.3s ease;
+            animation: logoSpin 1s ease-out;
         }
-        .login-section h2 {
-            color: #003087;
+
+        .login-card img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px var(--glow-color);
+        }
+
+        @keyframes logoSpin {
+            0% { transform: rotateY(90deg); opacity: 0; }
+            100% { transform: rotateY(0); opacity: 1; }
+        }
+
+        .login-card h2 {
+            font-size: 2rem;
             font-weight: 700;
+            color: var(--primary-color);
             text-align: center;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-        .login-section p {
-            color: #555;
+
+        .login-card p {
+            color: #6b7280;
             text-align: center;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2.5rem;
+            font-size: 1.1rem;
         }
+
+        /* Formulário */
+        .form-group {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .form-control {
+            border: none;
+            border-bottom: 2px solid #d1d5db;
+            border-radius: 0;
+            padding: 1rem 0.5rem;
+            background: transparent;
+            color: var(--text-color);
+            font-size: 1rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--secondary-color);
+            box-shadow: 0 2px 8px var(--glow-color);
+            outline: none;
+        }
+
+        .form-label {
+            position: absolute;
+            top: 1rem;
+            left: 0.5rem;
+            color: #6b7280;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+
+        .form-control:focus + .form-label,
+        .form-control:not(:placeholder-shown) + .form-label {
+            top: -0.75rem;
+            font-size: 0.85rem;
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+
+        /* Toggle senha */
         .password-container {
             position: relative;
         }
+
         .password-container i {
             position: absolute;
-            right: 10px;
+            right: 0.5rem;
             top: 50%;
             transform: translateY(-50%);
             cursor: pointer;
-            color: #003087;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            transition: color 0.3s ease, transform 0.2s ease;
         }
+
+        .password-container i:hover {
+            color: var(--secondary-color);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        /* Mensagem de erro */
         .error-message {
-            color: #dc3545;
+            color: #dc2626;
             font-size: 0.9rem;
             margin-top: 0.5rem;
             display: none;
-            animation: fadeIn 0.3s ease;
-        }
-        .success-message {
-            color: #28a745;
-            font-size: 0.9rem;
-            margin-top: 0.5rem;
-            display: none;
-            animation: fadeIn 0.3s ease;
-        }
-        .button-group {
-            display: flex;
-            gap: 1rem;
-            justify-content: flex-start;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        footer {
-            background: linear-gradient(90deg, #003087, #28a745);
-            color: white;
             text-align: center;
-            padding: 1.5rem;
-            margin-top: 2rem;
+            animation: shake 0.3s ease;
         }
-        .hidden {
-            display: none;
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
         }
-        .file-upload-container {
-            background-color: #f8f9fa;
-            padding: 1.5rem;
-            border-radius: 10px;
-            margin-bottom: 1rem;
+
+        /* Botão */
+        .btn-primary {
+            background: linear-gradient(90deg, var(--secondary-color), #16a34a);
+            border: none;
+            padding: 1rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.5s ease;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
         }
-        .file-upload-container label {
-            color: #003087;
-            font-weight: 500;
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px var(--glow-color);
+            background: linear-gradient(90deg, #16a34a, var(--secondary-color));
         }
-        @media (max-width: 768px) {
-            header h1 {
-                font-size: 1.8rem;
-            }
-            .container {
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+        }
+
+        .btn-primary:hover::before {
+            width: 200%;
+            height: 200%;
+        }
+
+        /* Responsividade */
+        @media (max-width: 576px) {
+            .login-card {
+                padding: 2rem;
                 margin: 1rem;
             }
-            .tab-content {
-                padding: 1.5rem;
+
+            .login-card h2 {
+                font-size: 1.6rem;
             }
-            header {
-                flex-direction: column;
-                align-items: flex-start;
+
+            .login-card img {
+                max-width: 140px;
             }
-            #logoutLink {
-                margin-top: 0.5rem;
+
+            .form-control {
+                padding: 0.8rem 0.4rem;
             }
-            .button-group {
-                flex-direction: column;
-                gap: 0.5rem;
-            }
-            .login-section .card {
-                padding: 1.5rem;
+
+            .btn-primary {
+                padding: 0.8rem;
+                font-size: 1rem;
             }
         }
     </style>
 </head>
 <body>
-    <header class="hidden" id="header">
-        <h1><i class="fas fa-coins"></i> Trilha da Fortuna</h1>
-        <a href="#" id="logoutLink" class="hidden">Sair</a>
-    </header>
-    <div class="container">
-        <!-- Seção de Login -->
-        <div class="login-section" id="loginSection">
-            <div class="card shadow">
-                <img src="https://via.placeholder.com/150x50?text=Logo" alt="Logo Trilha da Fortuna">
-                <h2>Bem-vindo à Trilha da Fortuna</h2>
-                <p>Faça login para continuar sua jornada financeira!</p>
-                <input type="text" id="username" class="form-control mb-3" placeholder="Nome de usuário" required>
-                <div class="password-container">
-                    <input type="password" id="password" class="form-control mb-3" placeholder="Senha" required>
-                    <i class="fas fa-eye" id="togglePassword"></i>
-                </div>
-                <div class="error-message" id="errorMessage"></div>
-                <button class="btn btn-primary w-100" onclick="fazerLogin()">Entrar</button>
+    <canvas id="particles"></canvas>
+    <div class="login-card">
+        <img src="logo.png" alt="Logo Trilha da Fortuna">
+        <h2>Bem-vindo</h2>
+        <p>Entre para continuar sua jornada financeira!</p>
+        <form id="loginForm">
+            <div class="form-group">
+                <input type="text" id="username" class="form-control" placeholder=" " required>
+                <label class="form-label" for="username">Nome de usuário</label>
             </div>
-        </div>
-
-        <!-- Seções de Conteúdo (Abas) -->
-        <div class="content-section hidden" id="contentSection">
-            <ul class="nav nav-tabs mb-4">
-                <li class="nav-item">
-                    <a class="nav-link active" href="#provas" id="provasTab" data-bs-toggle="tab">Provas</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#ranking" id="rankingTab" data-bs-toggle="tab">Ranking</a>
-                </li>
-                <li class="nav-item hidden" id="comprovanteTab">
-                    <a class="nav-link" href="#comprovante" id="comprovanteTabLink" data-bs-toggle="tab">Comprovante de Investimento</a>
-                </li>
-                <li class="nav-item hidden" id="adminTab">
-                    <a class="nav-link" href="#administrador" id="adminTabLink" data-bs-toggle="tab">Administrador</a>
-                </li>
-                <li class="nav-item hidden" id="investimentosTab">
-                    <a class="nav-link" href="#investimentos" id="investimentosTabLink" data-bs-toggle="tab">Investimentos Recebidos</a>
-                </li>
-            </ul>
-            <div class="tab-content">
-                <!-- Aba de Provas -->
-                <div class="tab-pane fade show active" id="provas">
-                    <h2><i class="fas fa-file-alt"></i> Provas Disponíveis</h2>
-                    <ul class="list-group" id="listaProvas"></ul>
-                </div>
-                <!-- Aba de Ranking -->
-                <div class="tab-pane fade" id="ranking">
-                    <h2><i class="fas fa-trophy"></i> Ranking de Usuários</h2>
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Posição</th>
-                                <th>Nome</th>
-                                <th>Pontos</th>
-                            </tr>
-                        </thead>
-                        <tbody id="rankingBody"></tbody>
-                    </table>
-                </div>
-                <!-- Aba de Comprovante de Investimento -->
-                <div class="tab-pane fade" id="comprovante">
-                    <h2><i class="fas fa-file-invoice-dollar"></i> Enviar Comprovante de Investimento</h2>
-                    <div class="file-upload-container">
-                        <form id="comprovanteForm">
-                            <div class="mb-3">
-                                <label for="comprovanteArquivo" class="form-label">Selecione o comprovante (Imagem ou PDF)</label>
-                                <input type="file" id="comprovanteArquivo" class="form-control" accept=".jpg,.jpeg,.png,.pdf" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Enviar Comprovante</button>
-                            <div class="success-message" id="comprovanteSuccess">Comprovante enviado com sucesso!</div>
-                        </form>
-                    </div>
-                </div>
-                <!-- Aba de Administrador -->
-                <div class="tab-pane fade" id="administrador">
-                    <h2><i class="fas fa-user-cog"></i> Gerenciamento (Administrador)</h2>
-                    <!-- Criar Nova Prova -->
-                    <div class="card mb-4">
-                        <div class="card-body">
-                            <h5 class="card-title">Criar Nova Prova</h5>
-                            <form id="novaProvaForm">
-                                <div class="mb-3">
-                                    <input type="text" id="tituloProva" class="form-control" placeholder="Título da Prova" required>
-                                </div>
-                                <div id="perguntasContainer">
-                                    <div class="pergunta">
-                                        <div class="mb-3">
-                                            <textarea class="form-control pergunta-texto" placeholder="Pergunta" required></textarea>
-                                        </div>
-                                        <div class="mb-3">
-                                            <input type="text" class="form-control opcao-a" placeholder="Resposta A" required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <input type="text" class="form-control opcao-b" placeholder="Resposta B" required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <input type="text" class="form-control opcao-c" placeholder="Resposta C" required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <input type="text" class="form-control opcao-d" placeholder="Resposta D" required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <input type="text" class="form-control correta" placeholder="Letra da resposta correta (a, b, c, d)" required>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="button-group">
-                                    <button type="button" class="btn btn-secondary" onclick="adicionarPergunta()">Adicionar Nova Pergunta</button>
-                                    <button type="submit" class="btn btn-primary">Enviar Prova</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <!-- Cadastrar Novo Usuário -->
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Cadastrar Novo Usuário</h5>
-                            <form id="novoUsuarioForm">
-                                <div class="mb-3">
-                                    <input type="text" id="novoUsername" class="form-control" placeholder="Nome de usuário" required>
-                                </div>
-                                <div class="mb-3">
-                                    <input type="password" id="novoPassword" class="form-control" placeholder="Senha" required>
-                                </div>
-                                <div class="mb-3">
-                                    <input type="text" id="nomeUsuario" class="form-control" placeholder="Nome para o ranking" required>
-                                </div>
-                                <button type="submit" class="btn btn-primary">Cadastrar Usuário</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <!-- Aba de Investimentos Recebidos -->
-                <div class="tab-pane fade" id="investimentos">
-                    <h2><i class="fas fa-file-invoice-dollar"></i> Investimentos Recebidos</h2>
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Usuário</th>
-                                <th>Data de Envio</th>
-                                <th>Status</th>
-                                <th>Ação</th>
-                            </tr>
-                        </thead>
-                        <tbody id="investimentosBody"></tbody>
-                    </table>
-                </div>
+            <div class="form-group password-container">
+                <input type="password" id="password" class="form-control" placeholder=" " required>
+                <label class="form-label" for="password">Senha</label>
+                <i class="fas fa-eye" id="togglePassword"></i>
             </div>
-        </div>
+            <div class="error-message" id="errorMessage"></div>
+            <button type="submit" class="btn btn-primary">Entrar</button>
+        </form>
     </div>
 
-    <!-- Modal de Prova -->
-    <div class="modal fade" id="provaModal" tabindex="-1" aria-labelledby="provaModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="provaModalLabel"><i class="fas fa-file-alt"></i> Prova</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="provaForm"></form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                    <button type="submit" form="provaForm" class="btn btn-primary">Enviar Prova</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal de Resultado -->
-    <div class="modal fade" id="resultadoModal" tabindex="-1" aria-labelledby="resultadoModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="resultadoModalLabel"><i class="fas fa-check-circle"></i> Resultado da Prova</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p id="resultadoTexto"></p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Fechar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal de Sucesso -->
-    <div class="modal fade" id="sucessoModal" tabindex="-1" aria-labelledby="sucessoModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="sucessoModalLabel"><i class="fas fa-check-circle"></i> Sucesso</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p id="sucessoTexto">Operação realizada com sucesso!</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="sucessoOkButton">OK</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal de Visualização de Comprovante -->
-    <div class="modal fade" id="comprovanteModal" tabindex="-1" aria-labelledby="comprovanteModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="comprovanteModalLabel"><i class="fas fa-file-invoice-dollar"></i> Visualizar Comprovante</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p id="comprovanteInfo"></p>
-                    <div id="comprovanteVisualizacao"></div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                    <button type="button" class="btn btn-primary" id="verificarComprovanteBtn">OK</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <footer class="hidden" id="footer">
-        <p>© 2025 Trilha da Fortuna. Todos os direitos reservados.</p>
-    </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Funções para carregar e salvar dados no localStorage
-        function carregarDados() {
+        // Partículas animadas
+        const canvas = document.getElementById('particles');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const particlesArray = [];
+        const numberOfParticles = 100;
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 5 + 1;
+                this.speedX = Math.random() * 2 - 1;
+                this.speedY = Math.random() * 2 - 1;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.size > 0.2) this.size -= 0.05;
+
+                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+            }
+
+            draw() {
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            for (let i = 0; i < numberOfParticles; i++) {
+                particlesArray.push(new Particle());
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+
+                if (particlesArray[i].size <= 0.2) {
+                    particlesArray.splice(i, 1);
+                    particlesArray.push(new Particle());
+                    i--;
+                }
+            }
+            requestAnimationFrame(animateParticles);
+        }
+
+        initParticles();
+        animateParticles();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // Carregar usuários do localStorage
+        function carregarUsuarios() {
             const usuariosSalvos = localStorage.getItem('usuarios');
-            const provasSalvas = localStorage.getItem('provas');
-            const comprovantesSalvos = localStorage.getItem('comprovantes');
-
-            return {
-                usuarios: usuariosSalvos ? JSON.parse(usuariosSalvos) : [
-                    { username: "admin", password: "admin123", nome: "Administrador", isAdmin: true, pontos: 0 },
-                    { username: "user1", password: "user123", nome: "João Silva", isAdmin: false, pontos: 100 },
-                    { username: "user2", password: "user123", nome: "Maria Oliveira", isAdmin: false, pontos: 50 }
-                ],
-                provas: provasSalvas ? JSON.parse(provasSalvas) : [],
-                comprovantes: comprovantesSalvos ? JSON.parse(comprovantesSalvos) : []
-            };
-        }
-
-        function salvarDados() {
-            localStorage.setItem('usuarios', JSON.stringify(usuarios));
-            localStorage.setItem('provas', JSON.stringify(provas));
-            localStorage.setItem('comprovantes', JSON.stringify(comprovantes));
-        }
-
-        // Inicializar dados
-        let { usuarios, provas, comprovantes } = carregarDados();
-        let usuarioLogado = null;
-
-        // Função de Login
-        function fazerLogin() {
-            const username = document.getElementById('username').value.trim();
-            const password = document.getElementById('password').value.trim();
-            const errorMessage = document.getElementById('errorMessage');
-            errorMessage.style.display = 'none';
-
-            const usuario = usuarios.find(u => u.username === username);
-
-            if (!usuario) {
-                errorMessage.textContent = 'Usuário incorreto';
-                errorMessage.style.display = 'block';
-                return;
-            }
-
-            if (usuario.password !== password) {
-                errorMessage.textContent = 'Senha incorreta';
-                errorMessage.style.display = 'block';
-                return;
-            }
-
-            usuarioLogado = usuario;
-            document.getElementById('loginSection').classList.add('hidden');
-            document.getElementById('contentSection').classList.remove('hidden');
-            document.getElementById('header').classList.remove('hidden');
-            document.getElementById('footer').classList.remove('hidden');
-            document.getElementById('logoutLink').classList.remove('hidden');
-            if (usuario.isAdmin) {
-                document.getElementById('adminTab').classList.remove('hidden');
-                document.getElementById('investimentosTab').classList.remove('hidden');
-            } else {
-                document.getElementById('comprovanteTab').classList.remove('hidden');
-            }
-            atualizarProvas();
-            atualizarRanking();
-            atualizarInvestimentos();
+            return usuariosSalvos ? JSON.parse(usuariosSalvos) : [
+                { username: "admin123", password: "admin123", nome: "Administrador", isAdmin: true, pontos: 0 },
+                { username: "user1", password: "user123", nome: "João Silva", isAdmin: false, pontos: 100 },
+                { username: "user2", password: "user123", nome: "Maria Oliveira", isAdmin: false, pontos: 50 }
+            ];
         }
 
         // Toggle senha visível
@@ -589,366 +358,39 @@
             }
         });
 
-        // Função de Logout
-        document.getElementById('logoutLink').addEventListener('click', (e) => {
+        // Função de Login
+        document.getElementById('loginForm').addEventListener('submit', (e) => {
             e.preventDefault();
-            usuarioLogado = null;
-            document.getElementById('loginSection').classList.remove('hidden');
-            document.getElementById('contentSection').classList.add('hidden');
-            document.getElementById('header').classList.add('hidden');
-            document.getElementById('footer').classList.add('hidden');
-            document.getElementById('adminTab').classList.add('hidden');
-            document.getElementById('investimentosTab').classList.add('hidden');
-            document.getElementById('comprovanteTab').classList.add('hidden');
-            document.getElementById('logoutLink').classList.add('hidden');
-            document.getElementById('username').value = '';
-            document.getElementById('password').value = '';
-            document.getElementById('errorMessage').style.display = 'none';
-        });
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const errorMessage = document.getElementById('errorMessage');
+            errorMessage.style.display = 'none';
 
-        // Função para adicionar nova pergunta no formulário de criação
-        function adicionarPergunta() {
-            const container = document.getElementById('perguntasContainer');
-            const perguntaDiv = document.createElement('div');
-            perguntaDiv.className = 'pergunta';
-            perguntaDiv.innerHTML = `
-                <div class="mb-3">
-                    <textarea class="form-control pergunta-texto" placeholder="Pergunta" required></textarea>
-                </div>
-                <div class="mb-3">
-                    <input type="text" class="form-control opcao-a" placeholder="Resposta A" required>
-                </div>
-                <div class="mb-3">
-                    <input type="text" class="form-control opcao-b" placeholder="Resposta B" required>
-                </div>
-                <div class="mb-3">
-                    <input type="text" class="form-control opcao-c" placeholder="Resposta C" required>
-                </div>
-                <div class="mb-3">
-                    <input type="text" class="form-control opcao-d" placeholder="Resposta D" required>
-                </div>
-                <div class="mb-3">
-                    <input type="text" class="form-control correta" placeholder="Letra da resposta correta (a, b, c, d)" required>
-                </div>
-            `;
-            container.appendChild(perguntaDiv);
-        }
+            const usuarios = carregarUsuarios();
+            const usuario = usuarios.find(u => u.username === username);
 
-        // Função para criar nova prova
-        document.getElementById('novaProvaForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            if (usuarioLogado && usuarioLogado.isAdmin) {
-                const titulo = document.getElementById('tituloProva').value.trim();
-                const perguntasDivs = document.querySelectorAll('#perguntasContainer .pergunta');
-                const perguntas = Array.from(perguntasDivs).map(div => ({
-                    texto: div.querySelector('.pergunta-texto').value.trim(),
-                    opcoes: {
-                        a: div.querySelector('.opcao-a').value.trim(),
-                        b: div.querySelector('.opcao-b').value.trim(),
-                        c: div.querySelector('.opcao-c').value.trim(),
-                        d: div.querySelector('.opcao-d').value.trim()
-                    },
-                    correta: div.querySelector('.correta').value.trim().toLowerCase()
-                }));
-
-                // Validação
-                if (!titulo) {
-                    alert("O título da prova é obrigatório!");
-                    return;
-                }
-                if (perguntas.length === 0) {
-                    alert("Adicione pelo menos uma pergunta!");
-                    return;
-                }
-                for (let p of perguntas) {
-                    if (!p.texto || !p.opcoes.a || !p.opcoes.b || !p.opcoes.c || !p.opcoes.d || !p.correta) {
-                        alert("Preencha todos os campos de cada pergunta!");
-                        return;
-                    }
-                    if (!['a', 'b', 'c', 'd'].includes(p.correta)) {
-                        alert("A letra da resposta correta deve ser a, b, c ou d!");
-                        return;
-                    }
-                }
-
-                const novaProva = {
-                    id: provas.length + 1,
-                    titulo,
-                    perguntas,
-                    respostas: {}
-                };
-                provas.push(novaProva);
-                console.log('Prova adicionada:', novaProva); // Depuração
-                salvarDados();
-                atualizarProvas(); // Atualizar imediatamente
-                document.getElementById('novaProvaForm').reset();
-                document.getElementById('perguntasContainer').innerHTML = `
-                    <div class="pergunta">
-                        <div class="mb-3">
-                            <textarea class="form-control pergunta-texto" placeholder="Pergunta" required></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <input type="text" class="form-control opcao-a" placeholder="Resposta A" required>
-                        </div>
-                        <div class="mb-3">
-                            <input type="text" class="form-control opcao-b" placeholder="Resposta B" required>
-                        </div>
-                        <div class="mb-3">
-                            <input type="text" class="form-control opcao-c" placeholder="Resposta C" required>
-                        </div>
-                        <div class="mb-3">
-                            <input type="text" class="form-control opcao-d" placeholder="Resposta D" required>
-                        </div>
-                        <div class="mb-3">
-                            <input type="text" class="form-control correta" placeholder="Letra da resposta correta (a, b, c, d)" required>
-                        </div>
-                    </div>
-                `;
-                const sucessoModal = new bootstrap.Modal(document.getElementById('sucessoModal'));
-                document.getElementById('sucessoTexto').textContent = 'Prova enviada com sucesso!';
-                sucessoModal.show();
-            }
-        });
-
-        // Ação do botão OK no modal de sucesso
-        document.getElementById('sucessoOkButton').addEventListener('click', () => {
-            const sucessoModal = bootstrap.Modal.getInstance(document.getElementById('sucessoModal'));
-            sucessoModal.hide();
-            atualizarProvas();
-            const provasTab = document.getElementById('provasTab');
-            const tab = new bootstrap.Tab(provasTab);
-            tab.show();
-        });
-
-        // Função para atualizar lista de provas
-        function atualizarProvas() {
-            const listaProvas = document.getElementById('listaProvas');
-            listaProvas.innerHTML = '';
-            if (provas.length === 0) {
-                listaProvas.innerHTML = '<li class="list-group-item text-muted">Nenhuma prova disponível</li>';
-                return;
-            }
-            provas.forEach(prova => {
-                const li = document.createElement('li');
-                li.className = 'list-group-item d-flex justify-content-between align-items-center';
-                const jaRespondida = usuarioLogado && prova.respostas[usuarioLogado.username];
-                const nota = jaRespondida ? prova.respostas[usuarioLogado.username].pontuacao : null;
-                li.innerHTML = `
-                    <span><i class="fas fa-file-alt me-2"></i>${prova.titulo}</span>
-                    ${nota !== null ? `<span class="badge bg-success">Nota: ${nota}</span>` : ''}
-                `;
-                if (!jaRespondida && !usuarioLogado.isAdmin) {
-                    li.style.cursor = 'pointer';
-                    li.addEventListener('click', () => abrirProva(prova));
-                } else {
-                    li.style.cursor = 'default';
-                }
-                listaProvas.appendChild(li);
-            });
-            console.log('Provas atualizadas:', provas); // Depuração
-        }
-
-        // Função para abrir prova em modal
-        function abrirProva(prova) {
-            const modal = new bootstrap.Modal(document.getElementById('provaModal'));
-            document.getElementById('provaModalLabel').innerHTML = `<i class="fas fa-file-alt"></i> ${prova.titulo}`;
-            const form = document.getElementById('provaForm');
-            form.innerHTML = prova.perguntas.map((p, i) => `
-                <div class="question">
-                    <p><i class="fas fa-question-circle"></i> ${i + 1}. ${p.texto}</p>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="q${i}" value="a" id="q${i}a" required>
-                        <label class="form-check-label" for="q${i}a">${p.opcoes.a}</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="q${i}" value="b" id="q${i}b" required>
-                        <label class="form-check-label" for="q${i}b">${p.opcoes.b}</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="q${i}" value="c" id="q${i}c" required>
-                        <label class="form-check-label" for="q${i}c">${p.opcoes.c}</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="q${i}" value="d" id="q${i}d" required>
-                        <label class="form-check-label" for="q${i}d">${p.opcoes.d}</label>
-                    </div>
-                </div>
-            `).join('');
-            form.onsubmit = (e) => {
-                e.preventDefault();
-                if (!usuarioLogado.isAdmin) {
-                    let pontuacao = 0;
-                    const respostas = {};
-                    prova.perguntas.forEach((p, i) => {
-                        const resposta = document.querySelector(`input[name="q${i}"]:checked`);
-                        if (resposta && resposta.value === p.correta) {
-                            pontuacao += 50;
-                        }
-                        respostas[i] = resposta ? resposta.value : null;
-                    });
-                    prova.respostas[usuarioLogado.username] = { pontuacao, respostas };
-                    usuarioLogado.pontos += pontuacao;
-                    salvarDados();
-                    atualizarRanking();
-                    atualizarProvas();
-                    modal.hide();
-                    mostrarResultado(pontuacao);
-                }
-            };
-            modal.show();
-        }
-
-        // Função para mostrar resultado em modal
-        function mostrarResultado(pontuacao) {
-            const modal = new bootstrap.Modal(document.getElementById('resultadoModal'));
-            document.getElementById('resultadoTexto').innerHTML = `Sua pontuação: <strong>${pontuacao} pontos</strong>!`;
-            modal.show();
-        }
-
-        // Função para atualizar ranking
-        function atualizarRanking() {
-            const rankingBody = document.getElementById('rankingBody');
-            rankingBody.innerHTML = '';
-            const usuariosOrdenados = [...usuarios].sort((a, b) => b.pontos - a.pontos);
-            usuariosOrdenados.forEach((usuario, index) => {
-                if (!usuario.isAdmin) {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>${index + 1}</td>
-                        <td>${usuario.nome}</td>
-                        <td>${usuario.pontos}</td>
-                    `;
-                    rankingBody.appendChild(row);
-                }
-            });
-        }
-
-        // Função para cadastrar novo usuário
-        document.getElementById('novoUsuarioForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            if (usuarioLogado && usuarioLogado.isAdmin) {
-                const novoUsername = document.getElementById('novoUsername').value.trim();
-                const novoPassword = document.getElementById('novoPassword').value.trim();
-                const nomeUsuario = document.getElementById('nomeUsuario').value.trim();
-
-                if (!novoUsername || !novoPassword || !nomeUsuario) {
-                    alert("Preencha todos os campos!");
-                    return;
-                }
-
-                if (usuarios.find(u => u.username === novoUsername)) {
-                    alert("Nome de usuário já existe!");
-                    return;
-                }
-
-                usuarios.push({
-                    username: novoUsername,
-                    password: novoPassword,
-                    nome: nomeUsuario,
-                    isAdmin: false,
-                    pontos: 0
-                });
-                salvarDados();
-                document.getElementById('novoUsuarioForm').reset();
-                alert("Usuário cadastrado com sucesso!");
-                atualizarRanking();
-            }
-        });
-
-        // Função para enviar comprovante de investimento
-        document.getElementById('comprovanteForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            if (usuarioLogado && !usuarioLogado.isAdmin) {
-                const arquivoInput = document.getElementById('comprovanteArquivo');
-                const arquivo = arquivoInput.files[0];
-                const successMessage = document.getElementById('comprovanteSuccess');
-
-                if (!arquivo) {
-                    alert("Selecione um arquivo!");
-                    return;
-                }
-
-                const extensoesPermitidas = ['.jpg', '.jpeg', '.png', '.pdf'];
-                const extensao = arquivo.name.substring(arquivo.name.lastIndexOf('.')).toLowerCase();
-                if (!extensoesPermitidas.includes(extensao)) {
-                    alert("Apenas arquivos JPG, JPEG, PNG ou PDF são permitidos!");
-                    return;
-                }
-
-                const comprovante = {
-                    id: comprovantes.length + 1,
-                    username: usuarioLogado.username,
-                    nome: usuarioLogado.nome,
-                    data: new Date().toLocaleString('pt-BR'),
-                    arquivo: arquivo.name,
-                    verificado: false
-                };
-                comprovantes.push(comprovante);
-                salvarDados();
-                document.getElementById('comprovanteForm').reset();
-                successMessage.style.display = 'block';
+            if (!usuario) {
+                errorMessage.textContent = 'Usuário incorreto';
+                errorMessage.style.display = 'block';
                 setTimeout(() => {
-                    successMessage.style.display = 'none';
+                    errorMessage.style.display = 'none';
                 }, 3000);
-                atualizarInvestimentos();
-            }
-        });
-
-        // Função para atualizar lista de investimentos recebidos
-        function atualizarInvestimentos() {
-            const investimentosBody = document.getElementById('investimentosBody');
-            investimentosBody.innerHTML = '';
-            if (comprovantes.length === 0) {
-                investimentosBody.innerHTML = '<tr><td colspan="4" class="text-muted text-center">Nenhum comprovante recebido</td></tr>';
                 return;
             }
-            comprovantes.forEach(comprovante => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${comprovante.nome}</td>
-                    <td>${comprovante.data}</td>
-                    <td>${comprovante.verificado ? '<span class="badge bg-success">Verificado</span>' : '<span class="badge bg-warning">Pendente</span>'}</td>
-                    <td><button class="btn btn-primary btn-sm" onclick="visualizarComprovante(${comprovante.id})">Visualizar</button></td>
-                `;
-                investimentosBody.appendChild(row);
-            });
-        }
 
-        // Função para visualizar comprovante em modal
-        function visualizarComprovante(comprovanteId) {
-            const comprovante = comprovantes.find(c => c.id === comprovanteId);
-            if (!comprovante) return;
+            if (usuario.password !== password) {
+                errorMessage.textContent = 'Senha incorreta';
+                errorMessage.style.display = 'block';
+                setTimeout(() => {
+                    errorMessage.style.display = 'none';
+                }, 3000);
+                return;
+            }
 
-            const modal = new bootstrap.Modal(document.getElementById('comprovanteModal'));
-            document.getElementById('comprovanteModalLabel').innerHTML = `<i class="fas fa-file-invoice-dollar"></i> Comprovante de ${comprovante.nome}`;
-            document.getElementById('comprovanteInfo').innerHTML = `
-                <p><strong>Usuário:</strong> ${comprovante.nome}</p>
-                <p><strong>Data de Envio:</strong> ${comprovante.data}</p>
-                <p><strong>Arquivo:</strong> ${comprovante.arquivo}</p>
-            `;
-            document.getElementById('comprovanteVisualizacao').innerHTML = `
-                <p class="text-muted">Visualização do arquivo: ${comprovante.arquivo} (Simulação - em um sistema real, o arquivo seria exibido aqui)</p>
-            `;
-            const verificarBtn = document.getElementById('verificarComprovanteBtn');
-            verificarBtn.disabled = comprovante.verificado;
-            verificarBtn.onclick = () => {
-                if (!comprovante.verificado) {
-                    comprovante.verificado = true;
-                    const usuario = usuarios.find(u => u.username === comprovante.username);
-                    if (usuario) {
-                        usuario.pontos += 100;
-                        salvarDados();
-                        atualizarRanking();
-                        atualizarInvestimentos();
-                    }
-                    const sucessoModal = new bootstrap.Modal(document.getElementById('sucessoModal'));
-                    document.getElementById('sucessoTexto').textContent = 'Comprovante verificado e pontos atribuídos!';
-                    sucessoModal.show();
-                    modal.hide();
-                }
-            };
-            modal.show();
-        }
+            // Salvar usuário logado no localStorage
+            localStorage.setItem('usuarioLogado', JSON.stringify(usuario));
+            window.location.href = 'software.html';
+        });
     </script>
 </body>
 </html>
