@@ -920,12 +920,22 @@
             const respostasSalvas = localStorage.getItem('respostas');
             const feedsSalvos = localStorage.getItem('feeds');
 
+            let usuarios = usuariosSalvos ? JSON.parse(usuariosSalvos) : [
+                { username: "admin123", password: "admin123", nome: "Administrador", isAdmin: true, pontos: 0 },
+                { username: "user1", password: "user123", nome: "João Silva", isAdmin: false, pontos: 100 },
+                { username: "user2", password: "user123", nome: "Maria Oliveira", isAdmin: false, pontos: 50 }
+            ];
+
+            // Garante que admin123 seja administrador
+            const adminUser = usuarios.find(u => u.username === "admin123");
+            if (adminUser) {
+                adminUser.isAdmin = true;
+            } else {
+                usuarios.push({ username: "admin123", password: "admin123", nome: "Administrador", isAdmin: true, pontos: 0 });
+            }
+
             return {
-                usuarios: usuariosSalvos ? JSON.parse(usuariosSalvos) : [
-                    { username: "admin123", password: "admin123", nome: "Administrador", isAdmin: true, pontos: 0 },
-                    { username: "user1", password: "user123", nome: "João Silva", isAdmin: false, pontos: 100 },
-                    { username: "user2", password: "user123", nome: "Maria Oliveira", isAdmin: false, pontos: 50 }
-                ],
+                usuarios,
                 provas: provasSalvas ? JSON.parse(provasSalvas) : [],
                 comprovantes: comprovantesSalvos ? JSON.parse(comprovantesSalvos) : [],
                 respostas: respostasSalvas ? JSON.parse(respostasSalvas) : {},
@@ -1141,7 +1151,7 @@
                 const sucessoModal = new bootstrap.Modal(document.getElementById('sucessoModal'));
                 document.getElementById('sucessoTexto').textContent = 'Prova enviada com sucesso!';
                 sucessoModal.show();
-                atualizarProvas(); // Apenas atualiza a lista de provas, sem mudar de aba
+                atualizarProvas();
             });
         }
 
@@ -1152,7 +1162,6 @@
                 if (sucessoModal) {
                     sucessoModal.hide();
                 }
-                // Não força a mudança para a aba Provas
             });
         }
 
@@ -1484,7 +1493,7 @@
                         curtidas: [],
                         comentarios: []
                     };
-                    feeds.unshift(novoFeed); // Adiciona ao início para exibir primeiro
+                    feeds.unshift(novoFeed); // Adiciona ao início
                     salvarDados();
                     feedForm.reset();
                     if (successMessage) {
@@ -1554,8 +1563,7 @@
                                     <div class="comment-header">
                                         <h6>${comentario.autor}</h6>
                                         <small>${comentario.data}</small>
-FAQ sobre a Trilha da Fortuna
-                                </div>
+                                    </div>
                                     <div class="comment-body">
                                         <p>${comentario.mensagem}</p>
                                     </div>
@@ -1643,7 +1651,7 @@ FAQ sobre a Trilha da Fortuna
                             replyForm.classList.remove('show');
                             atualizarFeed();
                         });
-                    });
+                    }
                 });
             });
 
@@ -1651,7 +1659,7 @@ FAQ sobre a Trilha da Fortuna
                 const menus = document.querySelectorAll('.feed-post-menu-content');
                 menus.forEach(menu => {
                     if (!menu.contains(e.target) && !e.target.closest('.feed-post-menu-btn')) {
-                        menuContent.classList.remove('show');
+                        menu.classList.remove('show');
                     }
                 });
             });
