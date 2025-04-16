@@ -15,18 +15,24 @@
             --background-color: #f9fafb;
             --text-color: #111827;
             --card-bg: #ffffff;
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            --border-radius: 0.75rem;
+            --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --border-radius: 8px;
+            --fb-blue: #1877f2;
+            --fb-gray: #606770;
+            --fb-light-gray: #e4e6eb;
         }
 
         body.dark-theme {
             --primary-color: #1e40af;
             --secondary-color: #34d399;
             --accent-color: #facc15;
-            --background-color: #111827;
-            --text-color: #e5e7eb;
-            --card-bg: #1f2937;
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            --background-color: #18191a;
+            --text-color: #e4e6eb;
+            --card-bg: #242526;
+            --shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            --fb-blue: #3b5998;
+            --fb-gray: #8a8d91;
+            --fb-light-gray: #3a3b3c;
         }
 
         * {
@@ -40,7 +46,6 @@
             background: var(--background-color);
             color: var(--text-color);
             line-height: 1.6;
-            transition: background 0.3s ease, color 0.3s ease;
         }
 
         header {
@@ -67,11 +72,6 @@
 
         header h1 i {
             color: var(--secondary-color);
-            transition: transform 0.3s ease;
-        }
-
-        header h1:hover i {
-            transform: scale(1.1);
         }
 
         #themeToggle {
@@ -80,11 +80,6 @@
             color: var(--text-color);
             font-size: 1.5rem;
             cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-
-        #themeToggle:hover {
-            transform: rotate(20deg);
         }
 
         #logoutLink {
@@ -93,13 +88,11 @@
             font-weight: 500;
             padding: 0.5rem 1rem;
             border-radius: 0.5rem;
-            transition: background 0.3s ease, transform 0.3s ease;
         }
 
         #logoutLink:hover {
             background: var(--secondary-color);
             color: #fff;
-            transform: translateY(-2px);
         }
 
         .container {
@@ -114,20 +107,13 @@
             background: var(--card-bg);
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
-            transition: transform 0.3s ease;
-        }
-
-        .home-section:hover {
-            transform: translateY(-5px);
         }
 
         .home-section h2 {
             font-family: 'Roboto', sans-serif;
             font-size: 2rem;
-            font-weight: 700;
             color: var(--primary-color);
             margin-bottom: 1rem;
-            animation: fadeIn 1s ease;
         }
 
         .home-section p {
@@ -135,7 +121,6 @@
             max-width: 800px;
             margin: 0 auto 2rem;
             color: #6b7280;
-            animation: fadeIn 1s ease 0.5s both;
         }
 
         .home-section .feature-cards {
@@ -150,23 +135,12 @@
             padding: 1.5rem;
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .home-section .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
         }
 
         .home-section .feature-card i {
             font-size: 2rem;
             color: var(--secondary-color);
             margin-bottom: 1rem;
-            transition: transform 0.3s ease;
-        }
-
-        .home-section .feature-card:hover i {
-            transform: scale(1.1);
         }
 
         .home-section .feature-card h3 {
@@ -197,26 +171,6 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            transition: all 0.3s ease;
-            position: relative;
-            cursor: pointer;
-        }
-
-        .nav-tabs .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: var(--secondary-color);
-            transform: scaleX(0);
-            transition: transform 0.3s ease;
-        }
-
-        .nav-tabs .nav-link.active::after,
-        .nav-tabs .nav-link:hover::after {
-            transform: scaleX(1);
         }
 
         .nav-tabs .nav-link.active {
@@ -244,15 +198,6 @@
         .table th {
             background: var(--primary-color);
             color: #fff;
-            font-weight: 500;
-        }
-
-        .table tbody tr {
-            transition: background 0.2s ease;
-        }
-
-        .table tbody tr:hover {
-            background: rgba(0, 0, 0, 0.05);
         }
 
         .list-group-item {
@@ -260,18 +205,6 @@
             margin-bottom: 0.5rem;
             padding: 1rem;
             background: var(--card-bg);
-            transition: transform 0.3s ease, background 0.3s ease;
-        }
-
-        .list-group-item:hover {
-            background: rgba(0, 0, 0, 0.05);
-            transform: translateY(-2px);
-        }
-
-        .list-group-item.disabled {
-            background: #e9ecef;
-            cursor: not-allowed;
-            opacity: 0.7;
         }
 
         .modal-content {
@@ -305,7 +238,6 @@
             padding: 1.5rem;
             margin-bottom: 1rem;
             border-radius: 0.5rem;
-            box-shadow: var(--shadow);
         }
 
         .question p {
@@ -322,55 +254,14 @@
             margin-top: 2rem;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @media (max-width: 768px) {
-            header {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            header h1 {
-                font-size: 1.5rem;
-            }
-
-            .container {
-                margin: 1rem;
-                padding: 0 0.5rem;
-            }
-
-            .nav-tabs {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .home-section h2 {
-                font-size: 1.8rem;
-            }
-
-            .home-section .feature-cards {
-                grid-template-columns: 1fr;
-            }
-        }
-
         .form-control {
             border-radius: 0.5rem;
             border: 1px solid #d1d5db;
             padding: 0.75rem;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
         .form-control:focus {
             border-color: var(--secondary-color);
-            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
             outline: none;
         }
 
@@ -379,33 +270,7 @@
             border: none;
             padding: 0.75rem 1.5rem;
             border-radius: 0.5rem;
-            font-weight: 500;
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .btn-primary::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: width 0.6s ease, height 0.6s ease;
-        }
-
-        .btn-primary:hover::before {
-            width: 300px;
-            height: 300px;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            color: #fff;
         }
 
         .success-message {
@@ -413,7 +278,6 @@
             font-size: 0.875rem;
             margin-top: 0.5rem;
             display: none;
-            animation: fadeIn 0.3s ease;
         }
 
         .hidden {
@@ -421,45 +285,48 @@
         }
 
         .feed-container {
-            max-width: 800px;
+            max-width: 680px;
             margin: 2rem auto;
         }
 
         .feed-post {
             background: var(--card-bg);
-            padding: 1.5rem;
+            padding: 12px 16px;
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
-            margin-bottom: 1.5rem;
-            position: relative;
-            transition: transform 0.3s ease;
-        }
-
-        .feed-post:hover {
-            transform: translateY(-5px);
+            margin-bottom: 16px;
         }
 
         .feed-post-header {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-bottom: 1rem;
+            justify-content: space-between;
+            margin-bottom: 8px;
         }
 
-        .feed-post-header h5 {
+        .feed-post-header-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .feed-post-header-left h5 {
             margin: 0;
-            font-size: 1.2rem;
-            color: var(--primary-color);
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-color);
         }
 
-        .feed-post-header small {
-            color: #6b7280;
+        .feed-post-header-left small {
+            font-size: 13px;
+            color: var(--fb-gray);
         }
 
         .feed-post-body {
-            font-size: 1rem;
+            font-size: 14px;
             color: var(--text-color);
-            margin-bottom: 1rem;
+            margin-bottom: 12px;
+            line-height: 1.4;
         }
 
         .feed-post-menu {
@@ -469,9 +336,10 @@
         .feed-post-menu-btn {
             background: none;
             border: none;
-            color: var(--text-color);
-            font-size: 1.2rem;
+            color: var(--fb-gray);
+            font-size: 16px;
             cursor: pointer;
+            padding: 4px;
         }
 
         .feed-post-menu-content {
@@ -481,8 +349,9 @@
             top: 100%;
             background: var(--card-bg);
             box-shadow: var(--shadow);
-            border-radius: 0.5rem;
+            border-radius: 4px;
             z-index: 10;
+            min-width: 120px;
         }
 
         .feed-post-menu-content.show {
@@ -492,179 +361,334 @@
         .feed-post-menu-content button {
             display: block;
             width: 100%;
-            padding: 0.5rem 1rem;
+            padding: 8px 12px;
             background: none;
             border: none;
             text-align: left;
-            color: #dc3545;
+            color: var(--text-color);
+            font-size: 14px;
             cursor: pointer;
         }
 
         .feed-post-menu-content button:hover {
-            background: rgba(0, 0, 0, 0.05);
-        }
-
-        .btn-danger {
-            background: #dc3545;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 0.5rem;
-            color: #fff;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .btn-danger:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            background: var(--fb-light-gray);
         }
 
         .feed-actions {
             display: flex;
-            gap: 1rem;
-            margin-bottom: 1rem;
+            gap: 8px;
+            border-top: 1px solid var(--fb-light-gray);
+            border-bottom: 1px solid var(--fb-light-gray);
+            padding: 8px 0;
+            margin-bottom: 8px;
         }
 
         .feed-action-btn {
+            flex: 1;
             background: none;
             border: none;
-            color: var(--text-color);
-            font-size: 0.9rem;
+            color: var(--fb-gray);
+            font-size: 14px;
+            font-weight: 500;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
+            padding: 8px;
+            text-align: center;
+            border-radius: 4px;
         }
 
         .feed-action-btn.liked {
-            color: var(--secondary-color);
+            color: var(--fb-blue);
+            font-weight: 600;
         }
 
         .feed-action-btn:hover {
-            color: var(--secondary-color);
+            background: var(--fb-light-gray);
+        }
+
+        .feed-action-btn i {
+            margin-right: 4px;
         }
 
         .comment-section {
-            margin-top: 1rem;
+            margin-top: 8px;
         }
 
         .comment-form {
-            margin-bottom: 1rem;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .comment-form textarea {
+            flex: 1;
+            border: 1px solid var(--fb-light-gray);
+            border-radius: 20px;
+            padding: 8px 12px;
+            font-size: 14px;
+            resize: none;
+            height: 36px;
+        }
+
+        .comment-form textarea:focus {
+            border-color: var(--fb-blue);
+            outline: none;
+        }
+
+        .comment-form button {
+            display: none;
         }
 
         .comment {
-            background: var(--card-bg);
-            padding: 1rem;
-            border-radius: 0.5rem;
-            margin-bottom: 1rem;
-            border-left: 3px solid var(--secondary-color);
+            display: flex;
+            flex-direction: column;
+            padding: 8px;
+            border-radius: 4px;
+            margin-bottom: 4px;
         }
 
         .comment-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 0.5rem;
+            margin-bottom: 4px;
         }
 
-        .comment-header h6 {
+        .comment-header-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .comment-header-left h6 {
             margin: 0;
-            font-size: 1rem;
-            color: var(--primary-color);
-        }
-
-        .comment-header small {
-            color: #6b7280;
-        }
-
-        .comment-body {
-            font-size: 0.9rem;
+            font-size: 14px;
+            font-weight: 600;
             color: var(--text-color);
         }
 
-        .reply-form {
-            margin-top: 1rem;
-            margin-left: 2rem;
-            display: none;
+        .comment-header-left small {
+            font-size: 12px;
+            color: var(--fb-gray);
         }
 
-        .reply-form.show {
-            display: block;
+        .comment-body {
+            font-size: 14px;
+            color: var(--text-color);
+            margin-left: 8px;
+            line-height: 1.4;
         }
 
-        .replies {
-            margin-left: 2rem;
-            margin-top: 1rem;
+        .comment-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 4px;
+            margin-left: 8px;
+        }
+
+        .comment-action-btn {
+            background: none;
+            border: none;
+            color: var(--fb-gray);
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .comment-action-btn:hover {
+            color: var(--fb-blue);
+        }
+
+        .comment-edit-form {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            margin-left: 8px;
+            margin-top: 4px;
+        }
+
+        .comment-edit-form textarea {
+            flex: 1;
+            border: 1px solid var(--fb-light-gray);
+            border-radius: 4px;
+            padding: 8px;
+            font-size: 14px;
+        }
+
+        .comment-edit-form button {
+            padding: 4px 12px;
+            font-size: 14px;
         }
 
         .btn-reply {
             background: none;
             border: none;
-            color: var(--primary-color);
-            font-size: 0.85rem;
+            color: var(--fb-gray);
+            font-size: 12px;
             cursor: pointer;
-            margin-top: 0.5rem;
+            margin-left: 8px;
+            margin-top: 4px;
         }
 
         .btn-reply:hover {
-            text-decoration: underline;
+            color: var(--fb-blue);
+        }
+
+        .reply-form {
+            display: none;
+            margin-left: 24px;
+            margin-top: 8px;
+            flex-direction: row;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .reply-form.show {
+            display: flex;
+        }
+
+        .reply-form textarea {
+            flex: 1;
+            border: 1px solid var(--fb-light-gray);
+            border-radius: 20px;
+            padding: 8px 12px;
+            font-size: 14px;
+            resize: none;
+            height: 36px;
+        }
+
+        .reply-form button {
+            display: none;
+        }
+
+        .replies {
+            margin-left: 24px;
+            margin-top: 4px;
+        }
+
+        .reply {
+            display: flex;
+            flex-direction: column;
+            padding: 8px;
+            border-radius: 4px;
+            margin-bottom: 4px;
+        }
+
+        .reply-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+
+        .reply-header-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .reply-header-left h6 {
+            margin: 0;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .reply-header-left small {
+            font-size: 12px;
+            color: var(--fb-gray);
+        }
+
+        .reply-body {
+            font-size: 14px;
+            color: var(--text-color);
+            margin-left: 8px;
+            line-height: 1.4;
+        }
+
+        .reply-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 4px;
+            margin-left: 8px;
+        }
+
+        .reply-edit-form {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            margin-left: 8px;
+            margin-top: 4px;
+        }
+
+        .reply-edit-form textarea {
+            flex: 1;
+            border: 1px solid var(--fb-light-gray);
+            border-radius: 4px;
+            padding: 8px;
+            font-size: 14px;
+        }
+
+        .reply-edit-form button {
+            padding: 4px 12px;
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
     <header id="header">
-        <h1><i class="fas fa-coins" aria-hidden="true"></i> Trilha da Fortuna</h1>
+        <h1><i class="fas fa-coins"></i> Trilha da Fortuna</h1>
         <div>
-            <button id="themeToggle" title="Alternar Tema" aria-label="Alternar tema claro/escuro"><i class="fas fa-moon"></i></button>
-            <a href="index.html" id="logoutLink" aria-label="Sair da conta">Sair</a>
+            <button id="themeToggle" title="Alternar Tema"><i class="fas fa-moon"></i></button>
+            <a href="index.html" id="logoutLink">Sair</a>
         </div>
     </header>
 
     <div class="container">
         <section class="content-section" id="contentSection">
             <ul class="nav nav-tabs mb-0" id="navTabs" role="tablist">
-                <li class="nav-item" role="presentation">
-                    <a class="nav-link active" id="homeTab" data-bs-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true"><i class="fas fa-home" aria-hidden="true"></i> Home</a>
+                <li class="nav-item">
+                    <a class="nav-link active" id="homeTab" data-bs-toggle="tab" href="#home" role="tab"> Home</a>
                 </li>
-                <li class="nav-item" role="presentation">
-                    <a class="nav-link" id="provasTab" data-bs-toggle="tab" href="#provas" role="tab" aria-controls="provas" aria-selected="false"><i class="fas fa-file-alt" aria-hidden="true"></i> Provas</a>
+                <li class="nav-item">
+                    <a class="nav-link" id="provasTab" data-bs-toggle="tab" href="#provas" role="tab"> Provas</a>
                 </li>
-                <li class="nav-item" role="presentation">
-                    <a class="nav-link" id="rankingTab" data-bs-toggle="tab" href="#ranking" role="tab" aria-controls="ranking" aria-selected="false"><i class="fas fa-trophy" aria-hidden="true"></i> Ranking</a>
+                <li class="nav-item">
+                    <a class="nav-link" id="rankingTab" data-bs-toggle="tab" href="#ranking" role="tab"> Ranking</a>
                 </li>
-                <li class="nav-item" id="comprovanteTabItem" role="presentation">
-                    <a class="nav-link" id="comprovanteTabLink" data-bs-toggle="tab" href="#comprovante" role="tab" aria-controls="comprovante" aria-selected="false"><i class="fas fa-file-invoice-dollar" aria-hidden="true"></i> Enviar Comprovante</a>
+                <li class="nav-item" id="comprovanteTabItem">
+                    <a class="nav-link" id="comprovanteTabLink" data-bs-toggle="tab" href="#comprovante" role="tab"> Enviar Comprovante</a>
                 </li>
-                <li class="nav-item hidden" id="adminTabItem" role="presentation">
-                    <a class="nav-link" id="adminTabLink" data-bs-toggle="tab" href="#administrador" role="tab" aria-controls="administrador" aria-selected="false"><i class="fas fa-user-cog" aria-hidden="true"></i> Administrador</a>
+                <li class="nav-item hidden" id="adminTabItem">
+                    <a class="nav-link" id="adminTabLink" data-bs-toggle="tab" href="#administrador" role="tab"> Administrador</a>
                 </li>
-                <li class="nav-item hidden" id="investimentosTabItem" role="presentation">
-                    <a class="nav-link" id="investimentosTabLink" data-bs-toggle="tab" href="#investimentos" role="tab" aria-controls="investimentos" aria-selected="false"><i class="fas fa-file-invoice-dollar" aria-hidden="true"></i> Investimentos</a>
+                <li class="nav-item hidden" id="investimentosTabItem">
+                    <a class="nav-link" id="investimentosTabLink" data-bs-toggle="tab" href="#investimentos" role="tab"> Investimentos</a>
                 </li>
             </ul>
 
             <div class="tab-content">
-                <section class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="homeTab">
+                <section class="tab-pane fade show active" id="home" role="tabpanel">
                     <div class="home-section">
                         <h2>Bem-vindo à Trilha da Fortuna!</h2>
-                        <p>Explore sua jornada financeira com um sistema interativo que combina aprendizado, competição e gestão de investimentos. Veja como funciona:</p>
+                        <p>Explore sua jornada financeira com aprendizado e competição.</p>
                         <div class="progress-chart">
-                            <canvas id="progressChart" aria-label="Gráfico de progresso do usuário"></canvas>
+                            <canvas id="progressChart"></canvas>
                         </div>
                         <div class="feature-cards">
                             <article class="feature-card">
-                                <i class="fas fa-file-alt" aria-hidden="true"></i>
+                                <i class="fas fa-file-alt"></i>
                                 <h3>Provas</h3>
-                                <p>Responda quizzes financeiros para testar seus conhecimentos e ganhar pontos.</p>
+                                <p>Teste seus conhecimentos e ganhe pontos.</p>
                             </article>
                             <article class="feature-card">
-                                <i class="fas fa-trophy" aria-hidden="true"></i>
+                                <i class="fas fa-trophy"></i>
                                 <h3>Ranking</h3>
-                                <p>Compare sua pontuação com outros usuários e suba no ranking geral.</p>
+                                <p>Compare sua pontuação e suba no ranking.</p>
                             </article>
                             <article class="feature-card">
-                                <i class="fas fa-file-invoice-dollar" aria-hidden="true"></i>
+                                <i class="fas fa-file-invoice-dollar"></i>
                                 <h3>Comprovantes</h3>
-                                <p>Envie comprovantes de investimentos para validação e acompanhamento.</p>
+                                <p>Envie comprovantes de investimentos.</p>
                             </article>
                         </div>
                         <div id="feedSection" class="mt-4">
@@ -673,7 +697,7 @@
                                 <form id="feedForm">
                                     <div class="mb-3">
                                         <label for="feedMessage" class="form-label">Novo Recado</label>
-                                        <textarea id="feedMessage" class="form-control" placeholder="Digite seu recado" required></textarea>
+                                        <textarea id="feedMessage" class="form-control" placeholder="No que você está pensando?" required></textarea>
                                     </div>
                                     <button type="submit" class="btn btn-primary">Postar</button>
                                     <div class="success-message" id="feedSuccess">Recado postado com sucesso!</div>
@@ -684,78 +708,77 @@
                     </div>
                 </section>
 
-                <section class="tab-pane fade" id="provas" role="tabpanel" aria-labelledby="provasTab">
-                    <h2 class="mb-4"><i class="fas fa-file-alt me-2" aria-hidden="true"></i> Provas Disponíveis</h2>
+                <section class="tab-pane fade" id="provas" role="tabpanel">
+                    <h2 class="mb-4"> Provas Disponíveis</h2>
                     <ul class="list-group" id="listaProvas"></ul>
                 </section>
 
-                <section class="tab-pane fade" id="ranking" role="tabpanel" aria-labelledby="rankingTab">
-                    <h2 class="mb-4"><i class="fas fa-trophy me-2" aria-hidden="true"></i> Ranking de Usuários</h2>
+                <section class="tab-pane fade" id="ranking" role="tabpanel">
+                    <h2 class="mb-4"> Ranking de Usuários</h2>
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th scope="col">Posição</th>
-                                <th scope="col">Nome</th>
-                                <th scope="col">Pontos</th>
-                                <th scope="col">Ação</th>
+                                <th>Posição</th>
+                                <th>Nome</th>
+                                <th>Pontos</th>
+                                <th>Ação</th>
                             </tr>
                         </thead>
                         <tbody id="rankingBody"></tbody>
                     </table>
                 </section>
 
-                <section class="tab-pane fade" id="comprovante" role="tabpanel" aria-labelledby="comprovanteTabLink">
-                    <h2 class="mb-4"><i class="fas fa-file-invoice-dollar me-2" aria-hidden="true"></i> Enviar Comprovante</h2>
+                <section class="tab-pane fade" id="comprovante" role="tabpanel">
+                    <h2 class="mb-4"> Enviar Comprovante</h2>
                     <div class="card">
                         <div class="card-body">
                             <form id="comprovanteForm">
                                 <div class="mb-3">
-                                    <label for="comprovanteArquivo" class="form-label">Selecione o comprovante (Imagem ou PDF)</label>
-                                    <input type="file" id="comprovanteArquivo" class="form-control" accept=".jpg,.jpeg,.png,.pdf" required aria-describedby="comprovanteHelp">
-                                    <div id="comprovanteHelp" class="form-text">Apenas arquivos JPG, JPEG, PNG ou PDF são permitidos.</div>
+                                    <label for="comprovanteArquivo" class="form-label">Selecione o comprovante</label>
+                                    <input type="file" id="comprovanteArquivo" class="form-control" accept=".jpg,.jpeg,.png,.pdf" required>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Enviar</button>
-                                <div class="success-message" id="comprovanteSuccess">Comprovante enviado com sucesso!</div>
+                                <div class="success-message" id="comprovanteSuccess">Comprovante enviado!</div>
                             </form>
                         </div>
                     </div>
                 </section>
 
-                <section class="tab-pane fade" id="administrador" role="tabpanel" aria-labelledby="adminTabLink">
-                    <h2 class="mb-4"><i class="fas fa-user-cog me-2" aria-hidden="true"></i> Gerenciamento</h2>
+                <section class="tab-pane fade" id="administrador" role="tabpanel">
+                    <h2 class="mb-4"> Gerenciamento</h2>
                     <div class="card mb-4">
                         <div class="card-body">
-                            <h5 class="card-title">Criar Nova Prova</h5>
+                            <h5>Criar Nova Prova</h5>
                             <form id="novaProvaForm">
                                 <div class="mb-3">
                                     <label for="tituloProva" class="form-label">Título da Prova</label>
-                                    <input type="text" id="tituloProva" class="form-control" placeholder="Título da Prova" required>
+                                    <input type="text" id="tituloProva" class="form-control" required>
                                 </div>
                                 <div id="perguntasContainer">
                                     <div class="pergunta">
                                         <div class="mb-3">
                                             <label for="pergunta1" class="form-label">Pergunta</label>
-                                            <textarea class="form-control pergunta-texto" id="pergunta1" placeholder="Pergunta" required></textarea>
+                                            <textarea class="form-control pergunta-texto" id="pergunta1" required></textarea>
                                         </div>
                                         <div class="mb-3">
                                             <label for="opcaoA1" class="form-label">Resposta A</label>
-                                            <input type="text" class="form-control opcao-a" id="opcaoA1" placeholder="Resposta A" required>
+                                            <input type="text" class="form-control opcao-a" id="opcaoA1" required>
                                         </div>
                                         <div class="mb-3">
                                             <label for="opcaoB1" class="form-label">Resposta B</label>
-                                            <input type="text" class="form-control opcao-b" id="opcaoB1" placeholder="Resposta B" required>
+                                            <input type="text" class="form-control opcao-b" id="opcaoB1" required>
                                         </div>
                                         <div class="mb-3">
                                             <label for="opcaoC1" class="form-label">Resposta C</label>
-                                            <input type="text" class="form-control opcao-c" id="opcaoC1" placeholder="Resposta C" required>
+                                            <input type="text" class="form-control opcao-c" id="opcaoC1" required>
                                         </div>
                                         <div class="mb-3">
                                             <label for="opcaoD1" class="form-label">Resposta D</label>
-                                            <input type="text" class="form-control opcao-d" id="opcaoD1" placeholder="Resposta D" required>
+                                            <input type="text" class="form-control opcao-d" id="opcaoD1" required>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="correta1" class="form-label">Letra da resposta correta (a, b, c, d)</label>
-                                            <input type="text" class="form-control correta" id="correta1" placeholder="Letra da resposta correta (a, b, c, d)" required>
+                                            <label for="correta1" class="form-label">Resposta correta (a, b, c, d)</label>
+                                            <input type="text" class="form-control correta" id="correta1" required>
                                         </div>
                                     </div>
                                 </div>
@@ -768,19 +791,19 @@
                     </div>
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Cadastrar Usuário</h5>
+                            <h5>Cadastrar Usuário</h5>
                             <form id="novoUsuarioForm">
                                 <div class="mb-3">
                                     <label for="novoUsername" class="form-label">Nome de usuário</label>
-                                    <input type="text" id="novoUsername" class="form-control" placeholder="Nome de usuário" required>
+                                    <input type="text" id="novoUsername" class="form-control" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="novoPassword" class="form-label">Senha</label>
-                                    <input type="password" id="novoPassword" class="form-control" placeholder="Senha" required>
+                                    <input type="password" id="novoPassword" class="form-control" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="nomeUsuario" class="form-label">Nome para o ranking</label>
-                                    <input type="text" id="nomeUsuario" class="form-control" placeholder="Nome para o ranking" required>
+                                    <label for="nomeUsuario" class="form-label">Nome</label>
+                                    <input type="text" id="nomeUsuario" class="form-control" required>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Cadastrar</button>
                             </form>
@@ -788,15 +811,15 @@
                     </div>
                 </section>
 
-                <section class="tab-pane fade" id="investimentos" role="tabpanel" aria-labelledby="investimentosTabLink">
-                    <h2 class="mb-4"><i class="fas fa-file-invoice-dollar me-2" aria-hidden="true"></i> Investimentos Recebidos</h2>
+                <section class="tab-pane fade" id="investimentos" role="tabpanel">
+                    <h2 class="mb-4"> Investimentos Recebidos</h2>
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th scope="col">Usuário</th>
-                                <th scope="col">Data de Envio</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Ação</th>
+                                <th>Usuário</th>
+                                <th>Data de Envio</th>
+                                <th>Status</th>
+                                <th>Ação</th>
                             </tr>
                         </thead>
                         <tbody id="investimentosBody"></tbody>
@@ -806,12 +829,12 @@
         </section>
     </div>
 
-    <div class="modal fade" id="provaModal" tabindex="-1" aria-labelledby="provaModalLabel" aria-hidden="true">
+    <div class="modal fade" id="provaModal" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="provaModalLabel"><i class="fas fa-file-alt" aria-hidden="true"></i> Prova</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                    <h5 class="modal-title" id="provaModalLabel"> Prova</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <form id="provaForm"></form>
@@ -824,12 +847,12 @@
         </div>
     </div>
 
-    <div class="modal fade" id="resultadoModal" tabindex="-1" aria-labelledby="resultadoModalLabel" aria-hidden="true">
+    <div class="modal fade" id="resultadoModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="resultadoModalLabel"><i class="fas fa-check-circle" aria-hidden="true"></i> Resultado</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                    <h5 class="modal-title" id="resultadoModalLabel"> Resultado</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <p id="resultadoTexto"></p>
@@ -841,12 +864,12 @@
         </div>
     </div>
 
-    <div class="modal fade" id="sucessoModal" tabindex="-1" aria-labelledby="sucessoModalLabel" aria-hidden="true">
+    <div class="modal fade" id="sucessoModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="sucessoModalLabel"><i class="fas fa-check-circle" aria-hidden="true"></i> Sucesso</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                    <h5 class="modal-title" id="sucessoModalLabel"> Sucesso</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <p id="sucessoTexto">Operação realizada com sucesso!</p>
@@ -858,12 +881,12 @@
         </div>
     </div>
 
-    <div class="modal fade" id="comprovanteModal" tabindex="-1" aria-labelledby="comprovanteModalLabel" aria-hidden="true">
+    <div class="modal fade" id="comprovanteModal" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="comprovanteModalLabel"><i class="fas fa-file-invoice-dollar" aria-hidden="true"></i> Visualizar Comprovante</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                    <h5 class="modal-title" id="comprovanteModalLabel"> Visualizar Comprovante</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <p id="comprovanteInfo"></p>
@@ -877,15 +900,15 @@
         </div>
     </div>
 
-    <div class="modal fade" id="confirmacaoExclusaoModal" tabindex="-1" aria-labelledby="confirmacaoExclusaoModalLabel" aria-hidden="true">
+    <div class="modal fade" id="confirmacaoExclusaoModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="confirmacaoExclusaoModalLabel"><i class="fas fa-exclamation-triangle" aria-hidden="true"></i> Confirmação de Exclusão</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                    <h5 class="modal-title" id="confirmacaoExclusaoModalLabel"> Confirmação de Exclusão</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Tem certeza que deseja remover o usuário <strong id="nomeUsuarioExclusao"></strong>? Esta ação é irreversível e removerá todo o acesso do usuário à plataforma.</p>
+                    <p>Tem certeza que deseja remover o usuário <strong id="nomeUsuarioExclusao"></strong>?</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -926,7 +949,6 @@
                 { username: "user2", password: "user123", nome: "Maria Oliveira", isAdmin: false, pontos: 50 }
             ];
 
-            // Garante que admin123 seja administrador
             const adminUser = usuarios.find(u => u.username === "admin123");
             if (adminUser) {
                 adminUser.isAdmin = true;
@@ -987,239 +1009,157 @@
         }
 
         function inicializarGrafico() {
-            const ctx = document.getElementById('progressChart');
-            if (!ctx || !window.Chart) {
-                console.error('Chart.js não carregado ou canvas não encontrado.');
-                return;
-            }
+            const ctx = document.getElementById('progressChart').getContext('2d');
             const usuario = usuarios.find(u => u.username === usuarioLogado.username);
             const pontos = usuario ? usuario.pontos : 0;
-            const maxPontos = 500;
-
-            if (ctx.chart) {
-                ctx.chart.destroy();
-            }
-
-            ctx.chart = new Chart(ctx, {
+            new Chart(ctx, {
                 type: 'doughnut',
                 data: {
-                    labels: ['Pontos Obtidos', 'Pontos Restantes'],
+                    labels: ['Pontos Obtidos', 'Restantes'],
                     datasets: [{
-                        data: [pontos, maxPontos - pontos],
-                        backgroundColor: [getComputedStyle(document.documentElement).getPropertyValue('--secondary-color'), '#e5e7eb'],
+                        data: [pontos, 500 - pontos],
+                        backgroundColor: ['#10b981', '#e5e7eb'],
                         borderWidth: 0
                     }]
                 },
                 options: {
                     cutout: '70%',
-                    plugins: {
-                        legend: { display: false },
-                        tooltip: { enabled: false }
-                    },
-                    animation: {
-                        animateRotate: true,
-                        animateScale: true
-                    }
+                    plugins: { legend: { display: false } }
                 }
             });
         }
 
-        const themeToggle = document.getElementById('themeToggle');
-        if (themeToggle) {
-            themeToggle.addEventListener('click', () => {
-                document.body.classList.toggle('dark-theme');
-                const isDark = document.body.classList.contains('dark-theme');
-                themeToggle.innerHTML = `<i class="fas fa-${isDark ? 'sun' : 'moon'}" aria-hidden="true"></i>`;
-                localStorage.setItem('theme', isDark ? 'dark' : 'light');
-                inicializarGrafico();
-            });
+        document.getElementById('themeToggle').addEventListener('click', () => {
+            document.body.classList.toggle('dark-theme');
+            const isDark = document.body.classList.contains('dark-theme');
+            document.getElementById('themeToggle').innerHTML = `<i class="fas fa-${isDark ? 'sun' : 'moon'}"></i>`;
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        });
 
-            if (localStorage.getItem('theme') === 'dark') {
-                document.body.classList.add('dark-theme');
-                themeToggle.innerHTML = '<i class="fas fa-sun" aria-hidden="true"></i>';
-            }
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-theme');
+            document.getElementById('themeToggle').innerHTML = '<i class="fas fa-sun"></i>';
         }
 
         function adicionarPergunta() {
             const container = document.getElementById('perguntasContainer');
-            if (!container) return;
-
-            const perguntaCount = container.querySelectorAll('.pergunta').length + 1;
-            const perguntaDiv = document.createElement('div');
-            perguntaDiv.className = 'pergunta';
-            perguntaDiv.innerHTML = `
+            const count = container.querySelectorAll('.pergunta').length + 1;
+            const div = document.createElement('div');
+            div.className = 'pergunta';
+            div.innerHTML = `
                 <div class="mb-3">
-                    <label for="pergunta${perguntaCount}" class="form-label">Pergunta</label>
-                    <textarea class="form-control pergunta-texto" id="pergunta${perguntaCount}" placeholder="Pergunta" required></textarea>
+                    <label for="pergunta${count}" class="form-label">Pergunta</label>
+                    <textarea class="form-control pergunta-texto" id="pergunta${count}" required></textarea>
                 </div>
                 <div class="mb-3">
-                    <label for="opcaoA${perguntaCount}" class="form-label">Resposta A</label>
-                    <input type="text" class="form-control opcao-a" id="opcaoA${perguntaCount}" placeholder="Resposta A" required>
+                    <label for="opcaoA${count}" class="form-label">Resposta A</label>
+                    <input type="text" class="form-control opcao-a" id="opcaoA${count}" required>
                 </div>
                 <div class="mb-3">
-                    <label for="opcaoB${perguntaCount}" class="form-label">Resposta B</label>
-                    <input type="text" class="form-control opcao-b" id="opcaoB${perguntaCount}" placeholder="Resposta B" required>
+                    <label for="opcaoB${count}" class="form-label">Resposta B</label>
+                    <input type="text" class="form-control opcao-b" id="opcaoB${count}" required>
                 </div>
                 <div class="mb-3">
-                    <label for="opcaoC${perguntaCount}" class="form-label">Resposta C</label>
-                    <input type="text" class="form-control opcao-c" id="opcaoC${perguntaCount}" placeholder="Resposta C" required>
+                    <label for="opcaoC${count}" class="form-label">Resposta C</label>
+                    <input type="text" class="form-control opcao-c" id="opcaoC${count}" required>
                 </div>
                 <div class="mb-3">
-                    <label for="opcaoD${perguntaCount}" class="form-label">Resposta D</label>
-                    <input type="text" class="form-control opcao-d" id="opcaoD${perguntaCount}" placeholder="Resposta D" required>
+                    <label for="opcaoD${count}" class="form-label">Resposta D</label>
+                    <input type="text" class="form-control opcao-d" id="opcaoD${count}" required>
                 </div>
                 <div class="mb-3">
-                    <label for="correta${perguntaCount}" class="form-label">Letra da resposta correta (a, b, c, d)</label>
-                    <input type="text" class="form-control correta" id="correta${perguntaCount}" placeholder="Letra da resposta correta (a, b, c, d)" required>
+                    <label for="correta${count}" class="form-label">Resposta correta (a, b, c, d)</label>
+                    <input type="text" class="form-control correta" id="correta${count}" required>
                 </div>
             `;
-            container.appendChild(perguntaDiv);
+            container.appendChild(div);
         }
 
-        const novaProvaForm = document.getElementById('novaProvaForm');
-        if (novaProvaForm) {
-            novaProvaForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const titulo = document.getElementById('tituloProva')?.value.trim();
-                const perguntasDivs = document.querySelectorAll('#perguntasContainer .pergunta');
-                const perguntas = Array.from(perguntasDivs).map(div => ({
-                    texto: div.querySelector('.pergunta-texto')?.value.trim(),
-                    opcoes: {
-                        a: div.querySelector('.opcao-a')?.value.trim(),
-                        b: div.querySelector('.opcao-b')?.value.trim(),
-                        c: div.querySelector('.opcao-c')?.value.trim(),
-                        d: div.querySelector('.opcao-d')?.value.trim()
-                    },
-                    correta: div.querySelector('.correta')?.value.trim().toLowerCase()
-                }));
+        document.getElementById('novaProvaForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const titulo = document.getElementById('tituloProva').value.trim();
+            const perguntas = Array.from(document.querySelectorAll('.pergunta')).map(div => ({
+                texto: div.querySelector('.pergunta-texto').value.trim(),
+                opcoes: {
+                    a: div.querySelector('.opcao-a').value.trim(),
+                    b: div.querySelector('.opcao-b').value.trim(),
+                    c: div.querySelector('.opcao-c').value.trim(),
+                    d: div.querySelector('.opcao-d').value.trim()
+                },
+                correta: div.querySelector('.correta').value.trim().toLowerCase()
+            }));
 
-                if (!titulo) {
-                    alert("O título da prova é obrigatório!");
-                    return;
-                }
-                if (perguntas.length === 0) {
-                    alert("Adicione pelo menos uma pergunta!");
-                    return;
-                }
-                for (let p of perguntas) {
-                    if (!p.texto || !p.opcoes.a || !p.opcoes.b || !p.opcoes.c || !p.opcoes.d || !p.correta) {
-                        alert("Preencha todos os campos de cada pergunta!");
-                        return;
-                    }
-                    if (!['a', 'b', 'c', 'd'].includes(p.correta)) {
-                        alert("A letra da resposta correta deve ser a, b, c ou d!");
-                        return;
-                    }
-                }
-
-                const novaProva = {
-                    id: provas.length + 1,
-                    titulo,
-                    perguntas
-                };
-                provas.push(novaProva);
-                salvarDados();
-                novaProvaForm.reset();
-                document.getElementById('perguntasContainer').innerHTML = `
-                    <div class="pergunta">
-                        <div class="mb-3">
-                            <label for="pergunta1" class="form-label">Pergunta</label>
-                            <textarea class="form-control pergunta-texto" id="pergunta1" placeholder="Pergunta" required></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label for="opcaoA1" class="form-label">Resposta A</label>
-                            <input type="text" class="form-control opcao-a" id="opcaoA1" placeholder="Resposta A" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="opcaoB1" class="form-label">Resposta B</label>
-                            <input type="text" class="form-control opcao-b" id="opcaoB1" placeholder="Resposta B" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="opcaoC1" class="form-label">Resposta C</label>
-                            <input type="text" class="form-control opcao-c" id="opcaoC1" placeholder="Resposta C" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="opcaoD1" class="form-label">Resposta D</label>
-                            <input type="text" class="form-control opcao-d" id="opcaoD1" placeholder="Resposta D" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="correta1" class="form-label">Letra da resposta correta (a, b, c, d)</label>
-                            <input type="text" class="form-control correta" id="correta1" placeholder="Letra da resposta correta (a, b, c, d)" required>
-                        </div>
+            if (!titulo || perguntas.length === 0) return;
+            provas.push({ id: provas.length + 1, titulo, perguntas });
+            salvarDados();
+            document.getElementById('novaProvaForm').reset();
+            document.getElementById('perguntasContainer').innerHTML = `
+                <div class="pergunta">
+                    <div class="mb-3">
+                        <label for="pergunta1" class="form-label">Pergunta</label>
+                        <textarea class="form-control pergunta-texto" id="pergunta1" required></textarea>
                     </div>
-                `;
-                const sucessoModal = new bootstrap.Modal(document.getElementById('sucessoModal'));
-                document.getElementById('sucessoTexto').textContent = 'Prova enviada com sucesso!';
-                sucessoModal.show();
-                atualizarProvas();
-            });
-        }
+                    <div class="mb-3">
+                        <label for="opcaoA1" class="form-label">Resposta A</label>
+                        <input type="text" class="form-control opcao-a" id="opcaoA1" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="opcaoB1" class="form-label">Resposta B</label>
+                        <input type="text" class="form-control opcao-b" id="opcaoB1" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="opcaoC1" class="form-label">Resposta C</label>
+                        <input type="text" class="form-control opcao-c" id="opcaoC1" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="opcaoD1" class="form-label">Resposta D</label>
+                        <input type="text" class="form-control opcao-d" id="opcaoD1" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="correta1" class="form-label">Resposta correta (a, b, c, d)</label>
+                        <input type="text" class="form-control correta" id="correta1" required>
+                    </div>
+                </div>
+            `;
+            const modal = new bootstrap.Modal(document.getElementById('sucessoModal'));
+            document.getElementById('sucessoTexto').textContent = 'Prova enviada!';
+            modal.show();
+            atualizarProvas();
+        });
 
-        const sucessoOkButton = document.getElementById('sucessoOkButton');
-        if (sucessoOkButton) {
-            sucessoOkButton.addEventListener('click', () => {
-                const sucessoModal = bootstrap.Modal.getInstance(document.getElementById('sucessoModal'));
-                if (sucessoModal) {
-                    sucessoModal.hide();
-                }
-            });
-        }
+        document.getElementById('sucessoOkButton').addEventListener('click', () => {
+            bootstrap.Modal.getInstance(document.getElementById('sucessoModal')).hide();
+        });
 
         function atualizarProvas() {
             const listaProvas = document.getElementById('listaProvas');
-            if (!listaProvas) return;
-
             listaProvas.innerHTML = '';
-            if (provas.length === 0) {
-                listaProvas.innerHTML = '<li class="list-group-item text-muted">Nenhuma prova disponível</li>';
-                return;
-            }
             provas.forEach(prova => {
                 const li = document.createElement('li');
-                li.className = 'list-group-item d-flex justify-content-between align-items-center';
+                li.className = 'list-group-item d-flex justify-content-between';
                 let nota = '';
                 let isConcluida = false;
-
-                if (!usuarioLogado.isAdmin && respostas[usuarioLogado.username] && respostas[usuarioLogado.username][prova.id]) {
+                if (!usuarioLogado.isAdmin && respostas[usuarioLogado.username]?.[prova.id]) {
                     nota = `<span class="badge bg-success">Nota: ${respostas[usuarioLogado.username][prova.id].pontuacao}</span>`;
                     isConcluida = true;
-                    li.classList.add('disabled');
                 }
-
-                li.innerHTML = `<span><i class="fas fa-file-alt me-2" aria-hidden="true"></i>${prova.titulo}</span>${nota}`;
-                
+                li.innerHTML = `<span>${prova.titulo}</span>${nota}`;
                 if (!isConcluida && !usuarioLogado.isAdmin) {
                     li.style.cursor = 'pointer';
                     li.addEventListener('click', () => abrirProva(prova));
-                } else if (usuarioLogado.isAdmin) {
-                    li.style.cursor = 'not-allowed';
-                    li.title = 'Administradores não podem realizar provas';
-                    li.setAttribute('aria-disabled', 'true');
                 }
                 listaProvas.appendChild(li);
             });
         }
 
         function abrirProva(prova) {
-            if (usuarioLogado.isAdmin) {
-                alert("Administradores não podem realizar provas!");
-                return;
-            }
-            if (respostas[usuarioLogado.username] && respostas[usuarioLogado.username][prova.id]) {
-                alert("Você já realizou esta prova!");
-                return;
-            }
-
+            if (usuarioLogado.isAdmin || respostas[usuarioLogado.username]?.[prova.id]) return;
             const modal = new bootstrap.Modal(document.getElementById('provaModal'));
-            const provaModalLabel = document.getElementById('provaModalLabel');
-            const provaForm = document.getElementById('provaForm');
-
-            if (!provaModalLabel || !provaForm) return;
-
-            provaModalLabel.innerHTML = `<i class="fas fa-file-alt" aria-hidden="true"></i> ${prova.titulo}`;
-            provaForm.innerHTML = prova.perguntas.map((p, i) => `
+            document.getElementById('provaModalLabel').textContent = prova.titulo;
+            const form = document.getElementById('provaForm');
+            form.innerHTML = prova.perguntas.map((p, i) => `
                 <div class="question">
-                    <p><i class="fas fa-question-circle" aria-hidden="true"></i> ${i + 1}. ${p.texto}</p>
+                    <p>${i + 1}. ${p.texto}</p>
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="q${i}" value="a" id="q${i}a" required>
                         <label class="form-check-label" for="q${i}a">${p.opcoes.a}</label>
@@ -1238,27 +1178,21 @@
                     </div>
                 </div>
             `).join('');
-            provaForm.onsubmit = (e) => {
+            form.onsubmit = (e) => {
                 e.preventDefault();
                 let pontuacao = 0;
                 prova.perguntas.forEach((p, i) => {
                     const resposta = document.querySelector(`input[name="q${i}"]:checked`);
-                    if (resposta && resposta.value === p.correta) {
-                        pontuacao += 50;
-                    }
+                    if (resposta?.value === p.correta) pontuacao += 50;
                 });
-
-                if (!respostas[usuarioLogado.username]) {
-                    respostas[usuarioLogado.username] = {};
-                }
+                if (!respostas[usuarioLogado.username]) respostas[usuarioLogado.username] = {};
                 respostas[usuarioLogado.username][prova.id] = { pontuacao };
                 const usuario = usuarios.find(u => u.username === usuarioLogado.username);
-                if (usuario) {
-                    usuario.pontos += pontuacao;
-                }
+                usuario.pontos += pontuacao;
                 salvarDados();
                 modal.hide();
-                mostrarResultado(pontuacao);
+                document.getElementById('resultadoTexto').textContent = `Pontuação: ${pontuacao} pontos!`;
+                new bootstrap.Modal(document.getElementById('resultadoModal')).show();
                 atualizarProvas();
                 atualizarRanking();
                 inicializarGrafico();
@@ -1266,67 +1200,41 @@
             modal.show();
         }
 
-        function mostrarResultado(pontuacao) {
-            const modal = new bootstrap.Modal(document.getElementById('resultadoModal'));
-            const resultadoTexto = document.getElementById('resultadoTexto');
-            if (resultadoTexto) {
-                resultadoTexto.innerHTML = `Sua pontuação: <strong>${pontuacao} pontos</strong>!`;
-            }
-            modal.show();
-        }
-
         function atualizarRanking() {
             const rankingBody = document.getElementById('rankingBody');
-            if (!rankingBody) return;
-
             rankingBody.innerHTML = '';
-            const usuariosOrdenados = [...usuarios].sort((a, b) => b.pontos - a.pontos);
-            usuariosOrdenados.forEach((usuario, index) => {
-                if (!usuario.isAdmin) {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>${index + 1}</td>
-                        <td>${usuario.nome}</td>
-                        <td>${usuario.pontos}</td>
-                        <td>
-                            ${usuarioLogado.isAdmin ? `
-                                <button class="btn btn-danger btn-sm" onclick="confirmarExclusaoUsuario('${usuario.username}')">
-                                    <i class="fas fa-trash-alt" aria-hidden="true"></i> Remover
-                                </button>
-                            ` : ''}
-                        </td>
+            const ordenados = [...usuarios].sort((a, b) => b.pontos - a.pontos);
+            ordenados.forEach((u, i) => {
+                if (!u.isAdmin) {
+                    rankingBody.innerHTML += `
+                        <tr>
+                            <td>${i + 1}</td>
+                            <td>${u.nome}</td>
+                            <td>${u.pontos}</td>
+                            <td>${usuarioLogado.isAdmin ? `<button class="btn btn-danger btn-sm" onclick="confirmarExclusaoUsuario('${u.username}')">Remover</button>` : ''}</td>
+                        </tr>
                     `;
-                    rankingBody.appendChild(row);
                 }
             });
         }
 
         function confirmarExclusaoUsuario(username) {
             const usuario = usuarios.find(u => u.username === username);
-            if (!usuario) return;
-
+            document.getElementById('nomeUsuarioExclusao').textContent = usuario.nome;
             const modal = new bootstrap.Modal(document.getElementById('confirmacaoExclusaoModal'));
-            const nomeUsuarioExclusao = document.getElementById('nomeUsuarioExclusao');
-            const confirmarExclusaoBtn = document.getElementById('confirmarExclusaoBtn');
-
-            if (!nomeUsuarioExclusao || !confirmarExclusaoBtn) return;
-
-            nomeUsuarioExclusao.textContent = usuario.nome;
-            confirmarExclusaoBtn.onclick = () => {
+            document.getElementById('confirmarExclusaoBtn').onclick = () => {
                 usuarios = usuarios.filter(u => u.username !== username);
-                if (respostas[username]) {
-                    delete respostas[username];
-                }
+                delete respostas[username];
                 comprovantes = comprovantes.filter(c => c.username !== username);
-                feeds = feeds.map(feed => ({
-                    ...feed,
-                    curtidas: feed.curtidas.filter(u => u !== username),
-                    comentarios: feed.comentarios.map(comentario => ({
-                        ...comentario,
-                        autor: comentario.autor === username ? '[Usuário Removido]' : comentario.autor,
-                        respostas: comentario.respostas.map(resposta => ({
-                            ...resposta,
-                            autor: resposta.autor === username ? '[Usuário Removido]' : resposta.autor
+                feeds = feeds.map(f => ({
+                    ...f,
+                    curtidas: f.curtidas.filter(u => u !== username),
+                    comentarios: f.comentarios.map(c => ({
+                        ...c,
+                        autor: c.autor === username ? '[Removido]' : c.autor,
+                        respostas: c.respostas.map(r => ({
+                            ...r,
+                            autor: r.autor === username ? '[Removido]' : r.autor
                         }))
                     }))
                 }));
@@ -1335,254 +1243,173 @@
                 atualizarInvestimentos();
                 atualizarFeed();
                 modal.hide();
-                const sucessoModal = new bootstrap.Modal(document.getElementById('sucessoModal'));
-                document.getElementById('sucessoTexto').textContent = 'Usuário removido com sucesso!';
-                sucessoModal.show();
+                document.getElementById('sucessoTexto').textContent = 'Usuário removido!';
+                new bootstrap.Modal(document.getElementById('sucessoModal')).show();
             };
             modal.show();
         }
 
-        const novoUsuarioForm = document.getElementById('novoUsuarioForm');
-        if (novoUsuarioForm) {
-            novoUsuarioForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const novoUsername = document.getElementById('novoUsername')?.value.trim();
-                const novoPassword = document.getElementById('novoPassword')?.value.trim();
-                const nomeUsuario = document.getElementById('nomeUsuario')?.value.trim();
+        document.getElementById('novoUsuarioForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const username = document.getElementById('novoUsername').value.trim();
+            const password = document.getElementById('novoPassword').value.trim();
+            const nome = document.getElementById('nomeUsuario').value.trim();
+            if (usuarios.find(u => u.username === username)) return;
+            usuarios.push({ username, password, nome, isAdmin: false, pontos: 0 });
+            salvarDados();
+            document.getElementById('novoUsuarioForm').reset();
+            atualizarRanking();
+        });
 
-                if (!novoUsername || !novoPassword || !nomeUsuario) {
-                    alert("Preencha todos os campos!");
-                    return;
-                }
-
-                if (usuarios.find(u => u.username === novoUsername)) {
-                    alert("Nome de usuário já existe!");
-                    return;
-                }
-
-                usuarios.push({
-                    username: novoUsername,
-                    password: novoPassword,
-                    nome: nomeUsuario,
-                    isAdmin: false,
-                    pontos: 0
-                });
-                salvarDados();
-                novoUsuarioForm.reset();
-                alert("Usuário cadastrado com sucesso!");
-                atualizarRanking();
+        document.getElementById('comprovanteForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const arquivo = document.getElementById('comprovanteArquivo').files[0];
+            if (!arquivo || !['.jpg', '.jpeg', '.png', '.pdf'].includes(arquivo.name.substring(arquivo.name.lastIndexOf('.')).toLowerCase())) return;
+            comprovantes.push({
+                id: comprovantes.length + 1,
+                username: usuarioLogado.username,
+                nome: usuarioLogado.nome,
+                data: new Date().toLocaleString('pt-BR'),
+                arquivo: arquivo.name,
+                verificado: false
             });
-        }
-
-        const comprovanteForm = document.getElementById('comprovanteForm');
-        if (comprovanteForm) {
-            comprovanteForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const arquivoInput = document.getElementById('comprovanteArquivo');
-                const arquivo = arquivoInput?.files[0];
-                const successMessage = document.getElementById('comprovanteSuccess');
-
-                if (!arquivo) {
-                    alert("Selecione um arquivo!");
-                    return;
-                }
-
-                const extensoesPermitidas = ['.jpg', '.jpeg', '.png', '.pdf'];
-                const extensao = arquivo.name.substring(arquivo.name.lastIndexOf('.')).toLowerCase();
-                if (!extensoesPermitidas.includes(extensao)) {
-                    alert("Apenas arquivos JPG, JPEG, PNG ou PDF são permitidos!");
-                    return;
-                }
-
-                const comprovante = {
-                    id: comprovantes.length + 1,
-                    username: usuarioLogado.username,
-                    nome: usuarioLogado.nome,
-                    data: new Date().toLocaleString('pt-BR'),
-                    arquivo: arquivo.name,
-                    verificado: false
-                };
-                comprovantes.push(comprovante);
-                salvarDados();
-                comprovanteForm.reset();
-                if (successMessage) {
-                    successMessage.style.display = 'block';
-                    setTimeout(() => {
-                        successMessage.style.display = 'none';
-                    }, 3000);
-                }
-                atualizarInvestimentos();
-            });
-        }
+            salvarDados();
+            document.getElementById('comprovanteForm').reset();
+            document.getElementById('comprovanteSuccess').style.display = 'block';
+            setTimeout(() => document.getElementById('comprovanteSuccess').style.display = 'none', 3000);
+            atualizarInvestimentos();
+        });
 
         function atualizarInvestimentos() {
-            const investimentosBody = document.getElementById('investimentosBody');
-            if (!investimentosBody) return;
-
-            investimentosBody.innerHTML = '';
-            if (comprovantes.length === 0) {
-                investimentosBody.innerHTML = '<tr><td colspan="4" class="text-muted text-center">Nenhum comprovante recebido</td></tr>';
-                return;
-            }
-            comprovantes.forEach(comprovante => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${comprovante.nome}</td>
-                    <td>${comprovante.data}</td>
-                    <td>${comprovante.verificado ? '<span class="badge bg-success">Verificado</span>' : '<span class="badge bg-warning">Pendente</span>'}</td>
-                    <td><button class="btn btn-primary btn-sm" onclick="visualizarComprovante(${comprovante.id})">Visualizar</button></td>
-                `;
-                investimentosBody.appendChild(row);
-            });
+            const body = document.getElementById('investimentosBody');
+            body.innerHTML = comprovantes.length ? comprovantes.map(c => `
+                <tr>
+                    <td>${c.nome}</td>
+                    <td>${c.data}</td>
+                    <td>${c.verificado ? '<span class="badge bg-success">Verificado</span>' : '<span class="badge bg-warning">Pendente</span>'}</td>
+                    <td><button class="btn btn-primary btn-sm" onclick="visualizarComprovante(${c.id})">Visualizar</button></td>
+                </tr>
+            `).join('') : '<tr><td colspan="4" class="text-center">Nenhum comprovante</td></tr>';
         }
 
-        function visualizarComprovante(comprovanteId) {
-            const comprovante = comprovantes.find(c => c.id === comprovanteId);
-            if (!comprovante) return;
-
-            const modal = new bootstrap.Modal(document.getElementById('comprovanteModal'));
-            const comprovanteModalLabel = document.getElementById('comprovanteModalLabel');
-            const comprovanteInfo = document.getElementById('comprovanteInfo');
-            const comprovanteVisualizacao = document.getElementById('comprovanteVisualizacao');
-            const verificarComprovanteBtn = document.getElementById('verificarComprovanteBtn');
-
-            if (!comprovanteModalLabel || !comprovanteInfo || !comprovanteVisualizacao || !verificarComprovanteBtn) return;
-
-            comprovanteModalLabel.innerHTML = `<i class="fas fa-file-invoice-dollar" aria-hidden="true"></i> Comprovante de ${comprovante.nome}`;
-            comprovanteInfo.innerHTML = `
-                <p><strong>Usuário:</strong> ${comprovante.nome}</p>
-                <p><strong>Data de Envio:</strong> ${comprovante.data}</p>
-                <p><strong>Arquivo:</strong> ${comprovante.arquivo}</p>
+        function visualizarComprovante(id) {
+            const c = comprovantes.find(c => c.id === id);
+            document.getElementById('comprovanteModalLabel').textContent = `Comprovante de ${c.nome}`;
+            document.getElementById('comprovanteInfo').innerHTML = `
+                <p><strong>Usuário:</strong> ${c.nome}</p>
+                <p><strong>Data:</strong> ${c.data}</p>
+                <p><strong>Arquivo:</strong> ${c.arquivo}</p>
             `;
-            comprovanteVisualizacao.innerHTML = `
-                <p class="text-muted">Visualização do arquivo: ${comprovante.arquivo} (Simulação - em um sistema real, o arquivo seria exibido aqui)</p>
-            `;
-            verificarComprovanteBtn.disabled = comprovante.verificado;
-            verificarComprovanteBtn.onclick = () => {
-                if (!comprovante.verificado) {
-                    comprovante.verificado = true;
-                    salvarDados();
-                    atualizarInvestimentos();
-                    const sucessoModal = new bootstrap.Modal(document.getElementById('sucessoModal'));
-                    document.getElementById('sucessoTexto').textContent = 'Comprovante verificado!';
-                    sucessoModal.show();
-                    modal.hide();
-                }
+            document.getElementById('comprovanteVisualizacao').innerHTML = `<p>Visualização: ${c.arquivo} (Simulação)</p>`;
+            document.getElementById('verificarComprovanteBtn').disabled = c.verificado;
+            document.getElementById('verificarComprovanteBtn').onclick = () => {
+                c.verificado = true;
+                salvarDados();
+                atualizarInvestimentos();
+                bootstrap.Modal.getInstance(document.getElementById('comprovanteModal')).hide();
+                document.getElementById('sucessoTexto').textContent = 'Comprovante verificado!';
+                new bootstrap.Modal(document.getElementById('sucessoModal')).show();
             };
-            modal.show();
+            new bootstrap.Modal(document.getElementById('comprovanteModal')).show();
         }
 
         function configurarFeed() {
-            const feedForm = document.getElementById('feedForm');
-            if (feedForm) {
-                feedForm.addEventListener('submit', (e) => {
-                    e.preventDefault();
-                    const feedMessage = document.getElementById('feedMessage')?.value.trim();
-                    const successMessage = document.getElementById('feedSuccess');
-
-                    if (!feedMessage) {
-                        alert("O recado não pode estar vazio!");
-                        return;
-                    }
-
-                    const novoFeed = {
-                        id: feeds.length + 1,
-                        autor: usuarioLogado.nome,
-                        mensagem: feedMessage,
-                        data: new Date().toLocaleString('pt-BR'),
-                        curtidas: [],
-                        comentarios: []
-                    };
-                    feeds.unshift(novoFeed); // Adiciona ao início
-                    salvarDados();
-                    feedForm.reset();
-                    if (successMessage) {
-                        successMessage.style.display = 'block';
-                        setTimeout(() => {
-                            successMessage.style.display = 'none';
-                        }, 3000);
-                    }
-                    atualizarFeed();
+            document.getElementById('feedForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const mensagem = document.getElementById('feedMessage').value.trim();
+                if (!mensagem) return;
+                feeds.unshift({
+                    id: feeds.length + 1,
+                    autor: usuarioLogado.nome,
+                    username: usuarioLogado.username, // Adiciona username para identificar autor
+                    mensagem,
+                    data: new Date().toLocaleString('pt-BR'),
+                    curtidas: [],
+                    comentarios: []
                 });
-            }
+                salvarDados();
+                document.getElementById('feedForm').reset();
+                document.getElementById('feedSuccess').style.display = 'block';
+                setTimeout(() => document.getElementById('feedSuccess').style.display = 'none', 3000);
+                atualizarFeed();
+            });
             atualizarFeed();
         }
 
         function atualizarFeed() {
-            const feedContainer = document.getElementById('feedContainer');
-            if (!feedContainer) return;
-
-            feedContainer.innerHTML = '';
-            if (feeds.length === 0) {
-                feedContainer.innerHTML = '<p class="text-muted text-center">Nenhum recado disponível</p>';
-                return;
-            }
-
-            feeds.forEach(feed => {
-                const feedPost = document.createElement('div');
-                feedPost.className = 'feed-post';
-                const isLiked = feed.curtidas.includes(usuarioLogado.username);
-                feedPost.innerHTML = `
+            const container = document.getElementById('feedContainer');
+            container.innerHTML = feeds.length ? feeds.map(f => `
+                <div class="feed-post">
                     <div class="feed-post-header">
-                        <div>
-                            <h5>${feed.autor}</h5>
-                            <small>${feed.data}</small>
+                        <div class="feed-post-header-left">
+                            <h5>${f.autor}</h5>
+                            <small>${f.data}</small>
                         </div>
                         ${usuarioLogado.isAdmin ? `
                             <div class="feed-post-menu">
-                                <button class="feed-post-menu-btn" aria-label="Menu de opções do feed">
-                                    <i class="fas fa-ellipsis-v" aria-hidden="true"></i>
-                                </button>
+                                <button class="feed-post-menu-btn"><i class="fas fa-ellipsis-h"></i></button>
                                 <div class="feed-post-menu-content">
-                                    <button onclick="excluirFeed(${feed.id})">Excluir</button>
+                                    <button onclick="excluirFeed(${f.id})">Excluir</button>
                                 </div>
                             </div>
                         ` : ''}
                     </div>
                     <div class="feed-post-body">
-                        <p>${feed.mensagem}</p>
+                        <p>${f.mensagem}</p>
                     </div>
                     <div class="feed-actions">
-                        <button class="feed-action-btn ${isLiked ? 'liked' : ''}" onclick="curtirFeed(${feed.id})">
-                            <i class="fas fa-heart" aria-hidden="true"></i> Curtir (${feed.curtidas.length})
+                        <button class="feed-action-btn ${f.curtidas.includes(usuarioLogado.username) ? 'liked' : ''}" onclick="curtirFeed(${f.id})">
+                            <i class="fas fa-thumbs-up"></i> Curtir
                         </button>
-                        <button class="feed-action-btn" onclick="focarComentario(${feed.id})">
-                            <i class="fas fa-comment" aria-hidden="true"></i> Comentar (${feed.comentarios.length})
+                        <button class="feed-action-btn" onclick="focarComentario(${f.id})">
+                            <i class="fas fa-comment"></i> Comentar
                         </button>
                     </div>
                     <div class="comment-section">
-                        <form class="comment-form" id="commentForm${feed.id}">
-                            <div class="mb-3">
-                                <textarea class="form-control" id="commentMessage${feed.id}" placeholder="Escreva um comentário..." required></textarea>
-                            </div>
+                        <form class="comment-form" id="commentForm${f.id}">
+                            <textarea id="commentMessage${f.id}" placeholder="Escreva um comentário..."></textarea>
                             <button type="submit" class="btn btn-primary btn-sm">Comentar</button>
                         </form>
                         <div class="comments">
-                            ${feed.comentarios.map(comentario => `
-                                <div class="comment">
+                            ${f.comentarios.map(c => `
+                                <div class="comment" id="comment${f.id}_${c.id}">
                                     <div class="comment-header">
-                                        <h6>${comentario.autor}</h6>
-                                        <small>${comentario.data}</small>
+                                        <div class="comment-header-left">
+                                            <h6>${c.autor}</h6>
+                                            <small>${c.data}</small>
+                                        </div>
+                                        ${c.username === usuarioLogado.username ? `
+                                            <div class="comment-actions">
+                                                <button class="comment-action-btn" onclick="editarComentario(${f.id}, ${c.id})">Editar</button>
+                                                <button class="comment-action-btn" onclick="excluirComentario(${f.id}, ${c.id})">Excluir</button>
+                                            </div>
+                                        ` : ''}
                                     </div>
                                     <div class="comment-body">
-                                        <p>${comentario.mensagem}</p>
+                                        <p>${c.mensagem}</p>
                                     </div>
-                                    <button class="btn-reply" onclick="toggleReplyForm(${feed.id}, ${comentario.id})">Responder</button>
-                                    <form class="reply-form" id="replyForm${feed.id}_${comentario.id}">
-                                        <div class="mb-3">
-                                            <textarea class="form-control" id="replyMessage${feed.id}_${comentario.id}" placeholder="Escreva uma resposta..." required></textarea>
-                                        </div>
+                                    <button class="btn-reply" onclick="toggleReplyForm(${f.id}, ${c.id})">Responder</button>
+                                    <form class="reply-form" id="replyForm${f.id}_${c.id}">
+                                        <textarea id="replyMessage${f.id}_${c.id}" placeholder="Escreva uma resposta..."></textarea>
                                         <button type="submit" class="btn btn-primary btn-sm">Responder</button>
                                     </form>
                                     <div class="replies">
-                                        ${comentario.respostas.map(resposta => `
-                                            <div class="comment">
-                                                <div class="comment-header">
-                                                    <h6>${resposta.autor}</h6>
-                                                    <small>${resposta.data}</small>
+                                        ${c.respostas.map(r => `
+                                            <div class="reply" id="reply${f.id}_${c.id}_${r.id}">
+                                                <div class="reply-header">
+                                                    <div class="reply-header-left">
+                                                        <h6>${r.autor}</h6>
+                                                        <small>${r.data}</small>
+                                                    </div>
+                                                    ${r.username === usuarioLogado.username ? `
+                                                        <div class="reply-actions">
+                                                            <button class="comment-action-btn" onclick="editarResposta(${f.id}, ${c.id}, ${r.id})">Editar</button>
+                                                            <button class="comment-action-btn" onclick="excluirResposta(${f.id}, ${c.id}, ${r.id})">Excluir</button>
+                                                        </div>
+                                                    ` : ''}
                                                 </div>
-                                                <div class="comment-body">
-                                                    <p>${resposta.mensagem}</p>
+                                                <div class="reply-body">
+                                                    <p>${r.mensagem}</p>
                                                 </div>
                                             </div>
                                         `).join('')}
@@ -1591,61 +1418,54 @@
                             `).join('')}
                         </div>
                     </div>
-                `;
-                feedContainer.appendChild(feedPost);
+                </div>
+            `).join('') : '<p class="text-muted text-center">Nenhum recado</p>';
 
-                if (usuarioLogado.isAdmin) {
-                    const menuBtn = feedPost.querySelector('.feed-post-menu-btn');
-                    const menuContent = feedPost.querySelector('.feed-post-menu-content');
-                    if (menuBtn && menuContent) {
-                        menuBtn.addEventListener('click', () => {
-                            menuContent.classList.toggle('show');
-                        });
-                    }
-                }
+            // Configurar eventos de menu
+            document.querySelectorAll('.feed-post-menu-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const menu = btn.nextElementSibling;
+                    menu.classList.toggle('show');
+                });
+            });
 
-                const commentForm = feedPost.querySelector(`#commentForm${feed.id}`);
+            // Configurar formulários de comentário
+            feeds.forEach(f => {
+                const commentForm = document.getElementById(`commentForm${f.id}`);
                 if (commentForm) {
                     commentForm.addEventListener('submit', (e) => {
                         e.preventDefault();
-                        const commentMessage = document.getElementById(`commentMessage${feed.id}`)?.value.trim();
-                        if (!commentMessage) {
-                            alert("O comentário não pode estar vazio!");
-                            return;
-                        }
-
-                        const novoComentario = {
-                            id: feed.comentarios.length + 1,
+                        const mensagem = document.getElementById(`commentMessage${f.id}`).value.trim();
+                        if (!mensagem) return;
+                        f.comentarios.push({
+                            id: f.comentarios.length + 1,
                             autor: usuarioLogado.nome,
-                            mensagem: commentMessage,
+                            username: usuarioLogado.username,
+                            mensagem,
                             data: new Date().toLocaleString('pt-BR'),
                             respostas: []
-                        };
-                        feed.comentarios.push(novoComentario);
+                        });
                         salvarDados();
                         commentForm.reset();
                         atualizarFeed();
                     });
                 }
 
-                feed.comentarios.forEach(comentario => {
-                    const replyForm = feedPost.querySelector(`#replyForm${feed.id}_${comentario.id}`);
+                // Configurar formulários de resposta
+                f.comentarios.forEach(c => {
+                    const replyForm = document.getElementById(`replyForm${f.id}_${c.id}`);
                     if (replyForm) {
                         replyForm.addEventListener('submit', (e) => {
                             e.preventDefault();
-                            const replyMessage = document.getElementById(`replyMessage${feed.id}_${comentario.id}`)?.value.trim();
-                            if (!replyMessage) {
-                                alert("A resposta não pode estar vazia!");
-                                return;
-                            }
-
-                            const novaResposta = {
-                                id: comentario.respostas.length + 1,
+                            const mensagem = document.getElementById(`replyMessage${f.id}_${c.id}`).value.trim();
+                            if (!mensagem) return;
+                            c.respostas.push({
+                                id: c.respostas.length + 1,
                                 autor: usuarioLogado.nome,
-                                mensagem: replyMessage,
+                                username: usuarioLogado.username,
+                                mensagem,
                                 data: new Date().toLocaleString('pt-BR')
-                            };
-                            comentario.respostas.push(novaResposta);
+                            });
                             salvarDados();
                             replyForm.reset();
                             replyForm.classList.remove('show');
@@ -1655,57 +1475,116 @@
                 });
             });
 
-            document.addEventListener('click', (e) => {
-                const menus = document.querySelectorAll('.feed-post-menu-content');
-                menus.forEach(menu => {
-                    if (!menu.contains(e.target) && !e.target.closest('.feed-post-menu-btn')) {
-                        menu.classList.remove('show');
-                    }
-                });
+            // Fechar menus ao clicar fora
+            document.addEventListener('click', e => {
+                if (!e.target.closest('.feed-post-menu-btn') && !e.target.closest('.feed-post-menu-content')) {
+                    document.querySelectorAll('.feed-post-menu-content').forEach(menu => menu.classList.remove('show'));
+                }
             });
         }
 
-        function curtirFeed(feedId) {
-            const feed = feeds.find(f => f.id === feedId);
-            if (!feed) return;
-
+        function curtirFeed(id) {
+            const feed = feeds.find(f => f.id === id);
             const username = usuarioLogado.username;
-            if (feed.curtidas.includes(username)) {
-                feed.curtidas = feed.curtidas.filter(u => u !== username);
-            } else {
-                feed.curtidas.push(username);
-            }
+            feed.curtidas = feed.curtidas.includes(username) ? feed.curtidas.filter(u => u !== username) : [...feed.curtidas, username];
             salvarDados();
             atualizarFeed();
         }
 
-        function focarComentario(feedId) {
-            const commentInput = document.getElementById(`commentMessage${feedId}`);
-            if (commentInput) {
-                commentInput.focus();
-            }
+        function focarComentario(id) {
+            document.getElementById(`commentMessage${id}`).focus();
         }
 
         function toggleReplyForm(feedId, comentarioId) {
-            const replyForm = document.getElementById(`replyForm${feedId}_${comentarioId}`);
-            if (replyForm) {
-                replyForm.classList.toggle('show');
-                if (replyForm.classList.contains('show')) {
-                    const replyInput = document.getElementById(`replyMessage${feedId}_${comentarioId}`);
-                    if (replyInput) {
-                        replyInput.focus();
-                    }
-                }
-            }
+            const form = document.getElementById(`replyForm${feedId}_${comentarioId}`);
+            form.classList.toggle('show');
+            if (form.classList.contains('show')) document.getElementById(`replyMessage${feedId}_${comentarioId}`).focus();
         }
 
-        function excluirFeed(feedId) {
-            feeds = feeds.filter(f => f.id !== feedId);
+        function excluirFeed(id) {
+            feeds = feeds.filter(f => f.id !== id);
             salvarDados();
             atualizarFeed();
-            const sucessoModal = new bootstrap.Modal(document.getElementById('sucessoModal'));
-            document.getElementById('sucessoTexto').textContent = 'Recado excluído com sucesso!';
-            sucessoModal.show();
+            document.getElementById('sucessoTexto').textContent = 'Recado excluído!';
+            new bootstrap.Modal(document.getElementById('sucessoModal')).show();
+        }
+
+        function editarComentario(feedId, comentarioId) {
+            const feed = feeds.find(f => f.id === feedId);
+            const comentario = feed.comentarios.find(c => c.id === comentarioId);
+            if (comentario.username !== usuarioLogado.username) return;
+
+            const commentDiv = document.getElementById(`comment${feedId}_${comentarioId}`);
+            const commentBody = commentDiv.querySelector('.comment-body');
+            commentBody.innerHTML = `
+                <form class="comment-edit-form" id="editCommentForm${feedId}_${comentarioId}">
+                    <textarea class="form-control" id="editCommentMessage${feedId}_${comentarioId}">${comentario.mensagem}</textarea>
+                    <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
+                    <button type="button" class="btn btn-secondary btn-sm" onclick="atualizarFeed()">Cancelar</button>
+                </form>
+            `;
+
+            const editForm = document.getElementById(`editCommentForm${feedId}_${comentarioId}`);
+            editForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const novaMensagem = document.getElementById(`editCommentMessage${feedId}_${comentarioId}`).value.trim();
+                if (novaMensagem) {
+                    comentario.mensagem = novaMensagem;
+                    comentario.data = new Date().toLocaleString('pt-BR'); // Atualiza a data
+                    salvarDados();
+                    atualizarFeed();
+                }
+            });
+        }
+
+        function excluirComentario(feedId, comentarioId) {
+            const feed = feeds.find(f => f.id === feedId);
+            if (feed.comentarios.find(c => c.id === comentarioId).username !== usuarioLogado.username) return;
+            feed.comentarios = feed.comentarios.filter(c => c.id !== comentarioId);
+            salvarDados();
+            atualizarFeed();
+            document.getElementById('sucessoTexto').textContent = 'Comentário excluído!';
+            new bootstrap.Modal(document.getElementById('sucessoModal')).show();
+        }
+
+        function editarResposta(feedId, comentarioId, respostaId) {
+            const feed = feeds.find(f => f.id === feedId);
+            const comentario = feed.comentarios.find(c => c.id === comentarioId);
+            const resposta = comentario.respostas.find(r => r.id === respostaId);
+            if (resposta.username !== usuarioLogado.username) return;
+
+            const replyDiv = document.getElementById(`reply${feedId}_${comentarioId}_${respostaId}`);
+            const replyBody = replyDiv.querySelector('.reply-body');
+            replyBody.innerHTML = `
+                <form class="reply-edit-form" id="editReplyForm${feedId}_${comentarioId}_${respostaId}">
+                    <textarea class="form-control" id="editReplyMessage${feedId}_${comentarioId}_${respostaId}">${resposta.mensagem}</textarea>
+                    <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
+                    <button type="button" class="btn btn-secondary btn-sm" onclick="atualizarFeed()">Cancelar</button>
+                </form>
+            `;
+
+            const editForm = document.getElementById(`editReplyForm${feedId}_${comentarioId}_${respostaId}`);
+            editForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const novaMensagem = document.getElementById(`editReplyMessage${feedId}_${comentarioId}_${respostaId}`).value.trim();
+                if (novaMensagem) {
+                    resposta.mensagem = novaMensagem;
+                    resposta.data = new Date().toLocaleString('pt-BR');
+                    salvarDados();
+                    atualizarFeed();
+                }
+            });
+        }
+
+        function excluirResposta(feedId, comentarioId, respostaId) {
+            const feed = feeds.find(f => f.id === feedId);
+            const comentario = feed.comentarios.find(c => c.id === comentarioId);
+            if (comentario.respostas.find(r => r.id === respostaId).username !== usuarioLogado.username) return;
+            comentario.respostas = comentario.respostas.filter(r => r.id !== respostaId);
+            salvarDados();
+            atualizarFeed();
+            document.getElementById('sucessoTexto').textContent = 'Resposta excluída!';
+            new bootstrap.Modal(document.getElementById('sucessoModal')).show();
         }
     </script>
 </body>
