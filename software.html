@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trilha da Fortuna</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous">
+    <style>
+        :root {
+            --primary-color: #1e3a8a; /* Azul escuro */
+            --secondary-color: #10b981; /* Verde esmeralda */
+            --accent-color: #f59e0b; /* Amarelo suave */
+            --background-color: #f9fafb; /* Fundo claro */
+            --text-color: #111827; /* Texto escuro */
+            --card-bg: #ffffff; /* Fundo dos cartões */
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --border-radius: 0.75rem;
+        }
+
+        /* Tema Escuro */
+        body.dark-theme {
+            --primary-color: #1e40af;
+            --secondary-color: #34d399;
+            --accent-color: #facc15;
+            --background-color: #111827;
+            --text-color: #e5e7eb;
+            --card-bg: #1f2937;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        /* Header */
+        header {
+            background: var(--card-bg);
+            color: var(--text-color);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        header h1 {
+            font-family: 'Roboto', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        header h1 i {
+            color: var(--secondary-color);
+            transition: transform 0.3s ease;
+        }
+
+        header h1:hover i {
+            transform: scale(1.1);
+        }
+
+        #themeToggle {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        #themeToggle:hover {
+            transform: rotate(20deg);
+        }
+
+        #logoutLink {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        #logoutLink:hover {
+            background: var(--secondary-color);
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        /* Home Section */
+        .home-section {
+            padding: 2rem;
+            text-align: center;
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .home-section:hover {
+            transform: translateY(-5px);
+        }
+
+        .home-section h2 {
+            font-family: 'Roboto', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            animation: fadeIn 1s ease;
+        }
+
+        .home-section p {
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            color: #6b7280;
+            animation: fadeIn 1s ease 0.5s both;
+        }
+
+        .home-section .feature-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .home-section .feature-card {
+            background: var(--card-bg);
+            color: var(--text-color);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .home-section .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .home-section .feature-card i {
+            font-size: 2rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .home-section .feature-card:hover i {
+            transform: scale(1.1);
+        }
+
+        .home-section .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        /* Chart */
+        .progress-chart {
+            max-width: 600px;
+            margin: 2rem auto;
+        }
+
+        /* Tabs */
+        .nav-tabs {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 0.5rem;
+            display: flex;
+            gap: 0.5rem;
+            border-bottom: none;
+        }
+
+        .nav-tabs .nav-link {
+            color: var(--text-color);
+            font-weight: 500;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .nav-tabs .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--secondary-color);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .nav-tabs .nav-link.active::after,
+        .nav-tabs .nav-link:hover::after {
+            transform: scaleX(1);
+        }
+
+        .nav-tabs .nav-link.active {
+            background: var(--secondary-color);
+            color: #fff;
+        }
+
+        .nav-tabs .nav-link:hover {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        .tab-content {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        /* Table */
+        .table {
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            background: var(--card-bg);
+        }
+
+        .table th {
+            background: var(--primary-color);
+            color: #fff;
+            font-weight: 500;
+        }
+
+        .table tbody tr {
+            transition: background 0.2s ease;
+        }
+
+        .table tbody tr:hover {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        /* List Group */
+        .list-group-item {
+            border-radius: 0.5rem;
+            margin-bottom: 0.5rem;
+            padding: 1rem;
+            background: var(--card-bg);
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        .list-group-item:hover {
+            background: rgba(0, 0, 0, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .list-group-item.disabled {
+            background: #e9ecef;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        /* Modal */
+        .modal-content {
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            background: var(--card-bg);
+        }
+
+        .modal-header {
+            background: var(--primary-color);
+            color: #fff;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+        }
+
+        .modal-body {
+            background: var(--card-bg);
+            padding: 1.5rem;
+        }
+
+        /* Estilo dinâmico para btn-close */
+        .modal-header .btn-close {
+            filter: brightness(100%) invert(100%); /* Branco no tema claro */
+        }
+
+        body.dark-theme .modal-header .btn-close {
+            filter: brightness(100%) invert(0%); /* Preto no tema escuro */
+        }
+
+        /* Question */
+        .question {
+            background: var(--card-bg);
+            border: 1px solid #e5e7eb;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 0.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .question p {
+            font-weight: 500;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary-color);
+            color: #fff;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            .container {
+                margin: 1rem;
+                padding: 0 0.5rem;
+            }
+
+            .nav-tabs {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .home-section h2 {
+                font-size: 1.8rem;
+            }
+
+            .home-section .feature-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Formulários */
+        .form-control {
+            border-radius: 0.5rem;
+            border: 1px solid #d1d5db;
+            padding: 0.75rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+            outline: none;
+        }
+
+        .btn-primary {
+            background: var(--secondary-color);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+        }
+
+        .btn-primary:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .success-message {
+            color: var(--secondary-color);
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        /* Hidden Class */
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <header id="header">
+        <h1><i class="fas fa-coins" aria-hidden="true"></i> Trilha da Fortuna</h1>
+        <div>
+            <button id="themeToggle" title="Alternar Tema" aria-label="Alternar tema claro/escuro"><i class="fas fa-moon"></i></button>
+            <a href="index.html" id="logoutLink" aria-label="Sair da conta">Sair</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Content Section -->
+        <section class="content-section" id="contentSection">
+            <ul class="nav nav-tabs mb-0" id="navTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link active" id="homeTab" data-bs-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true"><i class="fas fa-home" aria-hidden="true"></i> Home</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="provasTab" data-bs-toggle="tab" href="#provas" role="tab" aria-controls="provas" aria-selected="false"><i class="fas fa-file-alt" aria-hidden="true"></i> Provas</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="rankingTab" data-bs-toggle="tab" href="#ranking" role="tab" aria-controls="ranking" aria-selected="false"><i class="fas fa-trophy" aria-hidden="true"></i> Ranking</a>
+                </li>
+                <li class="nav-item" id="comprovanteTabItem" role="presentation">
+                    <a class="nav-link" id="comprovanteTabLink" data-bs-toggle="tab" href="#comprovante" role="tab" aria-controls="comprovante" aria-selected="false"><i class="fas fa-file-invoice-dollar" aria-hidden="true"></i> Enviar Comprovante</a>
+                </li>
+                <li class="nav-item hidden" id="adminTabItem" role="presentation">
+                    <a class="nav-link" id="adminTabLink" data-bs-toggle="tab" href="#administrador" role="tab" aria-controls="administrador" aria-selected="false"><i class="fas fa-user-cog" aria-hidden="true"></i> Administrador</a>
+                </li>
+                <li class="nav-item hidden" id="investimentosTabItem" role="presentation">
+                    <a class="nav-link" id="investimentosTabLink" data-bs-toggle="tab" href="#investimentos" role="tab" aria-controls="investimentos" aria-selected="false"><i class="fas fa-file-invoice-dollar" aria-hidden="true"></i> Investimentos</a>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+                <!-- Home -->
+                <section class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="homeTab">
+                    <div class="home-section">
+                        <h2>Bem-vindo à Trilha da Fortuna!</h2>
+                        <p>Explore sua jornada financeira com um sistema interativo que combina aprendizado, competição e gestão de investimentos. Veja como funciona:</p>
+                        <div class="progress-chart">
+                            <canvas id="progressChart" aria-label="Gráfico de progresso do usuário"></canvas>
+                        </div>
+                        <div class="feature-cards">
+                            <article class="feature-card">
+                                <i class="fas fa-file-alt" aria-hidden="true"></i>
+                                <h3>Provas</h3>
+                                <p>Responda quizzes financeiros para testar seus conhecimentos e ganhar pontos.</p>
+                            </article>
+                            <article class="feature-card">
+                                <i class="fas fa-trophy" aria-hidden="true"></i>
+                                <h3>Ranking</h3>
+                                <p>Compare sua pontuação com outros usuários e suba no ranking geral.</p>
+                            </article>
+                            <article class="feature-card">
+                                <i class="fas fa-file-invoice-dollar" aria-hidden="true"></i>
+                                <h3>Comprovantes</h3>
+                                <p>Envie comprovantes de investimentos para validação e acompanhamento.</p>
+                            </article>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Provas -->
+                <section class="tab-pane fade" id="provas" role="tabpanel" aria-labelledby="provasTab">
+                    <h2 class="mb-4"><i class="fas fa-file-alt me-2" aria-hidden="true"></i> Provas Disponíveis</h2>
+                    <ul class="list-group" id="listaProvas"></ul>
+                </section>
+
+                <!-- Ranking -->
+                <section class="tab-pane fade" id="ranking" role="tabpanel" aria-labelledby="rankingTab">
+                    <h2 class="mb-4"><i class="fas fa-trophy me-2" aria-hidden="true"></i> Ranking de Usuários</h2>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Posição</th>
+                                <th scope="col">Nome</th>
+                                <th scope="col">Pontos</th>
+                            </tr>
+                        </thead>
+                        <tbody id="rankingBody"></tbody>
+                    </table>
+                </section>
+
+                <!-- Comprovante -->
+                <section class="tab-pane fade" id="comprovante" role="tabpanel" aria-labelledby="comprovanteTabLink">
+                    <h2 class="mb-4"><i class="fas fa-file-invoice-dollar me-2" aria-hidden="true"></i> Enviar Comprovante</h2>
+                    <div class="card">
+                        <div class="card-body">
+                            <form id="comprovanteForm">
+                                <div class="mb-3">
+                                    <label for="comprovanteArquivo" class="form-label">Selecione o comprovante (Imagem ou PDF)</label>
+                                    <input type="file" id="comprovanteArquivo" class="form-control" accept=".jpg,.jpeg,.png,.pdf" required aria-describedby="comprovanteHelp">
+                                    <div id="comprovanteHelp" class="form-text">Apenas arquivos JPG, JPEG, PNG ou PDF são permitidos.</div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Enviar</button>
+                                <div class="success-message" id="comprovanteSuccess">Comprovante enviado com sucesso!</div>
+                            </form>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Administrador -->
+                <section class="tab-pane fade" id="administrador" role="tabpanel" aria-labelledby="adminTabLink">
+                    <h2 class="mb-4"><i class="fas fa-user-cog me-2" aria-hidden="true"></i> Gerenciamento</h2>
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Criar Nova Prova</h5>
+                            <form id="novaProvaForm">
+                                <div class="mb-3">
+                                    <label for="tituloProva" class="form-label">Título da Prova</label>
+                                    <input type="text" id="tituloProva" class="form-control" placeholder="Título da Prova" required>
+                                </div>
+                                <div id="perguntasContainer">
+                                    <div class="pergunta">
+                                        <div class="mb-3">
+                                            <label for="pergunta1" class="form-label">Pergunta</label>
+                                            <textarea class="form-control pergunta-texto" id="pergunta1" placeholder="Pergunta" required></textarea>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="opcaoA1" class="form-label">Resposta A</label>
+                                            <input type="text" class="form-control opcao-a" id="opcaoA1" placeholder="Resposta A" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="opcaoB1" class="form-label">Resposta B</label>
+                                            <input type="text" class="form-control opcao-b" id="opcaoB1" placeholder="Resposta B" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="opcaoC1" class="form-label">Resposta C</label>
+                                            <input type="text" class="form-control opcao-c" id="opcaoC1" placeholder="Resposta C" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="opcaoD1" class="form-label">Resposta D</label>
+                                            <input type="text" class="form-control opcao-d" id="opcaoD1" placeholder="Resposta D" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="correta1" class="form-label">Letra da resposta correta (a, b, c, d)</label>
+                                            <input type="text" class="form-control correta" id="correta1" placeholder="Letra da resposta correta (a, b, c, d)" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <button type="button" class="btn btn-secondary" onclick="adicionarPergunta()">Adicionar Pergunta</button>
+                                    <button type="submit" class="btn btn-primary">Enviar Prova</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Cadastrar Usuário</h5>
+                            <form id="novoUsuarioForm">
+                                <div class="mb-3">
+                                    <label for="novoUsername" class="form-label">Nome de usuário</label>
+                                    <input type="text" id="novoUsername" class="form-control" placeholder="Nome de usuário" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="novoPassword" class="form-label">Senha</label>
+                                    <input type="password" id="novoPassword" class="form-control" placeholder="Senha" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="nomeUsuario" class="form-label">Nome para o ranking</label>
+                                    <input type="text" id="nomeUsuario" class="form-control" placeholder="Nome para o ranking" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Cadastrar</button>
+                            </form>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Investimentos -->
+                <section class="tab-pane fade" id="investimentos" role="tabpanel" aria-labelledby="investimentosTabLink">
+                    <h2 class="mb-4"><i class="fas fa-file-invoice-dollar me-2" aria-hidden="true"></i> Investimentos Recebidos</h2>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Usuário</th>
+                                <th scope="col">Data de Envio</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Ação</th>
+                            </tr>
+                        </thead>
+                        <tbody id="investimentosBody"></tbody>
+                    </table>
+                </section>
+            </div>
+        </section>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal fade" id="provaModal" tabindex="-1" aria-labelledby="provaModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="provaModalLabel"><i class="fas fa-file-alt" aria-hidden="true"></i> Prova</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="provaForm"></form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button type="submit" form="provaForm" class="btn btn-primary">Enviar Prova</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="resultadoModal" tabindex="-1" aria-labelledby="resultadoModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="resultadoModalLabel"><i class="fas fa-check-circle" aria-hidden="true"></i> Resultado</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="resultadoTexto"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="sucessoModal" tabindex="-1" aria-labelledby="sucessoModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="sucessoModalLabel"><i class="fas fa-check-circle" aria-hidden="true"></i> Sucesso</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="sucessoTexto">Operação realizada com sucesso!</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="sucessoOkButton">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="comprovanteModal" tabindex="-1" aria-labelledby="comprovanteModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="comprovanteModalLabel"><i class="fas fa-file-invoice-dollar" aria-hidden="true"></i> Visualizar Comprovante</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="comprovanteInfo"></p>
+                    <div id="comprovanteVisualizacao"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-primary" id="verificarComprovanteBtn">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer id="footer">
+        <p>© 2025 Trilha da Fortuna. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" integrity="sha384-JLLY5MTQwtBav3T6T0RJPs9dVJi0Xju7eE78d0aLIuQ6NB98n26yosQ9C4v6xS0P" crossorigin="anonymous"></script>
+    <script>
+        // Declaração explícita de variáveis globais
+        let usuarios = [];
+        let provas = [];
+        let comprovantes = [];
+        let respostas = {};
+
+        // Verificar se há usuário logado
+        const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado'));
+        if (!usuarioLogado) {
+            window.location.href = 'index.html';
+        }
+
+        // Funções para carregar e salvar dados no localStorage
+        function carregarDados() {
+            const usuariosSalvos = localStorage.getItem('usuarios');
+            const provasSalvas = localStorage.getItem('provas');
+            const comprovantesSalvos = localStorage.getItem('comprovantes');
+            const respostasSalvas = localStorage.getItem('respostas');
+
+            return {
+                usuarios: usuariosSalvos ? JSON.parse(usuariosSalvos) : [
+                    { username: "admin123", password: "admin123", nome: "Administrador", isAdmin: true, pontos: 0 },
+                    { username: "user1", password: "user123", nome: "João Silva", isAdmin: false, pontos: 100 },
+                    { username: "user2", password: "user123", nome: "Maria Oliveira", isAdmin: false, pontos: 50 }
+                ],
+                provas: provasSalvas ? JSON.parse(provasSalvas) : [],
+                comprovantes: comprovantesSalvos ? JSON.parse(comprovantesSalvos) : [],
+                respostas: respostasSalvas ? JSON.parse(respostasSalvas) : {}
+            };
+        }
+
+        function salvarDados() {
+            localStorage.setItem('usuarios', JSON.stringify(usuarios));
+            localStorage.setItem('provas', JSON.stringify(provas));
+            localStorage.setItem('comprovantes', JSON.stringify(comprovantes));
+            localStorage.setItem('respostas', JSON.stringify(respostas));
+        }
+
+        // Inicializar dados
+        document.addEventListener('DOMContentLoaded', () => {
+            const dados = carregarDados();
+            usuarios = dados.usuarios;
+            provas = dados.provas;
+            comprovantes = dados.comprovantes;
+            respostas = dados.respostas;
+
+            ajustarAbas();
+            atualizarProvas();
+            atualizarRanking();
+            atualizarInvestimentos();
+            inicializarGrafico();
+        });
+
+        // Ajustar abas com base no perfil
+        function ajustarAbas() {
+            const comprovanteTabItem = document.getElementById('comprovanteTabItem');
+            const adminTabItem = document.getElementById('adminTabItem');
+            const investimentosTabItem = document.getElementById('investimentosTabItem');
+
+            if (usuarioLogado.isAdmin) {
+                comprovanteTabItem.classList.add('hidden');
+                adminTabItem.classList.remove('hidden');
+                investimentosTabItem.classList.remove('hidden');
+            } else {
+                comprovanteTabItem.classList.remove('hidden');
+                adminTabItem.classList.add('hidden');
+                investimentosTabItem.classList.add('hidden');
+            }
+        }
+
+        // Função para inicializar o gráfico de progresso
+        function inicializarGrafico() {
+            const ctx = document.getElementById('progressChart');
+            if (!ctx || !window.Chart) {
+                console.error('Chart.js não carregado ou canvas não encontrado.');
+                return;
+            }
+            const usuario = usuarios.find(u => u.username === usuarioLogado.username);
+            const pontos = usuario ? usuario.pontos : 0;
+            const maxPontos = 500; // Exemplo de pontuação máxima
+
+            // Destruir gráfico anterior, se existir
+            if (ctx.chart) {
+                ctx.chart.destroy();
+            }
+
+            ctx.chart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Pontos Obtidos', 'Pontos Restantes'],
+                    datasets: [{
+                        data: [pontos, maxPontos - pontos],
+                        backgroundColor: [getComputedStyle(document.documentElement).getPropertyValue('--secondary-color'), '#e5e7eb'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    cutout: '70%',
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { enabled: false }
+                    },
+                    animation: {
+                        animateRotate: true,
+                        animateScale: true
+                    }
+                }
+            });
+        }
+
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        if (themeToggle) {
+            themeToggle.addEventListener('click', () => {
+                document.body.classList.toggle('dark-theme');
+                const isDark = document.body.classList.contains('dark-theme');
+                themeToggle.innerHTML = `<i class="fas fa-${isDark ? 'sun' : 'moon'}" aria-hidden="true"></i>`;
+                localStorage.setItem('theme', isDark ? 'dark' : 'light');
+                inicializarGrafico(); // Atualizar gráfico com novas cores
+            });
+
+            // Load Theme
+            if (localStorage.getItem('theme') === 'dark') {
+                document.body.classList.add('dark-theme');
+                themeToggle.innerHTML = '<i class="fas fa-sun" aria-hidden="true"></i>';
+            }
+        }
+
+        // Função para adicionar nova pergunta no formulário de criação
+        function adicionarPergunta() {
+            const container = document.getElementById('perguntasContainer');
+            if (!container) return;
+
+            const perguntaCount = container.querySelectorAll('.pergunta').length + 1;
+            const perguntaDiv = document.createElement('div');
+            perguntaDiv.className = 'pergunta';
+            perguntaDiv.innerHTML = `
+                <div class="mb-3">
+                    <label for="pergunta${perguntaCount}" class="form-label">Pergunta</label>
+                    <textarea class="form-control pergunta-texto" id="pergunta${perguntaCount}" placeholder="Pergunta" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="opcaoA${perguntaCount}" class="form-label">Resposta A</label>
+                    <input type="text" class="form-control opcao-a" id="opcaoA${perguntaCount}" placeholder="Resposta A" required>
+                </div>
+                <div class="mb-3">
+                    <label for="opcaoB${perguntaCount}" class="form-label">Resposta B</label>
+                    <input type="text" class="form-control opcao-b" id="opcaoB${perguntaCount}" placeholder="Resposta B" required>
+                </div>
+                <div class="mb-3">
+                    <label for="opcaoC${perguntaCount}" class="form-label">Resposta C</label>
+                    <input type="text" class="form-control opcao-c" id="opcaoC${perguntaCount}" placeholder="Resposta C" required>
+                </div>
+                <div class="mb-3">
+                    <label for="opcaoD${perguntaCount}" class="form-label">Resposta D</label>
+                    <input type="text" class="form-control opcao-d" id="opcaoD${perguntaCount}" placeholder="Resposta D" required>
+                </div>
+                <div class="mb-3">
+                    <label for="correta${perguntaCount}" class="form-label">Letra da resposta correta (a, b, c, d)</label>
+                    <input type="text" class="form-control correta" id="correta${perguntaCount}" placeholder="Letra da resposta correta (a, b, c, d)" required>
+                </div>
+            `;
+            container.appendChild(perguntaDiv);
+        }
+
+        // Função para criar nova prova
+        const novaProvaForm = document.getElementById('novaProvaForm');
+        if (novaProvaForm) {
+            novaProvaForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const titulo = document.getElementById('tituloProva')?.value.trim();
+                const perguntasDivs = document.querySelectorAll('#perguntasContainer .pergunta');
+                const perguntas = Array.from(perguntasDivs).map(div => ({
+                    texto: div.querySelector('.pergunta-texto')?.value.trim(),
+                    opcoes: {
+                        a: div.querySelector('.opcao-a')?.value.trim(),
+                        b: div.querySelector('.opcao-b')?.value.trim(),
+                        c: div.querySelector('.opcao-c')?.value.trim(),
+                        d: div.querySelector('.opcao-d')?.value.trim()
+                    },
+                    correta: div.querySelector('.correta')?.value.trim().toLowerCase()
+                }));
+
+                // Validação
+                if (!titulo) {
+                    alert("O título da prova é obrigatório!");
+                    return;
+                }
+                if (perguntas.length === 0) {
+                    alert("Adicione pelo menos uma pergunta!");
+                    return;
+                }
+                for (let p of perguntas) {
+                    if (!p.texto || !p.opcoes.a || !p.opcoes.b || !p.opcoes.c || !p.opcoes.d || !p.correta) {
+                        alert("Preencha todos os campos de cada pergunta!");
+                        return;
+                    }
+                    if (!['a', 'b', 'c', 'd'].includes(p.correta)) {
+                        alert("A letra da resposta correta deve ser a, b, c ou d!");
+                        return;
+                    }
+                }
+
+                const novaProva = {
+                    id: provas.length + 1,
+                    titulo,
+                    perguntas
+                };
+                provas.push(novaProva);
+                salvarDados();
+                atualizarProvas();
+                novaProvaForm.reset();
+                document.getElementById('perguntasContainer').innerHTML = `
+                    <div class="pergunta">
+                        <div class="mb-3">
+                            <label for="pergunta1" class="form-label">Pergunta</label>
+                            <textarea class="form-control pergunta-texto" id="pergunta1" placeholder="Pergunta" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="opcaoA1" class="form-label">Resposta A</label>
+                            <input type="text" class="form-control opcao-a" id="opcaoA1" placeholder="Resposta A" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="opcaoB1" class="form-label">Resposta B</label>
+                            <input type="text" class="form-control opcao-b" id="opcaoB1" placeholder="Resposta B" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="opcaoC1" class="form-label">Resposta C</label>
+                            <input type="text" class="form-control opcao-c" id="opcaoC1" placeholder="Resposta C" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="opcaoD1" class="form-label">Resposta D</label>
+                            <input type="text" class="form-control opcao-d" id="opcaoD1" placeholder="Resposta D" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="correta1" class="form-label">Letra da resposta correta (a, b, c, d)</label>
+                            <input type="text" class="form-control correta" id="correta1" placeholder="Letra da resposta correta (a, b, c, d)" required>
+                        </div>
+                    </div>
+                `;
+                const sucessoModal = new bootstrap.Modal(document.getElementById('sucessoModal'));
+                document.getElementById('sucessoTexto').textContent = 'Prova enviada com sucesso!';
+                sucessoModal.show();
+            });
+        }
+
+        // Ação do botão OK no modal de sucesso
+        const sucessoOkButton = document.getElementById('sucessoOkButton');
+        if (sucessoOkButton) {
+            sucessoOkButton.addEventListener('click', () => {
+                const sucessoModal = bootstrap.Modal.getInstance(document.getElementById('sucessoModal'));
+                if (sucessoModal) {
+                    sucessoModal.hide();
+                }
+                atualizarProvas();
+                const provasTab = document.getElementById('provasTab');
+                if (provasTab) {
+                    const tab = new bootstrap.Tab(provasTab);
+                    tab.show();
+                }
+            });
+        }
+
+        // Função para atualizar lista de provas
+        function atualizarProvas() {
+            const listaProvas = document.getElementById('listaProvas');
+            if (!listaProvas) return;
+
+            listaProvas.innerHTML = '';
+            if (provas.length === 0) {
+                listaProvas.innerHTML = '<li class="list-group-item text-muted">Nenhuma prova disponível</li>';
+                return;
+            }
+            provas.forEach(prova => {
+                const li = document.createElement('li');
+                li.className = 'list-group-item d-flex justify-content-between align-items-center';
+                let nota = '';
+                let isConcluida = false;
+
+                if (!usuarioLogado.isAdmin && respostas[usuarioLogado.username] && respostas[usuarioLogado.username][prova.id]) {
+                    nota = `<span class="badge bg-success">Nota: ${respostas[usuarioLogado.username][prova.id].pontuacao}</span>`;
+                    isConcluida = true;
+                    li.classList.add('disabled');
+                }
+
+                li.innerHTML = `<span><i class="fas fa-file-alt me-2" aria-hidden="true"></i>${prova.titulo}</span>${nota}`;
+                
+                if (!isConcluida && !usuarioLogado.isAdmin) {
+                    li.style.cursor = 'pointer';
+                    li.addEventListener('click', () => abrirProva(prova));
+                } else if (usuarioLogado.isAdmin) {
+                    li.style.cursor = 'not-allowed';
+                    li.title = 'Administradores não podem realizar provas';
+                    li.setAttribute('aria-disabled', 'true');
+                }
+                listaProvas.appendChild(li);
+            });
+        }
+
+        // Função para abrir prova em modal
+        function abrirProva(prova) {
+            if (usuarioLogado.isAdmin) {
+                alert("Administradores não podem realizar provas!");
+                return;
+            }
+            if (respostas[usuarioLogado.username] && respostas[usuarioLogado.username][prova.id]) {
+                alert("Você já realizou esta prova!");
+                return;
+            }
+
+            const modal = new bootstrap.Modal(document.getElementById('provaModal'));
+            const provaModalLabel = document.getElementById('provaModalLabel');
+            const provaForm = document.getElementById('provaForm');
+
+            if (!provaModalLabel || !provaForm) return;
+
+            provaModalLabel.innerHTML = `<i class="fas fa-file-alt" aria-hidden="true"></i> ${prova.titulo}`;
+            provaForm.innerHTML = prova.perguntas.map((p, i) => `
+                <div class="question">
+                    <p><i class="fas fa-question-circle" aria-hidden="true"></i> ${i + 1}. ${p.texto}</p>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="q${i}" value="a" id="q${i}a" required>
+                        <label class="form-check-label" for="q${i}a">${p.opcoes.a}</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="q${i}" value="b" id="q${i}b" required>
+                        <label class="form-check-label" for="q${i}b">${p.opcoes.b}</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="q${i}" value="c" id="q${i}c" required>
+                        <label class="form-check-label" for="q${i}c">${p.opcoes.c}</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="q${i}" value="d" id="q${i}d" required>
+                        <label class="form-check-label" for="q${i}d">${p.opcoes.d}</label>
+                    </div>
+                </div>
+            `).join('');
+            provaForm.onsubmit = (e) => {
+                e.preventDefault();
+                let pontuacao = 0;
+                prova.perguntas.forEach((p, i) => {
+                    const resposta = document.querySelector(`input[name="q${i}"]:checked`);
+                    if (resposta && resposta.value === p.correta) {
+                        pontuacao += 50;
+                    }
+                });
+
+                // Salvar resposta
+                if (!respostas[usuarioLogado.username]) {
+                    respostas[usuarioLogado.username] = {};
+                }
+                respostas[usuarioLogado.username][prova.id] = { pontuacao };
+                const usuario = usuarios.find(u => u.username === usuarioLogado.username);
+                if (usuario) {
+                    usuario.pontos += pontuacao;
+                }
+                salvarDados();
+                modal.hide();
+                mostrarResultado(pontuacao);
+                atualizarProvas();
+                atualizarRanking();
+                inicializarGrafico();
+            };
+            modal.show();
+        }
+
+        // Função para mostrar resultado em modal
+        function mostrarResultado(pontuacao) {
+            const modal = new bootstrap.Modal(document.getElementById('resultadoModal'));
+            const resultadoTexto = document.getElementById('resultadoTexto');
+            if (resultadoTexto) {
+                resultadoTexto.innerHTML = `Sua pontuação: <strong>${pontuacao} pontos</strong>!`;
+            }
+            modal.show();
+        }
+
+        // Função para atualizar ranking
+        function atualizarRanking() {
+            const rankingBody = document.getElementById('rankingBody');
+            if (!rankingBody) return;
+
+            rankingBody.innerHTML = '';
+            const usuariosOrdenados = [...usuarios].sort((a, b) => b.pontos - a.pontos);
+            usuariosOrdenados.forEach((usuario, index) => {
+                if (!usuario.isAdmin) {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${index + 1}</td>
+                        <td>${usuario.nome}</td>
+                        <td>${usuario.pontos}</td>
+                    `;
+                    rankingBody.appendChild(row);
+                }
+            });
+        }
+
+        // Função para cadastrar novo usuário
+        const novoUsuarioForm = document.getElementById('novoUsuarioForm');
+        if (novoUsuarioForm) {
+            novoUsuarioForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const novoUsername = document.getElementById('novoUsername')?.value.trim();
+                const novoPassword = document.getElementById('novoPassword')?.value.trim();
+                const nomeUsuario = document.getElementById('nomeUsuario')?.value.trim();
+
+                if (!novoUsername || !novoPassword || !nomeUsuario) {
+                    alert("Preencha todos os campos!");
+                    return;
+                }
+
+                if (usuarios.find(u => u.username === novoUsername)) {
+                    alert("Nome de usuário já existe!");
+                    return;
+                }
+
+                usuarios.push({
+                    username: novoUsername,
+                    password: novoPassword,
+                    nome: nomeUsuario,
+                    isAdmin: false,
+                    pontos: 0
+                });
+                salvarDados();
+                novoUsuarioForm.reset();
+                alert("Usuário cadastrado com sucesso!");
+                atualizarRanking();
+            });
+        }
+
+        // Função para enviar comprovante de investimento
+        const comprovanteForm = document.getElementById('comprovanteForm');
+        if (comprovanteForm) {
+            comprovanteForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const arquivoInput = document.getElementById('comprovanteArquivo');
+                const arquivo = arquivoInput?.files[0];
+                const successMessage = document.getElementById('comprovanteSuccess');
+
+                if (!arquivo) {
+                    alert("Selecione um arquivo!");
+                    return;
+                }
+
+                const extensoesPermitidas = ['.jpg', '.jpeg', '.png', '.pdf'];
+                const extensao = arquivo.name.substring(arquivo.name.lastIndexOf('.')).toLowerCase();
+                if (!extensoesPermitidas.includes(extensao)) {
+                    alert("Apenas arquivos JPG, JPEG, PNG ou PDF são permitidos!");
+                    return;
+                }
+
+                const comprovante = {
+                    id: comprovantes.length + 1,
+                    username: usuarioLogado.username,
+                    nome: usuarioLogado.nome,
+                    data: new Date().toLocaleString('pt-BR'),
+                    arquivo: arquivo.name,
+                    verificado: false
+                };
+                comprovantes.push(comprovante);
+                salvarDados();
+                comprovanteForm.reset();
+                if (successMessage) {
+                    successMessage.style.display = 'block';
+                    setTimeout(() => {
+                        successMessage.style.display = 'none';
+                    }, 3000);
+                }
+                atualizarInvestimentos();
+            });
+        }
+
+        // Função para atualizar lista de investimentos recebidos
+        function atualizarInvestimentos() {
+            const investimentosBody = document.getElementById('investimentosBody');
+            if (!investimentosBody) return;
+
+            investimentosBody.innerHTML = '';
+            if (comprovantes.length === 0) {
+                investimentosBody.innerHTML = '<tr><td colspan="4" class="text-muted text-center">Nenhum comprovante recebido</td></tr>';
+                return;
+            }
+            comprovantes.forEach(comprovante => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${comprovante.nome}</td>
+                    <td>${comprovante.data}</td>
+                    <td>${comprovante.verificado ? '<span class="badge bg-success">Verificado</span>' : '<span class="badge bg-warning">Pendente</span>'}</td>
+                    <td><button class="btn btn-primary btn-sm" onclick="visualizarComprovante(${comprovante.id})">Visualizar</button></td>
+                `;
+                investimentosBody.appendChild(row);
+            });
+        }
+
+        // Função para visualizar comprovante em modal
+        function visualizarComprovante(comprovanteId) {
+            const comprovante = comprovantes.find(c => c.id === comprovanteId);
+            if (!comprovante) return;
+
+            const modal = new bootstrap.Modal(document.getElementById('comprovanteModal'));
+            const comprovanteModalLabel = document.getElementById('comprovanteModalLabel');
+            const comprovanteInfo = document.getElementById('comprovanteInfo');
+            const comprovanteVisualizacao = document.getElementById('comprovanteVisualizacao');
+            const verificarComprovanteBtn = document.getElementById('verificarComprovanteBtn');
+
+            if (!comprovanteModalLabel || !comprovanteInfo || !comprovanteVisualizacao || !verificarComprovanteBtn) return;
+
+            comprovanteModalLabel.innerHTML = `<i class="fas fa-file-invoice-dollar" aria-hidden="true"></i> Comprovante de ${comprovante.nome}`;
+            comprovanteInfo.innerHTML = `
+                <p><strong>Usuário:</strong> ${comprovante.nome}</p>
+                <p><strong>Data de Envio:</strong> ${comprovante.data}</p>
+                <p><strong>Arquivo:</strong> ${comprovante.arquivo}</p>
+            `;
+            comprovanteVisualizacao.innerHTML = `
+                <p class="text-muted">Visualização do arquivo: ${comprovante.arquivo} (Simulação - em um sistema real, o arquivo seria exibido aqui)</p>
+            `;
+            verificarComprovanteBtn.disabled = comprovante.verificado;
+            verificarComprovanteBtn.onclick = () => {
+                if (!comprovante.verificado) {
+                    comprovante.verificado = true;
+                    salvarDados();
+                    atualizarInvestimentos();
+                    const sucessoModal = new bootstrap.Modal(document.getElementById('sucessoModal'));
+                    document.getElementById('sucessoTexto').textContent = 'Comprovante verificado!';
+                    sucessoModal.show();
+                    modal.hide();
+                }
+            };
+            modal.show();
+        }
+    </script>
+</body>
+</html>
