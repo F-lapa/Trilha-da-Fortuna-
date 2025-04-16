@@ -9,17 +9,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous">
     <style>
         :root {
-            --primary-color: #1e3a8a; /* Azul escuro */
-            --secondary-color: #10b981; /* Verde esmeralda */
-            --accent-color: #f59e0b; /* Amarelo suave */
-            --background-color: #f9fafb; /* Fundo claro */
-            --text-color: #111827; /* Texto escuro */
-            --card-bg: #ffffff; /* Fundo dos cartões */
+            --primary-color: #1e3a8a;
+            --secondary-color: #10b981;
+            --accent-color: #f59e0b;
+            --background-color: #f9fafb;
+            --text-color: #111827;
+            --card-bg: #ffffff;
             --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             --border-radius: 0.75rem;
         }
 
-        /* Tema Escuro */
         body.dark-theme {
             --primary-color: #1e40af;
             --secondary-color: #34d399;
@@ -44,7 +43,6 @@
             transition: background 0.3s ease, color 0.3s ease;
         }
 
-        /* Header */
         header {
             background: var(--card-bg);
             color: var(--text-color);
@@ -104,14 +102,12 @@
             transform: translateY(-2px);
         }
 
-        /* Container */
         .container {
             max-width: 1200px;
             margin: 2rem auto;
             padding: 0 1rem;
         }
 
-        /* Home Section */
         .home-section {
             padding: 2rem;
             text-align: center;
@@ -179,13 +175,11 @@
             color: var(--primary-color);
         }
 
-        /* Chart */
         .progress-chart {
             max-width: 600px;
             margin: 2rem auto;
         }
 
-        /* Tabs */
         .nav-tabs {
             background: var(--card-bg);
             border-radius: var(--border-radius);
@@ -241,7 +235,6 @@
             box-shadow: var(--shadow);
         }
 
-        /* Table */
         .table {
             border-radius: var(--border-radius);
             overflow: hidden;
@@ -262,7 +255,6 @@
             background: rgba(0, 0, 0, 0.05);
         }
 
-        /* List Group */
         .list-group-item {
             border-radius: 0.5rem;
             margin-bottom: 0.5rem;
@@ -282,7 +274,6 @@
             opacity: 0.7;
         }
 
-        /* Modal */
         .modal-content {
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
@@ -300,16 +291,14 @@
             padding: 1.5rem;
         }
 
-        /* Estilo dinâmico para btn-close */
         .modal-header .btn-close {
-            filter: brightness(100%) invert(100%); /* Branco no tema claro */
+            filter: brightness(100%) invert(100%);
         }
 
         body.dark-theme .modal-header .btn-close {
-            filter: brightness(100%) invert(0%); /* Preto no tema escuro */
+            filter: brightness(100%) invert(0%);
         }
 
-        /* Question */
         .question {
             background: var(--card-bg);
             border: 1px solid #e5e7eb;
@@ -325,7 +314,6 @@
             margin-bottom: 1rem;
         }
 
-        /* Footer */
         footer {
             background: var(--primary-color);
             color: #fff;
@@ -334,7 +322,6 @@
             margin-top: 2rem;
         }
 
-        /* Animations */
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
@@ -345,7 +332,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
             header {
                 flex-direction: column;
@@ -375,7 +361,6 @@
             }
         }
 
-        /* Formulários */
         .form-control {
             border-radius: 0.5rem;
             border: 1px solid #d1d5db;
@@ -431,9 +416,106 @@
             animation: fadeIn 0.3s ease;
         }
 
-        /* Hidden Class */
         .hidden {
             display: none;
+        }
+
+        /* Estilos para os feeds */
+        .feed-container {
+            max-width: 800px;
+            margin: 2rem auto;
+        }
+
+        .feed-post {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 1.5rem;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .feed-post:hover {
+            transform: translateY(-5px);
+        }
+
+        .feed-post-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .feed-post-header h5 {
+            margin: 0;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+        }
+
+        .feed-post-header small {
+            color: #6b7280;
+        }
+
+        .feed-post-body {
+            font-size: 1rem;
+            color: var(--text-color);
+        }
+
+        .feed-post-menu {
+            position: relative;
+        }
+
+        .feed-post-menu-btn {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .feed-post-menu-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            background: var(--card-bg);
+            box-shadow: var(--shadow);
+            border-radius: 0.5rem;
+            z-index: 10;
+        }
+
+        .feed-post-menu-content.show {
+            display: block;
+        }
+
+        .feed-post-menu-content button {
+            display: block;
+            width: 100%;
+            padding: 0.5rem 1rem;
+            background: none;
+            border: none;
+            text-align: left;
+            color: #dc3545;
+            cursor: pointer;
+        }
+
+        .feed-post-menu-content button:hover {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            color: #fff;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
     </style>
 </head>
@@ -447,7 +529,6 @@
     </header>
 
     <div class="container">
-        <!-- Content Section -->
         <section class="content-section" id="contentSection">
             <ul class="nav nav-tabs mb-0" id="navTabs" role="tablist">
                 <li class="nav-item" role="presentation">
@@ -471,7 +552,6 @@
             </ul>
 
             <div class="tab-content">
-                <!-- Home -->
                 <section class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="homeTab">
                     <div class="home-section">
                         <h2>Bem-vindo à Trilha da Fortuna!</h2>
@@ -496,16 +576,28 @@
                                 <p>Envie comprovantes de investimentos para validação e acompanhamento.</p>
                             </article>
                         </div>
+                        <div id="feedSection" class="mt-4">
+                            <h3>Feed de Recados</h3>
+                            <div id="feedFormContainer" class="mb-4 hidden">
+                                <form id="feedForm">
+                                    <div class="mb-3">
+                                        <label for="feedMessage" class="form-label">Novo Recado</label>
+                                        <textarea id="feedMessage" class="form-control" placeholder="Digite seu recado" required></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Postar</button>
+                                    <div class="success-message" id="feedSuccess">Recado postado com sucesso!</div>
+                                </form>
+                            </div>
+                            <div id="feedContainer" class="feed-container"></div>
+                        </div>
                     </div>
                 </section>
 
-                <!-- Provas -->
                 <section class="tab-pane fade" id="provas" role="tabpanel" aria-labelledby="provasTab">
                     <h2 class="mb-4"><i class="fas fa-file-alt me-2" aria-hidden="true"></i> Provas Disponíveis</h2>
                     <ul class="list-group" id="listaProvas"></ul>
                 </section>
 
-                <!-- Ranking -->
                 <section class="tab-pane fade" id="ranking" role="tabpanel" aria-labelledby="rankingTab">
                     <h2 class="mb-4"><i class="fas fa-trophy me-2" aria-hidden="true"></i> Ranking de Usuários</h2>
                     <table class="table table-striped">
@@ -514,13 +606,13 @@
                                 <th scope="col">Posição</th>
                                 <th scope="col">Nome</th>
                                 <th scope="col">Pontos</th>
+                                <th scope="col">Ação</th>
                             </tr>
                         </thead>
                         <tbody id="rankingBody"></tbody>
                     </table>
                 </section>
 
-                <!-- Comprovante -->
                 <section class="tab-pane fade" id="comprovante" role="tabpanel" aria-labelledby="comprovanteTabLink">
                     <h2 class="mb-4"><i class="fas fa-file-invoice-dollar me-2" aria-hidden="true"></i> Enviar Comprovante</h2>
                     <div class="card">
@@ -538,7 +630,6 @@
                     </div>
                 </section>
 
-                <!-- Administrador -->
                 <section class="tab-pane fade" id="administrador" role="tabpanel" aria-labelledby="adminTabLink">
                     <h2 class="mb-4"><i class="fas fa-user-cog me-2" aria-hidden="true"></i> Gerenciamento</h2>
                     <div class="card mb-4">
@@ -606,7 +697,6 @@
                     </div>
                 </section>
 
-                <!-- Investimentos -->
                 <section class="tab-pane fade" id="investimentos" role="tabpanel" aria-labelledby="investimentosTabLink">
                     <h2 class="mb-4"><i class="fas fa-file-invoice-dollar me-2" aria-hidden="true"></i> Investimentos Recebidos</h2>
                     <table class="table table-striped">
@@ -697,6 +787,24 @@
         </div>
     </div>
 
+    <div class="modal fade" id="confirmacaoExclusaoModal" tabindex="-1" aria-labelledby="confirmacaoExclusaoModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmacaoExclusaoModalLabel"><i class="fas fa-exclamation-triangle" aria-hidden="true"></i> Confirmação de Exclusão</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Tem certeza que deseja remover o usuário <strong id="nomeUsuarioExclusao"></strong>? Esta ação é irreversível e removerá todo o acesso do usuário à plataforma.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" id="confirmarExclusaoBtn">Remover</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <footer id="footer">
         <p>© 2025 Trilha da Fortuna. Todos os direitos reservados.</p>
     </footer>
@@ -704,24 +812,23 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" integrity="sha384-JLLY5MTQwtBav3T6T0RJPs9dVJi0Xju7eE78d0aLIuQ6NB98n26yosQ9C4v6xS0P" crossorigin="anonymous"></script>
     <script>
-        // Declaração explícita de variáveis globais
         let usuarios = [];
         let provas = [];
         let comprovantes = [];
         let respostas = {};
+        let feeds = [];
 
-        // Verificar se há usuário logado
         const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado'));
         if (!usuarioLogado) {
             window.location.href = 'index.html';
         }
 
-        // Funções para carregar e salvar dados no localStorage
         function carregarDados() {
             const usuariosSalvos = localStorage.getItem('usuarios');
             const provasSalvas = localStorage.getItem('provas');
             const comprovantesSalvos = localStorage.getItem('comprovantes');
             const respostasSalvas = localStorage.getItem('respostas');
+            const feedsSalvos = localStorage.getItem('feeds');
 
             return {
                 usuarios: usuariosSalvos ? JSON.parse(usuariosSalvos) : [
@@ -731,7 +838,8 @@
                 ],
                 provas: provasSalvas ? JSON.parse(provasSalvas) : [],
                 comprovantes: comprovantesSalvos ? JSON.parse(comprovantesSalvos) : [],
-                respostas: respostasSalvas ? JSON.parse(respostasSalvas) : {}
+                respostas: respostasSalvas ? JSON.parse(respostasSalvas) : {},
+                feeds: feedsSalvos ? JSON.parse(feedsSalvos) : []
             };
         }
 
@@ -740,41 +848,44 @@
             localStorage.setItem('provas', JSON.stringify(provas));
             localStorage.setItem('comprovantes', JSON.stringify(comprovantes));
             localStorage.setItem('respostas', JSON.stringify(respostas));
+            localStorage.setItem('feeds', JSON.stringify(feeds));
         }
 
-        // Inicializar dados
         document.addEventListener('DOMContentLoaded', () => {
             const dados = carregarDados();
             usuarios = dados.usuarios;
             provas = dados.provas;
             comprovantes = dados.comprovantes;
             respostas = dados.respostas;
+            feeds = dados.feeds;
 
             ajustarAbas();
             atualizarProvas();
             atualizarRanking();
             atualizarInvestimentos();
             inicializarGrafico();
+            configurarFeed();
         });
 
-        // Ajustar abas com base no perfil
         function ajustarAbas() {
             const comprovanteTabItem = document.getElementById('comprovanteTabItem');
             const adminTabItem = document.getElementById('adminTabItem');
             const investimentosTabItem = document.getElementById('investimentosTabItem');
+            const feedFormContainer = document.getElementById('feedFormContainer');
 
             if (usuarioLogado.isAdmin) {
                 comprovanteTabItem.classList.add('hidden');
                 adminTabItem.classList.remove('hidden');
                 investimentosTabItem.classList.remove('hidden');
+                feedFormContainer.classList.remove('hidden');
             } else {
                 comprovanteTabItem.classList.remove('hidden');
                 adminTabItem.classList.add('hidden');
                 investimentosTabItem.classList.add('hidden');
+                feedFormContainer.classList.add('hidden');
             }
         }
 
-        // Função para inicializar o gráfico de progresso
         function inicializarGrafico() {
             const ctx = document.getElementById('progressChart');
             if (!ctx || !window.Chart) {
@@ -783,9 +894,8 @@
             }
             const usuario = usuarios.find(u => u.username === usuarioLogado.username);
             const pontos = usuario ? usuario.pontos : 0;
-            const maxPontos = 500; // Exemplo de pontuação máxima
+            const maxPontos = 500;
 
-            // Destruir gráfico anterior, se existir
             if (ctx.chart) {
                 ctx.chart.destroy();
             }
@@ -814,7 +924,6 @@
             });
         }
 
-        // Theme Toggle
         const themeToggle = document.getElementById('themeToggle');
         if (themeToggle) {
             themeToggle.addEventListener('click', () => {
@@ -822,17 +931,15 @@
                 const isDark = document.body.classList.contains('dark-theme');
                 themeToggle.innerHTML = `<i class="fas fa-${isDark ? 'sun' : 'moon'}" aria-hidden="true"></i>`;
                 localStorage.setItem('theme', isDark ? 'dark' : 'light');
-                inicializarGrafico(); // Atualizar gráfico com novas cores
+                inicializarGrafico();
             });
 
-            // Load Theme
             if (localStorage.getItem('theme') === 'dark') {
                 document.body.classList.add('dark-theme');
                 themeToggle.innerHTML = '<i class="fas fa-sun" aria-hidden="true"></i>';
             }
         }
 
-        // Função para adicionar nova pergunta no formulário de criação
         function adicionarPergunta() {
             const container = document.getElementById('perguntasContainer');
             if (!container) return;
@@ -869,7 +976,6 @@
             container.appendChild(perguntaDiv);
         }
 
-        // Função para criar nova prova
         const novaProvaForm = document.getElementById('novaProvaForm');
         if (novaProvaForm) {
             novaProvaForm.addEventListener('submit', (e) => {
@@ -887,7 +993,6 @@
                     correta: div.querySelector('.correta')?.value.trim().toLowerCase()
                 }));
 
-                // Validação
                 if (!titulo) {
                     alert("O título da prova é obrigatório!");
                     return;
@@ -950,7 +1055,6 @@
             });
         }
 
-        // Ação do botão OK no modal de sucesso
         const sucessoOkButton = document.getElementById('sucessoOkButton');
         if (sucessoOkButton) {
             sucessoOkButton.addEventListener('click', () => {
@@ -967,7 +1071,6 @@
             });
         }
 
-        // Função para atualizar lista de provas
         function atualizarProvas() {
             const listaProvas = document.getElementById('listaProvas');
             if (!listaProvas) return;
@@ -1003,7 +1106,6 @@
             });
         }
 
-        // Função para abrir prova em modal
         function abrirProva(prova) {
             if (usuarioLogado.isAdmin) {
                 alert("Administradores não podem realizar provas!");
@@ -1052,7 +1154,6 @@
                     }
                 });
 
-                // Salvar resposta
                 if (!respostas[usuarioLogado.username]) {
                     respostas[usuarioLogado.username] = {};
                 }
@@ -1071,7 +1172,6 @@
             modal.show();
         }
 
-        // Função para mostrar resultado em modal
         function mostrarResultado(pontuacao) {
             const modal = new bootstrap.Modal(document.getElementById('resultadoModal'));
             const resultadoTexto = document.getElementById('resultadoTexto');
@@ -1081,7 +1181,6 @@
             modal.show();
         }
 
-        // Função para atualizar ranking
         function atualizarRanking() {
             const rankingBody = document.getElementById('rankingBody');
             if (!rankingBody) return;
@@ -1095,13 +1194,47 @@
                         <td>${index + 1}</td>
                         <td>${usuario.nome}</td>
                         <td>${usuario.pontos}</td>
+                        <td>
+                            ${usuarioLogado.isAdmin ? `
+                                <button class="btn btn-danger btn-sm" onclick="confirmarExclusaoUsuario('${usuario.username}')">
+                                    <i class="fas fa-trash-alt" aria-hidden="true"></i> Remover
+                                </button>
+                            ` : ''}
+                        </td>
                     `;
                     rankingBody.appendChild(row);
                 }
             });
         }
 
-        // Função para cadastrar novo usuário
+        function confirmarExclusaoUsuario(username) {
+            const usuario = usuarios.find(u => u.username === username);
+            if (!usuario) return;
+
+            const modal = new bootstrap.Modal(document.getElementById('confirmacaoExclusaoModal'));
+            const nomeUsuarioExclusao = document.getElementById('nomeUsuarioExclusao');
+            const confirmarExclusaoBtn = document.getElementById('confirmarExclusaoBtn');
+
+            if (!nomeUsuarioExclusao || !confirmarExclusaoBtn) return;
+
+            nomeUsuarioExclusao.textContent = usuario.nome;
+            confirmarExclusaoBtn.onclick = () => {
+                usuarios = usuarios.filter(u => u.username !== username);
+                if (respostas[username]) {
+                    delete respostas[username];
+                }
+                comprovantes = comprovantes.filter(c => c.username !== username);
+                salvarDados();
+                atualizarRanking();
+                atualizarInvestimentos();
+                modal.hide();
+                const sucessoModal = new bootstrap.Modal(document.getElementById('sucessoModal'));
+                document.getElementById('sucessoTexto').textContent = 'Usuário removido com sucesso!';
+                sucessoModal.show();
+            };
+            modal.show();
+        }
+
         const novoUsuarioForm = document.getElementById('novoUsuarioForm');
         if (novoUsuarioForm) {
             novoUsuarioForm.addEventListener('submit', (e) => {
@@ -1134,7 +1267,6 @@
             });
         }
 
-        // Função para enviar comprovante de investimento
         const comprovanteForm = document.getElementById('comprovanteForm');
         if (comprovanteForm) {
             comprovanteForm.addEventListener('submit', (e) => {
@@ -1176,7 +1308,6 @@
             });
         }
 
-        // Função para atualizar lista de investimentos recebidos
         function atualizarInvestimentos() {
             const investimentosBody = document.getElementById('investimentosBody');
             if (!investimentosBody) return;
@@ -1198,7 +1329,6 @@
             });
         }
 
-        // Função para visualizar comprovante em modal
         function visualizarComprovante(comprovanteId) {
             const comprovante = comprovantes.find(c => c.id === comprovanteId);
             if (!comprovante) return;
@@ -1233,6 +1363,106 @@
                 }
             };
             modal.show();
+        }
+
+        function configurarFeed() {
+            const feedForm = document.getElementById('feedForm');
+            if (feedForm) {
+                feedForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const feedMessage = document.getElementById('feedMessage')?.value.trim();
+                    const successMessage = document.getElementById('feedSuccess');
+
+                    if (!feedMessage) {
+                        alert("O recado não pode estar vazio!");
+                        return;
+                    }
+
+                    const novoFeed = {
+                        id: feeds.length + 1,
+                        autor: usuarioLogado.nome,
+                        mensagem: feedMessage,
+                        data: new Date().toLocaleString('pt-BR')
+                    };
+                    feeds.push(novoFeed);
+                    salvarDados();
+                    feedForm.reset();
+                    if (successMessage) {
+                        successMessage.style.display = 'block';
+                        setTimeout(() => {
+                            successMessage.style.display = 'none';
+                        }, 3000);
+                    }
+                    atualizarFeed();
+                });
+            }
+            atualizarFeed();
+        }
+
+        function atualizarFeed() {
+            const feedContainer = document.getElementById('feedContainer');
+            if (!feedContainer) return;
+
+            feedContainer.innerHTML = '';
+            if (feeds.length === 0) {
+                feedContainer.innerHTML = '<p class="text-muted text-center">Nenhum recado disponível</p>';
+                return;
+            }
+
+            feeds.sort((a, b) => new Date(b.data) - new Date(a.data)).forEach(feed => {
+                const feedPost = document.createElement('div');
+                feedPost.className = 'feed-post';
+                feedPost.innerHTML = `
+                    <div class="feed-post-header">
+                        <div>
+                            <h5>${feed.autor}</h5>
+                            <small>${feed.data}</small>
+                        </div>
+                        ${usuarioLogado.isAdmin ? `
+                            <div class="feed-post-menu">
+                                <button class="feed-post-menu-btn" aria-label="Menu de opções do feed">
+                                    <i class="fas fa-ellipsis-v" aria-hidden="true"></i>
+                                </button>
+                                <div class="feed-post-menu-content">
+                                    <button onclick="excluirFeed(${feed.id})">Excluir</button>
+                                </div>
+                            </div>
+                        ` : ''}
+                    </div>
+                    <div class="feed-post-body">
+                        <p>${feed.mensagem}</p>
+                    </div>
+                `;
+                feedContainer.appendChild(feedPost);
+
+                if (usuarioLogado.isAdmin) {
+                    const menuBtn = feedPost.querySelector('.feed-post-menu-btn');
+                    const menuContent = feedPost.querySelector('.feed-post-menu-content');
+                    if (menuBtn && menuContent) {
+                        menuBtn.addEventListener('click', () => {
+                            menuContent.classList.toggle('show');
+                        });
+                    }
+                }
+            });
+
+            document.addEventListener('click', (e) => {
+                const menus = document.querySelectorAll('.feed-post-menu-content');
+                menus.forEach(menu => {
+                    if (!menu.contains(e.target) && !e.target.closest('.feed-post-menu-btn')) {
+                        menu.classList.remove('show');
+                    }
+                });
+            });
+        }
+
+        function excluirFeed(feedId) {
+            feeds = feeds.filter(f => f.id !== feedId);
+            salvarDados();
+            atualizarFeed();
+            const sucessoModal = new bootstrap.Modal(document.getElementById('sucessoModal'));
+            document.getElementById('sucessoTexto').textContent = 'Recado excluído com sucesso!';
+            sucessoModal.show();
         }
     </script>
 </body>
