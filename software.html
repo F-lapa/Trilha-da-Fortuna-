@@ -271,6 +271,13 @@
             display: none;
         }
 
+        .error-message {
+            color: #dc3545;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
         .hidden {
             display: none;
         }
@@ -303,12 +310,6 @@
 
         .feed-post-header small {
             color: #6b7280;
-        }
-
-        .feed-post-body {
-            font-size: 1rem;
-            color: var(--text-color);
-            margin-bottom: 1rem;
         }
 
         .feed-post-menu {
@@ -508,6 +509,7 @@
                                     </div>
                                     <button type="submit" class="btn btn-primary">Postar</button>
                                     <div class="success-message" id="feedSuccess">Recado postado com sucesso!</div>
+                                    <div class="error-message" id="feedError">Por favor, insira uma mensagem válida.</div>
                                 </form>
                             </div>
                             <div id="feedContainer" class="feed-container"></div>
@@ -798,18 +800,25 @@
         });
 
         function ajustarAbas() {
-            console.log('usuarioLogado:', usuarioLogado); // Log para depuração
+            console.log('Ajustando abas para usuário:', usuarioLogado); // Log para depuração
             const comprovanteTabItem = document.getElementById('comprovanteTabItem');
             const adminTabItem = document.getElementById('adminTabItem');
             const investimentosTabItem = document.getElementById('investimentosTabItem');
             const feedFormContainer = document.getElementById('feedFormContainer');
 
+            if (!comprovanteTabItem || !adminTabItem || !investimentosTabItem || !feedFormContainer) {
+                console.error('Um ou mais elementos de aba ou feed não foram encontrados no DOM');
+                return;
+            }
+
             if (usuarioLogado.isAdmin) {
+                console.log('Usuário é administrador, exibindo formulário de feed e abas de admin');
                 comprovanteTabItem.classList.add('hidden');
                 adminTabItem.classList.remove('hidden');
                 investimentosTabItem.classList.remove('hidden');
                 feedFormContainer.classList.remove('hidden');
             } else {
+                console.log('Usuário não é administrador, ocultando formulário de feed e abas de admin');
                 comprovanteTabItem.classList.remove('hidden');
                 adminTabItem.classList.add('hidden');
                 investimentosTabItem.classList.add('hidden');
@@ -1124,36 +1133,65 @@
 
         function configurarFeed() {
             const feedForm = document.getElementById('feedForm');
-            if (!feedForm) {
-                console.error('Formulário feedForm não encontrado no DOM');
+            const feedFormContainer = document.getElementById('feedFormContainer');
+
+            if (!feedForm || !feedFormContainer) {
+                console.error('Elementos feedForm ou feedFormContainer não encontrados no DOM');
                 return;
             }
 
-            feedForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                console.log('Formulário de recado submetido');
-                const mensagem = document.getElementById('feedMessage').value.trim();
-                if (!mensagem) {
-                    console.warn('Mensagem vazia, recado não será postado');
-                    return;
-                }
-                feeds.unshift({
-                    id: feeds.length + 1,
-                    autor: usuarioLogado.nome,
-                    mensagem,
-                    data: new Date().toLocaleString('pt-BR'),
-                    curtidas: [],
-                    comentarios: []
-                });
-                console.log('Novo recado adicionado:', feeds[0]);
-                salvarDados();
-                feedForm.reset();
-                const successMessage = document.getElementById('feedSuccess');
-                successMessage.style.display = 'block';
-                setTimeout(() => successMessage.style.display = 'none', 3000);
-                atualizarFeed();
+            // Verifica se o usuário é admin para garantir que o formulário esteja visível
+            if (usuarioLogado.isAdmin) {
+                console.log('Configurando formulário de feed para administrador');
+                feedFormContainer.classList.remove('hidden');
+            } else {
+                console.log('Usuário não é administrador, ocultando formulário de feed');
+                feedFormContainer.classList.add('hidden');
+            }
+
+            // Remove event listeners antigos para evitar múltiplos registros
+            feedForm.removeEventListener('submit', handleFeedSubmit);
+            feedForm.addEventListener('submit', handleFeedSubmit);
+
+            atualizarFeed();
+        }
+
+        function handleFeedSubmit(e) {
+            e.preventDefault();
+            console.log('Submissão do formulário de feed iniciada');
+
+            const feedMessage = document.getElementById('feedMessage');
+            const successMessage = document.getElementById('feedSuccess');
+            const errorMessage = document.getElementById('feedError');
+
+            if (!feedMessage || !successMessage || !errorMessage) {
+                console.error('Elementos de mensagem do feed não encontrados');
+                return;
+            }
+
+            const mensagem = feedMessage.value.trim();
+            if (!mensagem) {
+                console.warn('Mensagem vazia, exibindo mensagem de erro');
+                errorMessage.style.display = 'block';
+                setTimeout(() => errorMessage.style.display = 'none', 3000);
+                return;
+            }
+
+            console.log('Postando novo recado:', mensagem);
+            feeds.unshift({
+                id: feeds.length + 1,
+                autor: usuarioLogado.nome,
+                mensagem,
+                data: new Date().toLocaleString('pt-BR'),
+                curtidas: [],
+                comentarios: []
             });
 
+            salvarDados();
+            feedForm.reset();
+            successMessage.style.display = 'block';
+            setTimeout(() => successMessage.style.display = 'none', 3000);
+            errorMessage.style.display = 'none';
             atualizarFeed();
         }
 
