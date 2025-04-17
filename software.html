@@ -502,7 +502,7 @@
                         <div id="feedSection" class="mt-4">
                             <h3>Feed de Recados</h3>
                             <div id="feedFormContainer" class="mb-4 hidden">
-                                <form id="feedForm">
+                                <form id="feedForm" novalidate>
                                     <div class="mb-3">
                                         <label for="feedMessage" class="form-label">Novo Recado</label>
                                         <textarea id="feedMessage" class="form-control" placeholder="Digite seu recado" required></textarea>
@@ -758,7 +758,6 @@
                 { username: "user2", password: "user123", nome: "Maria Oliveira", isAdmin: false, pontos: 50 }
             ];
 
-            // Garante admin123 como administrador
             const adminUser = usuarios.find(u => u.username === "admin123");
             if (adminUser) {
                 adminUser.isAdmin = true;
@@ -800,25 +799,17 @@
         });
 
         function ajustarAbas() {
-            console.log('Ajustando abas para usuário:', usuarioLogado); // Log para depuração
             const comprovanteTabItem = document.getElementById('comprovanteTabItem');
             const adminTabItem = document.getElementById('adminTabItem');
             const investimentosTabItem = document.getElementById('investimentosTabItem');
             const feedFormContainer = document.getElementById('feedFormContainer');
 
-            if (!comprovanteTabItem || !adminTabItem || !investimentosTabItem || !feedFormContainer) {
-                console.error('Um ou mais elementos de aba ou feed não foram encontrados no DOM');
-                return;
-            }
-
             if (usuarioLogado.isAdmin) {
-                console.log('Usuário é administrador, exibindo formulário de feed e abas de admin');
                 comprovanteTabItem.classList.add('hidden');
                 adminTabItem.classList.remove('hidden');
                 investimentosTabItem.classList.remove('hidden');
                 feedFormContainer.classList.remove('hidden');
             } else {
-                console.log('Usuário não é administrador, ocultando formulário de feed e abas de admin');
                 comprovanteTabItem.classList.remove('hidden');
                 adminTabItem.classList.add('hidden');
                 investimentosTabItem.classList.add('hidden');
@@ -1136,20 +1127,17 @@
             const feedFormContainer = document.getElementById('feedFormContainer');
 
             if (!feedForm || !feedFormContainer) {
-                console.error('Elementos feedForm ou feedFormContainer não encontrados no DOM');
+                console.error('Elementos feedForm ou feedFormContainer não encontrados');
                 return;
             }
 
-            // Verifica se o usuário é admin para garantir que o formulário esteja visível
             if (usuarioLogado.isAdmin) {
-                console.log('Configurando formulário de feed para administrador');
                 feedFormContainer.classList.remove('hidden');
             } else {
-                console.log('Usuário não é administrador, ocultando formulário de feed');
                 feedFormContainer.classList.add('hidden');
             }
 
-            // Remove event listeners antigos para evitar múltiplos registros
+            // Limpar event listeners anteriores para evitar múltiplos registros
             feedForm.removeEventListener('submit', handleFeedSubmit);
             feedForm.addEventListener('submit', handleFeedSubmit);
 
@@ -1171,13 +1159,13 @@
 
             const mensagem = feedMessage.value.trim();
             if (!mensagem) {
-                console.warn('Mensagem vazia, exibindo mensagem de erro');
+                console.log('Mensagem vazia, exibindo erro');
                 errorMessage.style.display = 'block';
                 setTimeout(() => errorMessage.style.display = 'none', 3000);
                 return;
             }
 
-            console.log('Postando novo recado:', mensagem);
+            console.log('Postando recado:', mensagem);
             feeds.unshift({
                 id: feeds.length + 1,
                 autor: usuarioLogado.nome,
@@ -1192,11 +1180,20 @@
             successMessage.style.display = 'block';
             setTimeout(() => successMessage.style.display = 'none', 3000);
             errorMessage.style.display = 'none';
+
+            // Forçar atualização do feed
+            console.log('Atualizando feed após postagem');
             atualizarFeed();
         }
 
         function atualizarFeed() {
+            console.log('Renderizando feed com', feeds.length, 'recados');
             const container = document.getElementById('feedContainer');
+            if (!container) {
+                console.error('Elemento feedContainer não encontrado');
+                return;
+            }
+
             container.innerHTML = feeds.length ? feeds.map(f => `
                 <div class="feed-post">
                     <div class="feed-post-header">
