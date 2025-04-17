@@ -798,6 +798,7 @@
         });
 
         function ajustarAbas() {
+            console.log('usuarioLogado:', usuarioLogado); // Log para depuração
             const comprovanteTabItem = document.getElementById('comprovanteTabItem');
             const adminTabItem = document.getElementById('adminTabItem');
             const investimentosTabItem = document.getElementById('investimentosTabItem');
@@ -1122,10 +1123,20 @@
         }
 
         function configurarFeed() {
-            document.getElementById('feedForm').addEventListener('submit', (e) => {
+            const feedForm = document.getElementById('feedForm');
+            if (!feedForm) {
+                console.error('Formulário feedForm não encontrado no DOM');
+                return;
+            }
+
+            feedForm.addEventListener('submit', (e) => {
                 e.preventDefault();
+                console.log('Formulário de recado submetido');
                 const mensagem = document.getElementById('feedMessage').value.trim();
-                if (!mensagem) return;
+                if (!mensagem) {
+                    console.warn('Mensagem vazia, recado não será postado');
+                    return;
+                }
                 feeds.unshift({
                     id: feeds.length + 1,
                     autor: usuarioLogado.nome,
@@ -1134,12 +1145,15 @@
                     curtidas: [],
                     comentarios: []
                 });
+                console.log('Novo recado adicionado:', feeds[0]);
                 salvarDados();
-                document.getElementById('feedForm').reset();
-                document.getElementById('feedSuccess').style.display = 'block';
-                setTimeout(() => document.getElementById('feedSuccess').style.display = 'none', 3000);
+                feedForm.reset();
+                const successMessage = document.getElementById('feedSuccess');
+                successMessage.style.display = 'block';
+                setTimeout(() => successMessage.style.display = 'none', 3000);
                 atualizarFeed();
             });
+
             atualizarFeed();
         }
 
