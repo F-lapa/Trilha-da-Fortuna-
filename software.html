@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trilha da Fortuna</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT HallToCanvas(2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous">
     <style>
@@ -15,24 +15,18 @@
             --background-color: #f9fafb;
             --text-color: #111827;
             --card-bg: #ffffff;
-            --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            --border-radius: 8px;
-            --fb-blue: #1877f2;
-            --fb-gray: #606770;
-            --fb-light-gray: #e4e6eb;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --border-radius: 0.75rem;
         }
 
         body.dark-theme {
             --primary-color: #1e40af;
             --secondary-color: #34d399;
             --accent-color: #facc15;
-            --background-color: #18191a;
-            --text-color: #e4e6eb;
-            --card-bg: #242526;
-            --shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-            --fb-blue: #3b5998;
-            --fb-gray: #8a8d91;
-            --fb-light-gray: #3a3b3c;
+            --background-color: #111827;
+            --text-color: #e5e7eb;
+            --card-bg: #1f2937;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
 
         * {
@@ -46,6 +40,7 @@
             background: var(--background-color);
             color: var(--text-color);
             line-height: 1.6;
+            transition: background 0.3s ease, color 0.3s ease;
         }
 
         header {
@@ -228,10 +223,6 @@
             filter: brightness(100%) invert(100%);
         }
 
-        body.dark-theme .modal-header .btn-close {
-            filter: brightness(100%) invert(0%);
-        }
-
         .question {
             background: var(--card-bg);
             border: 1px solid #e5e7eb;
@@ -285,48 +276,39 @@
         }
 
         .feed-container {
-            max-width: 680px;
+            max-width: 800px;
             margin: 2rem auto;
         }
 
         .feed-post {
             background: var(--card-bg);
-            padding: 12px 16px;
+            padding: 1.5rem;
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
-            margin-bottom: 16px;
+            margin-bottom: 1.5rem;
         }
 
         .feed-post-header {
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            margin-bottom: 8px;
-        }
-
-        .feed-post-header-left {
-            display: flex;
             align-items: center;
-            gap: 8px;
+            margin-bottom: 1rem;
         }
 
-        .feed-post-header-left h5 {
+        .feed-post-header h5 {
             margin: 0;
-            font-size: 15px;
-            font-weight: 600;
-            color: var(--text-color);
+            font-size: 1.2rem;
+            color: var(--primary-color);
         }
 
-        .feed-post-header-left small {
-            font-size: 13px;
-            color: var(--fb-gray);
+        .feed-post-header small {
+            color: #6b7280;
         }
 
         .feed-post-body {
-            font-size: 14px;
+            font-size: 1rem;
             color: var(--text-color);
-            margin-bottom: 12px;
-            line-height: 1.4;
+            margin-bottom: 1rem;
         }
 
         .feed-post-menu {
@@ -336,10 +318,9 @@
         .feed-post-menu-btn {
             background: none;
             border: none;
-            color: var(--fb-gray);
-            font-size: 16px;
+            color: var(--text-color);
+            font-size: 1.2rem;
             cursor: pointer;
-            padding: 4px;
         }
 
         .feed-post-menu-content {
@@ -349,9 +330,8 @@
             top: 100%;
             background: var(--card-bg);
             box-shadow: var(--shadow);
-            border-radius: 4px;
+            border-radius: 0.5rem;
             z-index: 10;
-            min-width: 120px;
         }
 
         .feed-post-menu-content.show {
@@ -361,276 +341,103 @@
         .feed-post-menu-content button {
             display: block;
             width: 100%;
-            padding: 8px 12px;
+            padding: 0.5rem 1rem;
             background: none;
             border: none;
             text-align: left;
-            color: var(--text-color);
-            font-size: 14px;
+            color: #dc3545;
             cursor: pointer;
         }
 
-        .feed-post-menu-content button:hover {
-            background: var(--fb-light-gray);
+        .btn-danger {
+            background: #dc3545;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            color: #fff;
         }
 
         .feed-actions {
             display: flex;
-            gap: 8px;
-            border-top: 1px solid var(--fb-light-gray);
-            border-bottom: 1px solid var(--fb-light-gray);
-            padding: 8px 0;
-            margin-bottom: 8px;
+            gap: 1rem;
+            margin-bottom: 1rem;
         }
 
         .feed-action-btn {
-            flex: 1;
             background: none;
             border: none;
-            color: var(--fb-gray);
-            font-size: 14px;
-            font-weight: 500;
+            color: var(--text-color);
+            font-size: 0.9rem;
             cursor: pointer;
-            padding: 8px;
-            text-align: center;
-            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
         }
 
         .feed-action-btn.liked {
-            color: var(--fb-blue);
-            font-weight: 600;
-        }
-
-        .feed-action-btn:hover {
-            background: var(--fb-light-gray);
-        }
-
-        .feed-action-btn i {
-            margin-right: 4px;
+            color: var(--secondary-color);
         }
 
         .comment-section {
-            margin-top: 8px;
+            margin-top: 1rem;
         }
 
         .comment-form {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-            margin-bottom: 8px;
-        }
-
-        .comment-form textarea {
-            flex: 1;
-            border: 1px solid var(--fb-light-gray);
-            border-radius: 20px;
-            padding: 8px 12px;
-            font-size: 14px;
-            resize: none;
-            height: 36px;
-        }
-
-        .comment-form textarea:focus {
-            border-color: var(--fb-blue);
-            outline: none;
-        }
-
-        .comment-form button {
-            display: none;
+            margin-bottom: 1rem;
         }
 
         .comment {
-            display: flex;
-            flex-direction: column;
-            padding: 8px;
-            border-radius: 4px;
-            margin-bottom: 4px;
+            background: var(--card-bg);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            border-left: 3px solid var(--secondary-color);
         }
 
         .comment-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 4px;
+            margin-bottom: 0.5rem;
         }
 
-        .comment-header-left {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .comment-header-left h6 {
+        .comment-header h6 {
             margin: 0;
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--text-color);
+            font-size: 1rem;
+            color: var(--primary-color);
         }
 
-        .comment-header-left small {
-            font-size: 12px;
-            color: var(--fb-gray);
+        .comment-header small {
+            color: #6b7280;
         }
 
         .comment-body {
-            font-size: 14px;
+            font-size: 0.9rem;
             color: var(--text-color);
-            margin-left: 8px;
-            line-height: 1.4;
         }
 
-        .comment-actions {
-            display: flex;
-            gap: 8px;
-            margin-top: 4px;
-            margin-left: 8px;
+        .reply-form {
+            margin-top: 1rem;
+            margin-left: 2rem;
+            display: none;
         }
 
-        .comment-action-btn {
-            background: none;
-            border: none;
-            color: var(--fb-gray);
-            font-size: 12px;
-            cursor: pointer;
+        .reply-form.show {
+            display: block;
         }
 
-        .comment-action-btn:hover {
-            color: var(--fb-blue);
-        }
-
-        .comment-edit-form {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-            margin-left: 8px;
-            margin-top: 4px;
-        }
-
-        .comment-edit-form textarea {
-            flex: 1;
-            border: 1px solid var(--fb-light-gray);
-            border-radius: 4px;
-            padding: 8px;
-            font-size: 14px;
-        }
-
-        .comment-edit-form button {
-            padding: 4px 12px;
-            font-size: 14px;
+        .replies {
+            margin-left: 2rem;
+            margin-top: 1rem;
         }
 
         .btn-reply {
             background: none;
             border: none;
-            color: var(--fb-gray);
-            font-size: 12px;
+            color: var(--primary-color);
+            font-size: 0.85rem;
             cursor: pointer;
-            margin-left: 8px;
-            margin-top: 4px;
-        }
-
-        .btn-reply:hover {
-            color: var(--fb-blue);
-        }
-
-        .reply-form {
-            display: none;
-            margin-left: 24px;
-            margin-top: 8px;
-            flex-direction: row;
-            gap: 8px;
-            align-items: center;
-        }
-
-        .reply-form.show {
-            display: flex;
-        }
-
-        .reply-form textarea {
-            flex: 1;
-            border: 1px solid var(--fb-light-gray);
-            border-radius: 20px;
-            padding: 8px 12px;
-            font-size: 14px;
-            resize: none;
-            height: 36px;
-        }
-
-        .reply-form button {
-            display: none;
-        }
-
-        .replies {
-            margin-left: 24px;
-            margin-top: 4px;
-        }
-
-        .reply {
-            display: flex;
-            flex-direction: column;
-            padding: 8px;
-            border-radius: 4px;
-            margin-bottom: 4px;
-        }
-
-        .reply-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 4px;
-        }
-
-        .reply-header-left {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .reply-header-left h6 {
-            margin: 0;
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--text-color);
-        }
-
-        .reply-header-left small {
-            font-size: 12px;
-            color: var(--fb-gray);
-        }
-
-        .reply-body {
-            font-size: 14px;
-            color: var(--text-color);
-            margin-left: 8px;
-            line-height: 1.4;
-        }
-
-        .reply-actions {
-            display: flex;
-            gap: 8px;
-            margin-top: 4px;
-            margin-left: 8px;
-        }
-
-        .reply-edit-form {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-            margin-left: 8px;
-            margin-top: 4px;
-        }
-
-        .reply-edit-form textarea {
-            flex: 1;
-            border: 1px solid var(--fb-light-gray);
-            border-radius: 4px;
-            padding: 8px;
-            font-size: 14px;
-        }
-
-        .reply-edit-form button {
-            padding: 4px 12px;
-            font-size: 14px;
+            margin-top: 0.5rem;
         }
     </style>
 </head>
@@ -697,7 +504,7 @@
                                 <form id="feedForm">
                                     <div class="mb-3">
                                         <label for="feedMessage" class="form-label">Novo Recado</label>
-                                        <textarea id="feedMessage" class="form-control" placeholder="No que você está pensando?" required></textarea>
+                                        <textarea id="feedMessage" class="form-control" placeholder="Digite seu recado" required></textarea>
                                     </div>
                                     <button type="submit" class="btn btn-primary">Postar</button>
                                     <div class="success-message" id="feedSuccess">Recado postado com sucesso!</div>
@@ -949,6 +756,7 @@
                 { username: "user2", password: "user123", nome: "Maria Oliveira", isAdmin: false, pontos: 50 }
             ];
 
+            // Garante admin123 como administrador
             const adminUser = usuarios.find(u => u.username === "admin123");
             if (adminUser) {
                 adminUser.isAdmin = true;
@@ -1314,35 +1122,24 @@
         }
 
         function configurarFeed() {
-            const feedForm = document.getElementById('feedForm');
-            if (feedForm) {
-                feedForm.addEventListener('submit', (e) => {
-                    e.preventDefault();
-                    const mensagem = document.getElementById('feedMessage').value.trim();
-                    if (!mensagem) {
-                        console.log('Mensagem vazia, não postando.');
-                        return;
-                    }
-                    console.log('Postando recado para:', usuarioLogado);
-                    feeds.unshift({
-                        id: feeds.length + 1,
-                        autor: usuarioLogado.nome,
-                        username: usuarioLogado.username,
-                        mensagem,
-                        data: new Date().toLocaleString('pt-BR'),
-                        curtidas: [],
-                        comentarios: []
-                    });
-                    salvarDados();
-                    feedForm.reset();
-                    document.getElementById('feedSuccess').style.display = 'block';
-                    setTimeout(() => document.getElementById('feedSuccess').style.display = 'none', 3000);
-                    atualizarFeed();
-                    console.log('Recado postado, feeds:', feeds);
+            document.getElementById('feedForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const mensagem = document.getElementById('feedMessage').value.trim();
+                if (!mensagem) return;
+                feeds.unshift({
+                    id: feeds.length + 1,
+                    autor: usuarioLogado.nome,
+                    mensagem,
+                    data: new Date().toLocaleString('pt-BR'),
+                    curtidas: [],
+                    comentarios: []
                 });
-            } else {
-                console.error('Formulário de feed não encontrado.');
-            }
+                salvarDados();
+                document.getElementById('feedForm').reset();
+                document.getElementById('feedSuccess').style.display = 'block';
+                setTimeout(() => document.getElementById('feedSuccess').style.display = 'none', 3000);
+                atualizarFeed();
+            });
             atualizarFeed();
         }
 
@@ -1351,13 +1148,13 @@
             container.innerHTML = feeds.length ? feeds.map(f => `
                 <div class="feed-post">
                     <div class="feed-post-header">
-                        <div class="feed-post-header-left">
+                        <div>
                             <h5>${f.autor}</h5>
                             <small>${f.data}</small>
                         </div>
                         ${usuarioLogado.isAdmin ? `
                             <div class="feed-post-menu">
-                                <button class="feed-post-menu-btn"><i class="fas fa-ellipsis-h"></i></button>
+                                <button class="feed-post-menu-btn"><i class="fas fa-ellipsis-v"></i></button>
                                 <div class="feed-post-menu-content">
                                     <button onclick="excluirFeed(${f.id})">Excluir</button>
                                 </div>
@@ -1369,56 +1166,44 @@
                     </div>
                     <div class="feed-actions">
                         <button class="feed-action-btn ${f.curtidas.includes(usuarioLogado.username) ? 'liked' : ''}" onclick="curtirFeed(${f.id})">
-                            <i class="fas fa-thumbs-up"></i> Curtir
+                            <i class="fas fa-heart"></i> Curtir (${f.curtidas.length})
                         </button>
                         <button class="feed-action-btn" onclick="focarComentario(${f.id})">
-                            <i class="fas fa-comment"></i> Comentar
+                            <i class="fas fa-comment"></i> Comentar (${f.comentarios.length})
                         </button>
                     </div>
                     <div class="comment-section">
                         <form class="comment-form" id="commentForm${f.id}">
-                            <textarea id="commentMessage${f.id}" placeholder="Escreva um comentário..."></textarea>
+                            <div class="mb-3">
+                                <textarea class="form-control" id="commentMessage${f.id}" placeholder="Escreva um comentário..." required></textarea>
+                            </div>
                             <button type="submit" class="btn btn-primary btn-sm">Comentar</button>
                         </form>
                         <div class="comments">
                             ${f.comentarios.map(c => `
-                                <div class="comment" id="comment${f.id}_${c.id}">
+                                <div class="comment">
                                     <div class="comment-header">
-                                        <div class="comment-header-left">
-                                            <h6>${c.autor}</h6>
-                                            <small>${c.data}</small>
-                                        </div>
-                                        ${c.username === usuarioLogado.username ? `
-                                            <div class="comment-actions">
-                                                <button class="comment-action-btn" onclick="editarComentario(${f.id}, ${c.id})">Editar</button>
-                                                <button class="comment-action-btn" onclick="excluirComentario(${f.id}, ${c.id})">Excluir</button>
-                                            </div>
-                                        ` : ''}
+                                        <h6>${c.autor}</h6>
+                                        <small>${c.data}</small>
                                     </div>
                                     <div class="comment-body">
                                         <p>${c.mensagem}</p>
                                     </div>
                                     <button class="btn-reply" onclick="toggleReplyForm(${f.id}, ${c.id})">Responder</button>
                                     <form class="reply-form" id="replyForm${f.id}_${c.id}">
-                                        <textarea id="replyMessage${f.id}_${c.id}" placeholder="Escreva uma resposta..."></textarea>
+                                        <div class="mb-3">
+                                            <textarea class="form-control" id="replyMessage${f.id}_${c.id}" placeholder="Escreva uma resposta..." required></textarea>
+                                        </div>
                                         <button type="submit" class="btn btn-primary btn-sm">Responder</button>
                                     </form>
                                     <div class="replies">
                                         ${c.respostas.map(r => `
-                                            <div class="reply" id="reply${f.id}_${c.id}_${r.id}">
-                                                <div class="reply-header">
-                                                    <div class="reply-header-left">
-                                                        <h6>${r.autor}</h6>
-                                                        <small>${r.data}</small>
-                                                    </div>
-                                                    ${r.username === usuarioLogado.username ? `
-                                                        <div class="reply-actions">
-                                                            <button class="comment-action-btn" onclick="editarResposta(${f.id}, ${c.id}, ${r.id})">Editar</button>
-                                                            <button class="comment-action-btn" onclick="excluirResposta(${f.id}, ${c.id}, ${r.id})">Excluir</button>
-                                                        </div>
-                                                    ` : ''}
+                                            <div class="comment">
+                                                <div class="comment-header">
+                                                    <h6>${r.autor}</h6>
+                                                    <small>${r.data}</small>
                                                 </div>
-                                                <div class="reply-body">
+                                                <div class="comment-body">
                                                     <p>${r.mensagem}</p>
                                                 </div>
                                             </div>
@@ -1439,43 +1224,38 @@
             });
 
             feeds.forEach(f => {
-                const commentForm = document.getElementById(`commentForm${f.id}`);
-                if (commentForm) {
-                    commentForm.addEventListener('submit', (e) => {
-                        e.preventDefault();
-                        const mensagem = document.getElementById(`commentMessage${f.id}`).value.trim();
-                        if (!mensagem) return;
-                        f.comentarios.push({
-                            id: f.comentarios.length + 1,
-                            autor: usuarioLogado.nome,
-                            username: usuarioLogado.username,
-                            mensagem,
-                            data: new Date().toLocaleString('pt-BR'),
-                            respostas: []
-                        });
-                        salvarDados();
-                        commentForm.reset();
-                        atualizarFeed();
+                document.getElementById(`commentForm${f.id}`).addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const mensagem = document.getElementById(`commentMessage${f.id}`).value.trim();
+                    if (!mensagem) return;
+                    f.comentarios.push({
+                        id: f.comentarios.length + 1,
+                        autor: usuarioLogado.nome,
+                        mensagem,
+                        data: new Date().toLocaleString('pt-BR'),
+                        respostas: []
                     });
-                }
+                    salvarDados();
+                    document.getElementById(`commentForm${f.id}`).reset();
+                    atualizarFeed();
+                });
 
                 f.comentarios.forEach(c => {
-                    const replyForm = document.getElementById(`replyForm${f.id}_${c.id}`);
-                    if (replyForm) {
-                        replyForm.addEventListener('submit', (e) => {
+                    const form = document.getElementById(`replyForm${f.id}_${c.id}`);
+                    if (form) {
+                        form.addEventListener('submit', (e) => {
                             e.preventDefault();
                             const mensagem = document.getElementById(`replyMessage${f.id}_${c.id}`).value.trim();
                             if (!mensagem) return;
                             c.respostas.push({
                                 id: c.respostas.length + 1,
                                 autor: usuarioLogado.nome,
-                                username: usuarioLogado.username,
                                 mensagem,
                                 data: new Date().toLocaleString('pt-BR')
                             });
                             salvarDados();
-                            replyForm.reset();
-                            replyForm.classList.remove('show');
+                            form.reset();
+                            form.classList.remove('show');
                             atualizarFeed();
                         });
                     }
@@ -1512,84 +1292,6 @@
             salvarDados();
             atualizarFeed();
             document.getElementById('sucessoTexto').textContent = 'Recado excluído!';
-            new bootstrap.Modal(document.getElementById('sucessoModal')).show();
-        }
-
-        function editarComentario(feedId, comentarioId) {
-            const feed = feeds.find(f => f.id === feedId);
-            const comentario = feed.comentarios.find(c => c.id === comentarioId);
-            if (comentario.username !== usuarioLogado.username) return;
-
-            const commentDiv = document.getElementById(`comment${feedId}_${comentarioId}`);
-            const commentBody = commentDiv.querySelector('.comment-body');
-            commentBody.innerHTML = `
-                <form class="comment-edit-form" id="editCommentForm${feedId}_${comentarioId}">
-                    <textarea class="form-control" id="editCommentMessage${feedId}_${comentarioId}">${comentario.mensagem}</textarea>
-                    <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
-                    <button type="button" class="btn btn-secondary btn-sm" onclick="atualizarFeed()">Cancelar</button>
-                </form>
-            `;
-
-            const editForm = document.getElementById(`editCommentForm${feedId}_${comentarioId}`);
-            editForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const novaMensagem = document.getElementById(`editCommentMessage${feedId}_${comentarioId}`).value.trim();
-                if (novaMensagem) {
-                    comentario.mensagem = novaMensagem;
-                    comentario.data = new Date().toLocaleString('pt-BR');
-                    salvarDados();
-                    atualizarFeed();
-                }
-            });
-        }
-
-        function excluirComentario(feedId, comentarioId) {
-            const feed = feeds.find(f => f.id === feedId);
-            if (feed.comentarios.find(c => c.id === comentarioId).username !== usuarioLogado.username) return;
-            feed.comentarios = feed.comentarios.filter(c => c.id !== comentarioId);
-            salvarDados();
-            atualizarFeed();
-            document.getElementById('sucessoTexto').textContent = 'Comentário excluído!';
-            new bootstrap.Modal(document.getElementById('sucessoModal')).show();
-        }
-
-        function editarResposta(feedId, comentarioId, respostaId) {
-            const feed = feeds.find(f => f.id === feedId);
-            const comentario = feed.comentarios.find(c => c.id === comentarioId);
-            const resposta = comentario.respostas.find(r => r.id === respostaId);
-            if (resposta.username !== usuarioLogado.username) return;
-
-            const replyDiv = document.getElementById(`reply${feedId}_${comentarioId}_${respostaId}`);
-            const replyBody = replyDiv.querySelector('.reply-body');
-            replyBody.innerHTML = `
-                <form class="reply-edit-form" id="editReplyForm${feedId}_${comentarioId}_${respostaId}">
-                    <textarea class="form-control" id="editReplyMessage${feedId}_${comentarioId}_${respostaId}">${resposta.mensagem}</textarea>
-                    <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
-                    <button type="button" class="btn btn-secondary btn-sm" onclick="atualizarFeed()">Cancelar</button>
-                </form>
-            `;
-
-            const editForm = document.getElementById(`editReplyForm${feedId}_${comentarioId}_${respostaId}`);
-            editForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const novaMensagem = document.getElementById(`editReplyMessage${feedId}_${comentarioId}_${respostaId}`).value.trim();
-                if (novaMensagem) {
-                    resposta.mensagem = novaMensagem;
-                    resposta.data = new Date().toLocaleString('pt-BR');
-                    salvarDados();
-                    atualizarFeed();
-                }
-            });
-        }
-
-        function excluirResposta(feedId, comentarioId, respostaId) {
-            const feed = feeds.find(f => f.id === feedId);
-            const comentario = feed.comentarios.find(c => c.id === comentarioId);
-            if (comentario.respostas.find(r => r.id === respostaId).username !== usuarioLogado.username) return;
-            comentario.respostas = comentario.respostas.filter(r => r.id !== respostaId);
-            salvarDados();
-            atualizarFeed();
-            document.getElementById('sucessoTexto').textContent = 'Resposta excluída!';
             new bootstrap.Modal(document.getElementById('sucessoModal')).show();
         }
     </script>
