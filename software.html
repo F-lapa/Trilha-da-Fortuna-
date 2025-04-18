@@ -217,6 +217,8 @@
         .modal-body {
             background: var(--card-bg);
             padding: 1.5rem;
+            max-height: 60vh; /* Limita a altura do modal */
+            overflow-y: auto; /* Adiciona barra de rolagem vertical */
         }
 
         .modal-header .btn-close {
@@ -662,38 +664,51 @@
                             <label for="tituloProva" class="form-label">Título da Prova</label>
                             <input type="text" id="tituloProva" class="form-control" required>
                         </div>
-                        <div id="perguntasContainer">
-                            <div class="pergunta">
-                                <div class="mb-3">
-                                    <label for="pergunta1" class="form-label">Pergunta</label>
-                                    <textarea class="form-control pergunta-texto" id="pergunta1" required></textarea>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="opcaoA1" class="form-label">Resposta A</label>
-                                    <input type="text" class="form-control opcao-a" id="opcaoA1" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="opcaoB1" class="form-label">Resposta B</label>
-                                    <input type="text" class="form-control opcao-b" id="opcaoB1" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="opcaoC1" class="form-label">Resposta C</label>
-                                    <input type="text" class="form-control opcao-c" id="opcaoC1" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="opcaoD1" class="form-label">Resposta D</label>
-                                    <input type="text" class="form-control opcao-d" id="opcaoD1" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="correta1" class="form-label">Resposta correta (a, b, c, d)</label>
-                                    <input type="text" class="form-control correta" id="correta1" required>
-                                </div>
-                            </div>
-                        </div>
+                        <div id="perguntasLista" class="mb-3"></div>
                         <div class="d-flex gap-2">
-                            <button type="button" class="btn btn-secondary" onclick="adicionarPergunta()">Adicionar Pergunta</button>
+                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#novaPerguntaModal">Adicionar Pergunta</button>
                             <button type="submit" class="btn btn-primary">Enviar Prova</button>
                         </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="novaPerguntaModal" tabindex="-1">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="novaPerguntaModalLabel">Pergunta 1</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="novaPerguntaForm">
+                        <div class="mb-3">
+                            <label for="perguntaTexto" class="form-label">Pergunta</label>
+                            <textarea class="form-control" id="perguntaTexto" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="opcaoA" class="form-label">Resposta A</label>
+                            <input type="text" class="form-control" id="opcaoA" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="opcaoB" class="form-label">Resposta B</label>
+                            <input type="text" class="form-control" id="opcaoB" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="opcaoC" class="form-label">Resposta C</label>
+                            <input type="text" class="form-control" id="opcaoC" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="opcaoD" class="form-label">Resposta D</label>
+                            <input type="text" class="form-control" id="opcaoD" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="correta" class="form-label">Resposta correta (a, b, c, d)</label>
+                            <input type="text" class="form-control" id="correta" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Salvar Pergunta</button>
                     </form>
                 </div>
             </div>
@@ -734,6 +749,24 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                     <button type="button" class="btn btn-primary" id="confirmarEnvioBtn">Enviar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="confirmacaoExclusaoProvaModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmacaoExclusaoProvaModalLabel">Confirmação de Exclusão</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Tem certeza que deseja excluir a prova <strong id="tituloProvaExclusao"></strong>?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" id="confirmarExclusaoProvaBtn">Excluir</button>
                 </div>
             </div>
         </div>
@@ -839,6 +872,7 @@
         let comprovantes = [];
         let respostas = {};
         let feeds = [];
+        let perguntasTemp = []; // Armazena perguntas temporariamente durante criação da prova
 
         const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado'));
         if (!usuarioLogado) {
@@ -965,86 +999,70 @@
             document.getElementById('themeToggle').innerHTML = '<i class="fas fa-sun"></i>';
         }
 
-        function adicionarPergunta() {
-            const container = document.getElementById('perguntasContainer');
-            const count = container.querySelectorAll('.pergunta').length + 1;
-            const div = document.createElement('div');
-            div.className = 'pergunta';
-            div.innerHTML = `
-                <div class="mb-3">
-                    <label for="pergunta${count}" class="form-label">Pergunta</label>
-                    <textarea class="form-control pergunta-texto" id="pergunta${count}" required></textarea>
-                </div>
-                <div class="mb-3">
-                    <label for="opcaoA${count}" class="form-label">Resposta A</label>
-                    <input type="text" class="form-control opcao-a" id="opcaoA${count}" required>
-                </div>
-                <div class="mb-3">
-                    <label for="opcaoB${count}" class="form-label">Resposta B</label>
-                    <input type="text" class="form-control opcao-b" id="opcaoB${count}" required>
-                </div>
-                <div class="mb-3">
-                    <label for="opcaoC${count}" class="form-label">Resposta C</label>
-                    <input type="text" class="form-control opcao-c" id="opcaoC${count}" required>
-                </div>
-                <div class="mb-3">
-                    <label for="opcaoD${count}" class="form-label">Resposta D</label>
-                    <input type="text" class="form-control opcao-d" id="opcaoD${count}" required>
-                </div>
-                <div class="mb-3">
-                    <label for="correta${count}" class="form-label">Resposta correta (a, b, c, d)</label>
-                    <input type="text" class="form-control correta" id="correta${count}" required>
-                </div>
-            `;
-            container.appendChild(div);
+        // Manipulação do modal de nova pergunta
+        document.getElementById('novaPerguntaForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const texto = document.getElementById('perguntaTexto').value.trim();
+            const opcaoA = document.getElementById('opcaoA').value.trim();
+            const opcaoB = document.getElementById('opcaoB').value.trim();
+            const opcaoC = document.getElementById('opcaoC').value.trim();
+            const opcaoD = document.getElementById('opcaoD').value.trim();
+            const correta = document.getElementById('correta').value.trim().toLowerCase();
+
+            if (!texto || !opcaoA || !opcaoB || !opcaoC || !opcaoD || !['a', 'b', 'c', 'd'].includes(correta)) return;
+
+            perguntasTemp.push({
+                texto,
+                opcoes: { a: opcaoA, b: opcaoB, c: opcaoC, d: opcaoD },
+                correta
+            });
+
+            atualizarListaPerguntas();
+            document.getElementById('novaPerguntaForm').reset();
+            const modal = bootstrap.Modal.getInstance(document.getElementById('novaPerguntaModal'));
+            modal.hide();
+
+            // Atualiza o título do próximo modal de pergunta
+            document.getElementById('novaPerguntaModalLabel').textContent = `Pergunta ${perguntasTemp.length + 1}`;
+        });
+
+        // Atualiza a lista de perguntas no modal principal
+        function atualizarListaPerguntas() {
+            const lista = document.getElementById('perguntasLista');
+            lista.innerHTML = perguntasTemp.length ? `
+                <h6>Perguntas Adicionadas:</h6>
+                <ul class="list-group">
+                    ${perguntasTemp.map((p, i) => `
+                        <li class="list-group-item">Pergunta ${i + 1}: ${p.texto}</li>
+                    `).join('')}
+                </ul>
+            ` : '<p class="text-muted">Nenhuma pergunta adicionada.</p>';
         }
 
+        // Limpa perguntas temporárias ao abrir o modal de nova prova
+        document.getElementById('novaProvaModal').addEventListener('show.bs.modal', () => {
+            perguntasTemp = [];
+            document.getElementById('novaPerguntaModalLabel').textContent = 'Pergunta 1';
+            atualizarListaPerguntas();
+            document.getElementById('novaProvaForm').reset();
+        });
+
+        // Envio da prova
         document.getElementById('novaProvaForm').addEventListener('submit', (e) => {
             e.preventDefault();
             const titulo = document.getElementById('tituloProva').value.trim();
-            const perguntas = Array.from(document.querySelectorAll('.pergunta')).map(div => ({
-                texto: div.querySelector('.pergunta-texto').value.trim(),
-                opcoes: {
-                    a: div.querySelector('.opcao-a').value.trim(),
-                    b: div.querySelector('.opcao-b').value.trim(),
-                    c: div.querySelector('.opcao-c').value.trim(),
-                    d: div.querySelector('.opcao-d').value.trim()
-                },
-                correta: div.querySelector('.correta').value.trim().toLowerCase()
-            }));
+            if (!titulo || perguntasTemp.length === 0) return;
 
-            if (!titulo || perguntas.length === 0) return;
-            provas.push({ id: provas.length + 1, titulo, perguntas });
+            provas.push({
+                id: provas.length + 1,
+                titulo,
+                perguntas: perguntasTemp
+            });
+
             salvarDados();
+            perguntasTemp = [];
             document.getElementById('novaProvaForm').reset();
-            document.getElementById('perguntasContainer').innerHTML = `
-                <div class="pergunta">
-                    <div class="mb-3">
-                        <label for="pergunta1" class="form-label">Pergunta</label>
-                        <textarea class="form-control pergunta-texto" id="pergunta1" required></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label for="opcaoA1" class="form-label">Resposta A</label>
-                        <input type="text" class="form-control opcao-a" id="opcaoA1" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="opcaoB1" class="form-label">Resposta B</label>
-                        <input type="text" class="form-control opcao-b" id="opcaoB1" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="opcaoC1" class="form-label">Resposta C</label>
-                        <input type="text" class="form-control opcao-c" id="opcaoC1" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="opcaoD1" class="form-label">Resposta D</label>
-                        <input type="text" class="form-control opcao-d" id="opcaoD1" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="correta1" class="form-label">Resposta correta (a, b, c, d)</label>
-                        <input type="text" class="form-control correta" id="correta1" required>
-                    </div>
-                </div>
-            `;
+            atualizarListaPerguntas();
             const modal = bootstrap.Modal.getInstance(document.getElementById('novaProvaModal'));
             modal.hide();
             document.getElementById('sucessoTexto').textContent = 'Prova enviada!';
@@ -1061,20 +1079,43 @@
             listaProvas.innerHTML = '';
             provas.forEach(prova => {
                 const li = document.createElement('li');
-                li.className = 'list-group-item d-flex justify-content-between';
+                li.className = 'list-group-item d-flex justify-content-between align-items-center';
                 let nota = '';
                 let isConcluida = false;
                 if (!usuarioLogado.isAdmin && respostas[usuarioLogado.username]?.[prova.id]) {
                     nota = `<span class="badge bg-success">Nota: ${respostas[usuarioLogado.username][prova.id].pontuacao}</span>`;
                     isConcluida = true;
                 }
-                li.innerHTML = `<span>${prova.titulo}</span>${nota}`;
+                li.innerHTML = `
+                    <span>${prova.titulo}</span>
+                    <div>
+                        ${nota}
+                        ${usuarioLogado.isAdmin ? `<button class="btn btn-danger btn-sm ms-2" onclick="confirmarExclusaoProva(${prova.id}, '${prova.titulo}')">Excluir</button>` : ''}
+                    </div>
+                `;
                 if (!isConcluida && !usuarioLogado.isAdmin) {
                     li.style.cursor = 'pointer';
                     li.addEventListener('click', () => abrirProva(prova));
                 }
                 listaProvas.appendChild(li);
             });
+        }
+
+        function confirmarExclusaoProva(provaId, titulo) {
+            document.getElementById('tituloProvaExclusao').textContent = titulo;
+            const modal = new bootstrap.Modal(document.getElementById('confirmacaoExclusaoProvaModal'));
+            document.getElementById('confirmarExclusaoProvaBtn').onclick = () => {
+                provas = provas.filter(p => p.id !== provaId);
+                Object.keys(respostas).forEach(username => {
+                    delete respostas[username][provaId];
+                });
+                salvarDados();
+                atualizarProvas();
+                modal.hide();
+                document.getElementById('sucessoTexto').textContent = 'Prova excluída!';
+                new bootstrap.Modal(document.getElementById('sucessoModal')).show();
+            };
+            modal.show();
         }
 
         function abrirProva(prova) {
