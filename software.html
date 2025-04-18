@@ -217,8 +217,8 @@
         .modal-body {
             background: var(--card-bg);
             padding: 1.5rem;
-            max-height: 60vh; /* Limita a altura do modal */
-            overflow-y: auto; /* Adiciona barra de rolagem vertical */
+            max-height: 60vh;
+            overflow-y: auto;
         }
 
         .modal-header .btn-close {
@@ -280,13 +280,20 @@
             display: none;
         }
 
+        .error-message#corretaError {
+            display: none;
+            color: #dc3545;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+
         .hidden {
             display: none;
         }
 
         .feed-container {
             max-width: 800px;
-            margin: 2rem auto;
+            margen: 2rem auto;
         }
 
         .feed-post {
@@ -706,9 +713,10 @@
                         </div>
                         <div class="mb-3">
                             <label for="correta" class="form-label">Resposta correta (a, b, c, d)</label>
-                            <input type="text" class="form-control" id="correta" required>
+                            <input type="text" class="form-control" id="correta" maxlength="1" required>
+                            <div class="error-message" id="corretaError">Apenas as letras a, b, c ou d são permitidas.</div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Salvar Pergunta</button>
+                        <button type="submit" class="btn btn-primary">Próxima Pergunta</button>
                     </form>
                 </div>
             </div>
@@ -851,7 +859,8 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <ul id="curtidasLista" class="list-group"></ul>
+                    <
+                    ul id="curtidasLista" class="list-group"></ul>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Fechar</button>
@@ -872,7 +881,7 @@
         let comprovantes = [];
         let respostas = {};
         let feeds = [];
-        let perguntasTemp = []; // Armazena perguntas temporariamente durante criação da prova
+        let perguntasTemp = [];
 
         const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado'));
         if (!usuarioLogado) {
@@ -941,6 +950,20 @@
             atualizarInvestimentos();
             inicializarGrafico();
             configurarFeed();
+
+            document.getElementById('correta').addEventListener('input', (e) => {
+                const input = e.target;
+                const value = input.value.toLowerCase();
+                const errorMessage = document.getElementById('corretaError');
+
+                if (value && !['a', 'b', 'c', 'd'].includes(value)) {
+                    input.value = '';
+                    errorMessage.style.display = 'block';
+                    setTimeout(() => errorMessage.style.display = 'none', 3000);
+                } else {
+                    errorMessage.style.display = 'none';
+                }
+            });
         });
 
         function ajustarAbas() {
@@ -999,7 +1022,6 @@
             document.getElementById('themeToggle').innerHTML = '<i class="fas fa-sun"></i>';
         }
 
-        // Manipulação do modal de nova pergunta
         document.getElementById('novaPerguntaForm').addEventListener('submit', (e) => {
             e.preventDefault();
             const texto = document.getElementById('perguntaTexto').value.trim();
@@ -1009,7 +1031,9 @@
             const opcaoD = document.getElementById('opcaoD').value.trim();
             const correta = document.getElementById('correta').value.trim().toLowerCase();
 
-            if (!texto || !opcaoA || !opcaoB || !opcaoC || !opcaoD || !['a', 'b', 'c', 'd'].includes(correta)) return;
+            if (!texto || !opcaoA || !opcaoB || !opcaoC || !opcaoD || !['a', 'b', 'c', 'd'].includes(correta)) {
+                return;
+            }
 
             perguntasTemp.push({
                 texto,
@@ -1019,14 +1043,9 @@
 
             atualizarListaPerguntas();
             document.getElementById('novaPerguntaForm').reset();
-            const modal = bootstrap.Modal.getInstance(document.getElementById('novaPerguntaModal'));
-            modal.hide();
-
-            // Atualiza o título do próximo modal de pergunta
             document.getElementById('novaPerguntaModalLabel').textContent = `Pergunta ${perguntasTemp.length + 1}`;
         });
 
-        // Atualiza a lista de perguntas no modal principal
         function atualizarListaPerguntas() {
             const lista = document.getElementById('perguntasLista');
             lista.innerHTML = perguntasTemp.length ? `
@@ -1039,7 +1058,6 @@
             ` : '<p class="text-muted">Nenhuma pergunta adicionada.</p>';
         }
 
-        // Limpa perguntas temporárias ao abrir o modal de nova prova
         document.getElementById('novaProvaModal').addEventListener('show.bs.modal', () => {
             perguntasTemp = [];
             document.getElementById('novaPerguntaModalLabel').textContent = 'Pergunta 1';
@@ -1047,11 +1065,13 @@
             document.getElementById('novaProvaForm').reset();
         });
 
-        // Envio da prova
         document.getElementById('novaProvaForm').addEventListener('submit', (e) => {
             e.preventDefault();
             const titulo = document.getElementById('tituloProva').value.trim();
-            if (!titulo || perguntasTemp.length === 0) return;
+            if (!titulo || perguntasTemp.length === 0) {
+                alert('Por favor, insira um título e pelo menos uma pergunta.');
+                return;
+            }
 
             provas.push({
                 id: provas.length + 1,
@@ -1066,7 +1086,7 @@
             const modal = bootstrap.Modal.getInstance(document.getElementById('novaProvaModal'));
             modal.hide();
             document.getElementById('sucessoTexto').textContent = 'Prova enviada!';
-            new bootstrap.Modal(document.getElementById('sucessoModal')).show();
+            new bootstrap.Modal(document.getdt('sucessoModal')).show();
             atualizarProvas();
         });
 
@@ -1328,75 +1348,47 @@
                 return;
             }
 
-            console.log('Configurando feed para usuário:', usuarioLogado.username, 'isAdmin:', usuarioLogado.isAdmin);
             if (usuarioLogado.isAdmin) {
                 feedFormContainer.classList.remove('hidden');
-                console.log('Formulário de feed visível para admin');
             } else {
                 feedFormContainer.classList.add('hidden');
-                console.log('Formulário de feed oculto para usuário comum');
             }
 
-            feedForm.removeEventListener('submit', handleFeedSubmit);
-            feedForm.addEventListener('submit', handleFeedSubmit);
+            feedForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const mensagem = document.getElementById('feedMessage').value.trim();
+                const successMessage = document.getElementById('feedSuccess');
+                const errorMessage = document.getElementById('feedError');
 
-            atualizarFeed();
-        }
+                if (!mensagem) {
+                    errorMessage.style.display = 'block';
+                    setTimeout(() => errorMessage.style.display = 'none', 3000);
+                    return;
+                }
 
-        function handleFeedSubmit(e) {
-            e.preventDefault();
-            console.log('Submissão do formulário de feed iniciada');
+                if (!usuarioLogado.isAdmin) return;
 
-            const feedMessage = document.getElementById('feedMessage');
-            const successMessage = document.getElementById('feedSuccess');
-            const errorMessage = document.getElementById('feedError');
+                feeds.unshift({
+                    id: feeds.length + 1,
+                    autor: usuarioLogado.nome,
+                    mensagem,
+                    data: new Date().toLocaleString('pt-BR'),
+                    curtidas: [],
+                    comentarios: []
+                });
 
-            if (!feedMessage || !successMessage || !errorMessage) {
-                console.error('Elementos de mensagem do feed não encontrados');
-                return;
-            }
-
-            const mensagem = feedMessage.value.trim();
-            if (!mensagem) {
-                console.log('Mensagem vazia, exibindo erro');
-                errorMessage.style.display = 'block';
-                setTimeout(() => errorMessage.style.display = 'none', 3000);
-                return;
-            }
-
-            if (!usuarioLogado.isAdmin) {
-                console.error('Tentativa de postagem por usuário não-admin');
-                return;
-            }
-
-            console.log('Postando recado:', mensagem);
-            feeds.unshift({
-                id: feeds.length + 1,
-                autor: usuarioLogado.nome,
-                mensagem,
-                data: new Date().toLocaleString('pt-BR'),
-                curtidas: [],
-                comentarios: []
+                salvarDados();
+                feedForm.reset();
+                successMessage.style.display = 'block';
+                setTimeout(() => successMessage.style.display = 'none', 3000);
+                atualizarFeed();
             });
 
-            salvarDados();
-            feedForm.reset();
-            successMessage.style.display = 'block';
-            setTimeout(() => successMessage.style.display = 'none', 3000);
-            errorMessage.style.display = 'none';
-
-            console.log('Atualizando feed após postagem');
             atualizarFeed();
         }
 
         function atualizarFeed() {
-            console.log('Renderizando feed com', feeds.length, 'recados');
             const container = document.getElementById('feedContainer');
-            if (!container) {
-                console.error('Elemento feedContainer não encontrado');
-                return;
-            }
-
             container.innerHTML = feeds.length ? feeds.map(f => `
                 <div class="feed-post">
                     <div class="feed-post-header">
@@ -1406,8 +1398,8 @@
                         </div>
                         ${usuarioLogado.isAdmin ? `
                             <div class="feed-post-menu">
-                                <button class="feed-post-menu-btn"><i class="fas fa-ellipsis-v"></i></button>
-                                <div class="feed-post-menu-content">
+                                <button class="feed-post-menu-btn" onclick="toggleMenu(${f.id})"><i class="fas fa-ellipsis-v"></i></button>
+                                <div class="feed-post-menu-content" id="menu-${f.id}">
                                     <button onclick="excluirFeed(${f.id})">Excluir</button>
                                 </div>
                             </div>
@@ -1417,25 +1409,22 @@
                         <p>${f.mensagem}</p>
                     </div>
                     <div class="feed-actions">
-                        <button class="feed-action-btn ${(f.curtidas || []).includes(usuarioLogado.username) ? 'liked' : ''}" onclick="curtirFeed(${f.id})">
-                            <i class="fas fa-heart"></i> Curtir
+                        <button class="feed-action-btn ${f.curtidas.includes(usuarioLogado.username) ? 'liked' : ''}" onclick="curtirFeed(${f.id})">
+                            <i class="fas fa-heart"></i> <span>${f.curtidas.length}</span>
                         </button>
-                        <span class="feed-action-btn" onclick="mostrarCurtidas('feed', ${f.id})">
-                            (${(f.curtidas || []).length})
-                        </span>
-                        <button class="feed-action-btn" onclick="focarComentario(${f.id})">
-                            <i class="fas fa-comment"></i> Comentar (${f.comentarios.length})
+                        <button class="feed-action-btn" onclick="toggleCommentForm(${f.id})">
+                            <i class="fas fa-comment"></i> <span>${f.comentarios.length}</span>
                         </button>
                     </div>
-                    <div class="comment-section">
-                        <form class="comment-form" id="commentForm${f.id}">
-                            <div class="mb-3">
-                                <textarea class="form-control" id="commentMessage${f.id}" placeholder="Escreva um comentário..." required></textarea>
+                    <div class="comment-section" id="comment-section-${f.id}">
+                        <form class="comment-form hidden" id="comment-form-${f.id}" onsubmit="comentarFeed(event, ${f.id})">
+                            <div class="d-flex gap-2">
+                                <input type="text" class="form-control" placeholder="Escreva um comentário" required>
+                                <button type="submit" class="btn btn-primary">Comentar</button>
                             </div>
-                            <button type="submit" class="btn btn-primary btn-sm">Comentar</button>
                         </form>
                         <div class="comments">
-                            ${f.comentarios.map(c => `
+                            ${f.comentarios.map((c, i) => `
                                 <div class="comment">
                                     <div class="comment-header">
                                         <h6>${c.autor}</h6>
@@ -1445,19 +1434,16 @@
                                         <p>${c.mensagem}</p>
                                     </div>
                                     <div class="comment-actions">
-                                        <button class="feed-action-btn ${(c.curtidas || []).includes(usuarioLogado.username) ? 'liked' : ''}" onclick="curtirComentario(${f.id}, ${c.id})">
-                                            <i class="fas fa-heart"></i> Curtir
+                                        <button class="feed-action-btn ${c.curtidas.includes(usuarioLogado.username) ? 'liked' : ''}" onclick="curtirComentario(${f.id}, ${i})">
+                                            <i class="fas fa-heart"></i> <span>${c.curtidas.length}</span>
                                         </button>
-                                        <span class="feed-action-btn" onclick="mostrarCurtidas('comentario', ${f.id}, ${c.id})">
-                                            (${(c.curtidas || []).length})
-                                        </span>
-                                        <button class="btn-reply" onclick="toggleReplyForm(${f.id}, ${c.id})">Responder</button>
+                                        <button class="btn-reply" onclick="toggleReplyForm(${f.id}, ${i})">Responder</button>
                                     </div>
-                                    <form class="reply-form" id="replyForm${f.id}_${c.id}">
-                                        <div class="mb-3">
-                                            <textarea class="form-control" id="replyMessage${f.id}_${c.id}" placeholder="Escreva uma resposta..." required></textarea>
+                                    <form class="reply-form hidden" id="reply-form-${f.id}-${i}" onsubmit="responderComentario(event, ${f.id}, ${i})">
+                                        <div class="d-flex gap-2">
+                                            <input type="text" class="form-control" placeholder="Escreva uma resposta" required>
+                                            <button type="submit" class="btn btn-primary">Responder</button>
                                         </div>
-                                        <button type="submit" class="btn btn-primary btn-sm">Responder</button>
                                     </form>
                                     <div class="replies">
                                         ${c.respostas.map(r => `
@@ -1477,133 +1463,98 @@
                         </div>
                     </div>
                 </div>
-            `).join('') : '<p class="text-muted text-center">Nenhum recado</p>';
-
-            document.querySelectorAll('.feed-post-menu-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const menu = btn.nextElementSibling;
-                    menu.classList.toggle('show');
-                });
-            });
-
-            feeds.forEach(f => {
-                const commentForm = document.getElementById(`commentForm${f.id}`);
-                if (commentForm) {
-                    commentForm.removeEventListener('submit', handleCommentSubmit);
-                    commentForm.addEventListener('submit', handleCommentSubmit(f));
-                }
-
-                f.comentarios.forEach(c => {
-                    const replyForm = document.getElementById(`replyForm${f.id}_${c.id}`);
-                    if (replyForm) {
-                        replyForm.removeEventListener('submit', handleReplySubmit);
-                        replyForm.addEventListener('submit', handleReplySubmit(f, c));
-                    }
-                });
-            });
-
-            document.addEventListener('click', e => {
-                if (!e.target.closest('.feed-post-menu-btn') && !e.target.closest('.feed-post-menu-content')) {
-                    document.querySelectorAll('.feed-post-menu-content').forEach(menu => menu.classList.remove('show'));
-                }
-            });
+            `).join('') : '<p class="text-muted">Nenhum recado no feed.</p>';
         }
 
-        function handleCommentSubmit(feed) {
-            return function(e) {
-                e.preventDefault();
-                const mensagem = document.getElementById(`commentMessage${feed.id}`).value.trim();
-                if (!mensagem) return;
-                feed.comentarios.push({
-                    id: feed.comentarios.length + 1,
-                    autor: usuarioLogado.nome,
-                    mensagem,
-                    data: new Date().toLocaleString('pt-BR'),
-                    curtidas: [],
-                    respostas: []
-                });
-                salvarDados();
-                document.getElementById(`commentForm${feed.id}`).reset();
-                atualizarFeed();
-            };
+        function toggleMenu(feedId) {
+            const menu = document.getElementById(`menu-${feedId}`);
+            menu.classList.toggle('show');
         }
 
-        function handleReplySubmit(feed, comentario) {
-            return function(e) {
-                e.preventDefault();
-                const mensagem = document.getElementById(`replyMessage${feed.id}_${comentario.id}`).value.trim();
-                if (!mensagem) return;
-                comentario.respostas.push({
-                    id: comentario.respostas.length + 1,
-                    autor: usuarioLogado.nome,
-                    mensagem,
-                    data: new Date().toLocaleString('pt-BR')
-                });
-                salvarDados();
-                document.getElementById(`replyForm${feed.id}_${comentario.id}`).reset();
-                document.getElementById(`replyForm${feed.id}_${comentario.id}`).classList.remove('show');
-                atualizarFeed();
-            };
-        }
-
-        function curtirFeed(id) {
-            const feed = feeds.find(f => f.id === id);
-            const username = usuarioLogado.username;
-            feed.curtidas = feed.curtidas.includes(username) ? feed.curtidas.filter(u => u !== username) : [...feed.curtidas, username];
+        function excluirFeed(feedId) {
+            feeds = feeds.filter(f => f.id !== feedId);
             salvarDados();
             atualizarFeed();
         }
 
-        function curtirComentario(feedId, comentarioId) {
+        function curtirFeed(feedId) {
             const feed = feeds.find(f => f.id === feedId);
-            const comentario = feed.comentarios.find(c => c.id === comentarioId);
-            const username = usuarioLogado.username;
-            comentario.curtidas = comentario.curtidas.includes(username) ? comentario.curtidas.filter(u => u !== username) : [...comentario.curtidas, username];
-            salvarDados();
-            atualizarFeed();
-        }
-
-        function mostrarCurtidas(tipo, feedId, comentarioId = null) {
-            const modal = new bootstrap.Modal(document.getElementById('curtidasModal'));
-            const lista = document.getElementById('curtidasLista');
-            let curtidas = [];
-
-            if (tipo === 'feed') {
-                const feed = feeds.find(f => f.id === feedId);
-                curtidas = feed.curtidas || [];
-                document.getElementById('curtidasModalLabel').textContent = 'Usuários que Curtiram o Post';
-            } else if (tipo === 'comentario') {
-                const feed = feeds.find(f => f.id === feedId);
-                const comentario = feed.comentarios.find(c => c.id === comentarioId);
-                curtidas = comentario.curtidas || [];
-                document.getElementById('curtidasModalLabel').textContent = 'Usuários que Curtiram o Comentário';
+            if (!feed.curtidas.includes(usuarioLogado.username)) {
+                feed.curtidas.push(usuarioLogado.username);
+            } else {
+                feed.curtidas = feed.curtidas.filter(u => u !== usuarioLogado.username);
             }
-
-            lista.innerHTML = curtidas.length ? curtidas.map(username => {
-                const usuario = usuarios.find(u => u.username === username);
-                return `<li class="list-group-item">${usuario ? usuario.nome : '[Usuário Removido]'}</li>`;
-            }).join('') : '<p class="text-muted">Nenhuma curtida ainda.</p>';
-
-            modal.show();
-        }
-
-        function focarComentario(id) {
-            document.getElementById(`commentMessage${id}`).focus();
-        }
-
-        function toggleReplyForm(feedId, comentarioId) {
-            const form = document.getElementById(`replyForm${feedId}_${comentarioId}`);
-            form.classList.toggle('show');
-            if (form.classList.contains('show')) document.getElementById(`replyMessage${feedId}_${comentarioId}`).focus();
-        }
-
-        function excluirFeed(id) {
-            feeds = feeds.filter(f => f.id !== id);
             salvarDados();
             atualizarFeed();
-            document.getElementById('sucessoTexto').textContent = 'Recado excluído!';
-            new bootstrap.Modal(document.getElementById('sucessoModal')).show();
         }
+
+        function toggleCommentForm(feedId) {
+            const form = document.getElementById(`comment-form-${feedId}`);
+            form.classList.toggle('hidden');
+        }
+
+        function comentarFeed(event, feedId) {
+            event.preventDefault();
+            const input = event.target.querySelector('input');
+            const mensagem = input.value.trim();
+            if (!mensagem) return;
+
+            const feed = feeds.find(f => f.id === feedId);
+            feed.comentarios.push({
+                autor: usuarioLogado.nome,
+                mensagem,
+                data: new Date().toLocaleString('pt-BR'),
+                curtidas: [],
+                respostas: []
+            });
+
+            salvarDados();
+            input.value = '';
+            atualizarFeed();
+        }
+
+        function curtirComentario(feedId, comentarioIndex) {
+            const feed = feeds.find(f => f.id === feedId);
+            const comentario = feed.comentarios[comentarioIndex];
+            if (!comentario.curtidas.includes(usuarioLogado.username)) {
+                comentario.curtidas.push(usuarioLogado.username);
+            } else {
+                comentario.curtidas = comentario.curtidas.filter(u => u !== usuarioLogado.username);
+            }
+            salvarDados();
+            atualizarFeed();
+        }
+
+        function toggleReplyForm(feedId, comentarioIndex) {
+            const form = document.getElementById(`reply-form-${feedId}-${comentarioIndex}`);
+            form.classList.toggle('hidden');
+        }
+
+        function responderComentario(event, feedId, comentarioIndex) {
+            event.preventDefault();
+            const input = event.target.querySelector('input');
+            const mensagem = input.value.trim();
+            if (!mensagem) return;
+
+            const feed = feeds.find(f => f.id === feedId);
+            feed.comentarios[comentarioIndex].respostas.push({
+                autor: usuarioLogado.nome,
+                mensagem,
+                data: new Date().toLocaleString('pt-BR')
+            });
+
+            salvarDados();
+            input.value = '';
+            atualizarFeed();
+        }
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.feed-post-menu-btn') && !e.target.closest('.feed-post-menu-content')) {
+                document.querySelectorAll('.feed-post-menu-content.show').forEach(menu => {
+                    menu.classList.remove('show');
+                });
+            }
+        });
     </script>
 </body>
 </html>
