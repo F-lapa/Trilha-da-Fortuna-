@@ -830,12 +830,24 @@
                 usuarios.push({ username: "admin123", password: "admin123", nome: "Administrador", isAdmin: true, pontos: 0 });
             }
 
+            // Normalizar feeds para garantir que curtidas existam
+            let feeds = feedsSalvos ? JSON.parse(feedsSalvos) : [];
+            feeds = feeds.map(f => ({
+                ...f,
+                curtidas: Array.isArray(f.curtidas) ? f.curtidas : [],
+                comentarios: Array.isArray(f.comentarios) ? f.comentarios.map(c => ({
+                    ...c,
+                    curtidas: Array.isArray(c.curtidas) ? c.curtidas : [],
+                    respostas: Array.isArray(c.respostas) ? c.respostas : []
+                })) : []
+            }));
+
             return {
                 usuarios,
                 provas: provasSalvas ? JSON.parse(provasSalvas) : [],
                 comprovantes: comprovantesSalvos ? JSON.parse(comprovantesSalvos) : [],
                 respostas: respostasSalvas ? JSON.parse(respostasSalvas) : {},
-                feeds: feedsSalvos ? JSON.parse(feedsSalvos) : []
+                feeds
             };
         }
 
@@ -1290,12 +1302,12 @@
                         <p>${f.mensagem}</p>
                     </div>
                     <div class="feed-actions">
-                        <button class="feed-action-btn ${f.curtidas.includes(usuarioLogado.username) ? 'liked' : ''}" onclick="curtirFeed(${f.id})">
-                            <i class="fas fa-heart"></i> Curtir (${f.curtidas.length})
+                        <button class="feed-action-btn ${(f.curtidas || []).includes(usuarioLogado.username) ? 'liked' : ''}" onclick="curtirFeed(${f.id})">
+                            <i class="fas fa-heart"></i> Curtir
                         </button>
-                        <button class="feed-action-btn" onclick="mostrarCurtidas('feed', ${f.id})">
-                            <i class="fas fa-heart"></i> (${f.curtidas.length})
-                        </button>
+                        <span class="feed-action-btn" onclick="mostrarCurtidas('feed', ${f.id})">
+                            (${(f.curtidas || []).length})
+                        </span>
                         <button class="feed-action-btn" onclick="focarComentario(${f.id})">
                             <i class="fas fa-comment"></i> Comentar (${f.comentarios.length})
                         </button>
@@ -1318,12 +1330,12 @@
                                         <p>${c.mensagem}</p>
                                     </div>
                                     <div class="comment-actions">
-                                        <button class="feed-action-btn ${c.curtidas.includes(usuarioLogado.username) ? 'liked' : ''}" onclick="curtirComentario(${f.id}, ${c.id})">
-                                            <i class="fas fa-heart"></i> (${c.curtidas.length})
+                                        <button class="feed-action-btn ${(c.curtidas || []).includes(usuarioLogado.username) ? 'liked' : ''}" onclick="curtirComentario(${f.id}, ${c.id})">
+                                            <i class="fas fa-heart"></i> Curtir
                                         </button>
-                                        <button class="feed-action-btn" onclick="mostrarCurtidas('comentario', ${f.id}, ${c.id})">
-                                            <i class="fas fa-heart"></i> (${c.curtidas.length})
-                                        </button>
+                                        <span class="feed-action-btn" onclick="mostrarCurtidas('comentario', ${f.id}, ${c.id})">
+                                            (${(c.curtidas || []).length})
+                                        </span>
                                         <button class="btn-reply" onclick="toggleReplyForm(${f.id}, ${c.id})">Responder</button>
                                     </div>
                                     <form class="reply-form" id="replyForm${f.id}_${c.id}">
@@ -1443,12 +1455,12 @@
 
             if (tipo === 'feed') {
                 const feed = feeds.find(f => f.id === feedId);
-                curtidas = feed.curtidas;
+                curtidas = feed.curtidas || [];
                 document.getElementById('curtidasModalLabel').textContent = 'Usuários que Curtiram o Post';
             } else if (tipo === 'comentario') {
                 const feed = feeds.find(f => f.id === feedId);
                 const comentario = feed.comentarios.find(c => c.id === comentarioId);
-                curtidas = comentario.curtidas;
+                curtidas = comentario.curtidas || [];
                 document.getElementById('curtidasModalLabel').textContent = 'Usuários que Curtiram o Comentário';
             }
 
