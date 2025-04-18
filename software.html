@@ -605,45 +605,8 @@
                     <h2 class="mb-4"> Gerenciamento</h2>
                     <div class="card mb-4">
                         <div class="card-body">
-                            <h5>Criar Nova Prova</h5>
-                            <form id="novaProvaForm">
-                                <div class="mb-3">
-                                    <label for="tituloProva" class="form-label">Título da Prova</label>
-                                    <input type="text" id="tituloProva" class="form-control" required>
-                                </div>
-                                <div id="perguntasContainer">
-                                    <div class="pergunta">
-                                        <div class="mb-3">
-                                            <label for="pergunta1" class="form-label">Pergunta</label>
-                                            <textarea class="form-control pergunta-texto" id="pergunta1" required></textarea>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="opcaoA1" class="form-label">Resposta A</label>
-                                            <input type="text" class="form-control opcao-a" id="opcaoA1" required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="opcaoB1" class="form-label">Resposta B</label>
-                                            <input type="text" class="form-control opcao-b" id="opcaoB1" required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="opcaoC1" class="form-label">Resposta C</label>
-                                            <input type="text" class="form-control opcao-c" id="opcaoC1" required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="opcaoD1" class="form-label">Resposta D</label>
-                                            <input type="text" class="form-control opcao-d" id="opcaoD1" required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="correta1" class="form-label">Resposta correta (a, b, c, d)</label>
-                                            <input type="text" class="form-control correta" id="correta1" required>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="d-flex gap-2">
-                                    <button type="button" class="btn btn-secondary" onclick="adicionarPergunta()">Adicionar Pergunta</button>
-                                    <button type="submit" class="btn btn-primary">Enviar Prova</button>
-                                </div>
-                            </form>
+                            <h5>Criar Prova</h5>
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#novaProvaModal">Criar Prova</button>
                         </div>
                     </div>
                     <div class="card">
@@ -686,6 +649,57 @@
         </section>
     </div>
 
+    <div class="modal fade" id="novaProvaModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="novaProvaModalLabel">Criar Nova Prova</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="novaProvaForm">
+                        <div class="mb-3">
+                            <label for="tituloProva" class="form-label">Título da Prova</label>
+                            <input type="text" id="tituloProva" class="form-control" required>
+                        </div>
+                        <div id="perguntasContainer">
+                            <div class="pergunta">
+                                <div class="mb-3">
+                                    <label for="pergunta1" class="form-label">Pergunta</label>
+                                    <textarea class="form-control pergunta-texto" id="pergunta1" required></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="opcaoA1" class="form-label">Resposta A</label>
+                                    <input type="text" class="form-control opcao-a" id="opcaoA1" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="opcaoB1" class="form-label">Resposta B</label>
+                                    <input type="text" class="form-control opcao-b" id="opcaoB1" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="opcaoC1" class="form-label">Resposta C</label>
+                                    <input type="text" class="form-control opcao-c" id="opcaoC1" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="opcaoD1" class="form-label">Resposta D</label>
+                                    <input type="text" class="form-control opcao-d" id="opcaoD1" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="correta1" class="form-label">Resposta correta (a, b, c, d)</label>
+                                    <input type="text" class="form-control correta" id="correta1" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <button type="button" class="btn btn-secondary" onclick="adicionarPergunta()">Adicionar Pergunta</button>
+                            <button type="submit" class="btn btn-primary">Enviar Prova</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="modal fade" id="provaModal" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -694,11 +708,32 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="provaForm"></form>
+                    <form id="provaForm">
+                        <div id="perguntaContainer"></div>
+                        <div class="d-flex justify-content-between mt-3">
+                            <button type="button" id="btnAnterior" class="btn btn-secondary hidden">Pergunta Anterior</button>
+                            <button type="button" id="btnProxima" class="btn btn-primary">Próxima Pergunta</button>
+                            <button type="button" id="btnEnviar" class="btn btn-primary hidden">Enviar Prova</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="confirmacaoEnvioModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmacaoEnvioModalLabel">Confirmar Envio</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Tem certeza que deseja enviar a prova? Você não poderá alterar suas respostas após o envio.</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                    <button type="submit" form="provaForm" class="btn btn-primary">Enviar Prova</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="confirmarEnvioBtn">Enviar</button>
                 </div>
             </div>
         </div>
@@ -830,7 +865,6 @@
                 usuarios.push({ username: "admin123", password: "admin123", nome: "Administrador", isAdmin: true, pontos: 0 });
             }
 
-            // Normalizar feeds para garantir que curtidas existam
             let feeds = feedsSalvos ? JSON.parse(feedsSalvos) : [];
             feeds = feeds.map(f => ({
                 ...f,
@@ -1011,9 +1045,10 @@
                     </div>
                 </div>
             `;
-            const modal = new bootstrap.Modal(document.getElementById('sucessoModal'));
+            const modal = bootstrap.Modal.getInstance(document.getElementById('novaProvaModal'));
+            modal.hide();
             document.getElementById('sucessoTexto').textContent = 'Prova enviada!';
-            modal.show();
+            new bootstrap.Modal(document.getElementById('sucessoModal')).show();
             atualizarProvas();
         });
 
@@ -1046,47 +1081,86 @@
             if (usuarioLogado.isAdmin || respostas[usuarioLogado.username]?.[prova.id]) return;
             const modal = new bootstrap.Modal(document.getElementById('provaModal'));
             document.getElementById('provaModalLabel').textContent = prova.titulo;
-            const form = document.getElementById('provaForm');
-            form.innerHTML = prova.perguntas.map((p, i) => `
-                <div class="question">
-                    <p>${i + 1}. ${p.texto}</p>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="q${i}" value="a" id="q${i}a" required>
-                        <label class="form-check-label" for="q${i}a">${p.opcoes.a}</label>
+            const container = document.getElementById('perguntaContainer');
+            const btnAnterior = document.getElementById('btnAnterior');
+            const btnProxima = document.getElementById('btnProxima');
+            const btnEnviar = document.getElementById('btnEnviar');
+            let currentIndex = 0;
+            const respostasTemp = {};
+
+            function renderizarPergunta(index) {
+                const p = prova.perguntas[index];
+                container.innerHTML = `
+                    <div class="question">
+                        <p>${index + 1}. ${p.texto}</p>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="q${index}" value="a" id="q${index}a" ${respostasTemp[index] === 'a' ? 'checked' : ''} required>
+                            <label class="form-check-label" for="q${index}a">${p.opcoes.a}</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="q${index}" value="b" id="q${index}b" ${respostasTemp[index] === 'b' ? 'checked' : ''} required>
+                            <label class="form-check-label" for="q${index}b">${p.opcoes.b}</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="q${index}" value="c" id="q${index}c" ${respostasTemp[index] === 'c' ? 'checked' : ''} required>
+                            <label class="form-check-label" for="q${index}c">${p.opcoes.c}</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="q${index}" value="d" id="q${index}d" ${respostasTemp[index] === 'd' ? 'checked' : ''} required>
+                            <label class="form-check-label" for="q${index}d">${p.opcoes.d}</label>
+                        </div>
                     </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="q${i}" value="b" id="q${i}b" required>
-                        <label class="form-check-label" for="q${i}b">${p.opcoes.b}</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="q${i}" value="c" id="q${i}c" required>
-                        <label class="form-check-label" for="q${i}c">${p.opcoes.c}</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="q${i}" value="d" id="q${i}d" required>
-                        <label class="form-check-label" for="q${i}d">${p.opcoes.d}</label>
-                    </div>
-                </div>
-            `).join('');
-            form.onsubmit = (e) => {
-                e.preventDefault();
-                let pontuacao = 0;
-                prova.perguntas.forEach((p, i) => {
-                    const resposta = document.querySelector(`input[name="q${i}"]:checked`);
-                    if (resposta?.value === p.correta) pontuacao += 50;
-                });
-                if (!respostas[usuarioLogado.username]) respostas[usuarioLogado.username] = {};
-                respostas[usuarioLogado.username][prova.id] = { pontuacao };
-                const usuario = usuarios.find(u => u.username === usuarioLogado.username);
-                usuario.pontos += pontuacao;
-                salvarDados();
-                modal.hide();
-                document.getElementById('resultadoTexto').textContent = `Pontuação: ${pontuacao} pontos!`;
-                new bootstrap.Modal(document.getElementById('resultadoModal')).show();
-                atualizarProvas();
-                atualizarRanking();
-                inicializarGrafico();
-            };
+                `;
+                btnAnterior.classList.toggle('hidden', index === 0);
+                btnProxima.classList.toggle('hidden', index === prova.perguntas.length - 1);
+                btnEnviar.classList.toggle('hidden', index !== prova.perguntas.length - 1);
+            }
+
+            function salvarResposta(index) {
+                const resposta = document.querySelector(`input[name="q${index}"]:checked`);
+                if (resposta) {
+                    respostasTemp[index] = resposta.value;
+                }
+            }
+
+            renderizarPergunta(currentIndex);
+
+            btnProxima.addEventListener('click', () => {
+                salvarResposta(currentIndex);
+                currentIndex++;
+                renderizarPergunta(currentIndex);
+            });
+
+            btnAnterior.addEventListener('click', () => {
+                salvarResposta(currentIndex);
+                currentIndex--;
+                renderizarPergunta(currentIndex);
+            });
+
+            btnEnviar.addEventListener('click', () => {
+                salvarResposta(currentIndex);
+                const confirmModal = new bootstrap.Modal(document.getElementById('confirmacaoEnvioModal'));
+                confirmModal.show();
+                document.getElementById('confirmarEnvioBtn').onclick = () => {
+                    let pontuacao = 0;
+                    prova.perguntas.forEach((p, i) => {
+                        if (respostasTemp[i] === p.correta) pontuacao += 50;
+                    });
+                    if (!respostas[usuarioLogado.username]) respostas[usuarioLogado.username] = {};
+                    respostas[usuarioLogado.username][prova.id] = { pontuacao };
+                    const usuario = usuarios.find(u => u.username === usuarioLogado.username);
+                    usuario.pontos += pontuacao;
+                    salvarDados();
+                    confirmModal.hide();
+                    modal.hide();
+                    document.getElementById('resultadoTexto').textContent = `Pontuação: ${pontuacao} pontos!`;
+                    new bootstrap.Modal(document.getElementById('resultadoModal')).show();
+                    atualizarProvas();
+                    atualizarRanking();
+                    inicializarGrafico();
+                };
+            });
+
             modal.show();
         }
 
