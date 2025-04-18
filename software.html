@@ -732,7 +732,7 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" integrity="sha384-4j20D2tF7w0R3ABnuRLJnp6uZ6sdX01QXjzo2lF9M7Kx0+3xhvZ1h96Gje0e/97" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" crossorigin="anonymous"></script>
     <script>
         let usuarios = [];
         let provas = [];
@@ -1232,7 +1232,6 @@
                         </button>
                     </div>
                     <div class="comment-section">
-                        <form class="comment-section">
                         <form class="comment-form" id="commentForm${f.id}">
                             <div class="mb-3">
                                 <textarea class="form-control" id="commentMessage${f.id}" placeholder="Escreva um comentário..." required></textarea>
@@ -1284,40 +1283,17 @@
             });
 
             feeds.forEach(f => {
-                document.getElementById(`commentForm${f.id}`).addEventListener('submit', (e) => {
-                    e.preventDefault();
-                    const mensagem = document.getElementById(`commentMessage${f.id}`).value.trim();
-                    if (!mensagem) return;
-                    f.comentarios.push({
-                        id: f.comentarios.length + 1,
-                        autor: usuarioLogado.nome,
-                        mensagem,
-                        data: new Date().toLocaleString('pt-BR'),
-                        respostas: []
-                    });
-                    salvarDados();
-                    document.getElementById(`commentForm${f.id}`).reset();
-                    atualizarFeed();
-                });
+                const commentForm = document.getElementById(`commentForm${f.id}`);
+                if (commentForm) {
+                    commentForm.removeEventListener('submit', handleCommentSubmit);
+                    commentForm.addEventListener('submit', handleCommentSubmit(f));
+                }
 
                 f.comentarios.forEach(c => {
-                    const form = document.getElementById(`replyForm${f.id}_${c.id}`);
-                    if (form) {
-                        form.addEventListener('submit', (e) => {
-                            e.preventDefault();
-                            const mensagem = document.getElementById(`replyMessage${f.id}_${c.id}`).value.trim();
-                            if (!mensagem) return;
-                            c.respostas.push({
-                                id: c.respostas.length + 1,
-                                autor: usuarioLogado.nome,
-                                mensagem,
-                                data: new Date().toLocaleString('pt-BR')
-                            });
-                            salvarDados();
-                            form.reset();
-                            form.classList.remove('show');
-                            atualizarFeed();
-                        });
+                    const replyForm = document.getElementById(`replyForm${f.id}_${c.id}`);
+                    if (replyForm) {
+                        replyForm.removeEventListener('submit', handleReplySubmit);
+                        replyForm.addEventListener('submit', handleReplySubmit(f, c));
                     }
                 });
             });
@@ -1327,6 +1303,42 @@
                     document.querySelectorAll('.feed-post-menu-content').forEach(menu => menu.classList.remove('show'));
                 }
             });
+        }
+
+        function handleCommentSubmit(feed) {
+            return function(e) {
+                e.preventDefault();
+                const mensagem = document.getElementById(`commentMessage${feed.id}`).value.trim();
+                if (!mensagem) return;
+                feed.comentarios.push({
+                    id: feed.comentarios.length + 1,
+                    autor: usuarioLogado.nome,
+                    mensagem,
+                    data: new Date().toLocaleString('pt-BR'),
+                    respostas: []
+                });
+                salvarDados();
+                document.getElementById(`commentForm${feed.id}`).reset();
+                atualizarFeed();
+            };
+        }
+
+        function handleReplySubmit(feed, comentario) {
+            return function(e) {
+                e.preventDefault();
+                const mensagem = document.getElementById(`replyMessage${feed.id}_${comentario.id}`).value.trim();
+                if (!mensagem) return;
+                comentario.respostas.push({
+                    id: comentario.respostas.length + 1,
+                    autor: usuarioLogado.nome,
+                    mensagem,
+                    data: new Date().toLocaleString('pt-BR')
+                });
+                salvarDados();
+                document.getElementById(`replyForm${feed.id}_${comentario.id}`).reset();
+                document.getElementById(`replyForm${feed.id}_${comentario.id}`).classList.remove('show');
+                atualizarFeed();
+            };
         }
 
         function curtirFeed(id) {
