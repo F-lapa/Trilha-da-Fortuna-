@@ -293,7 +293,7 @@
 
         .feed-container {
             max-width: 800px;
-            margen: 2rem auto;
+            margin: 2rem auto;
         }
 
         .feed-post {
@@ -716,7 +716,10 @@
                             <input type="text" class="form-control" id="correta" maxlength="1" required>
                             <div class="error-message" id="corretaError">Apenas as letras a, b, c ou d são permitidas.</div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Próxima Pergunta</button>
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary">Próxima Pergunta</button>
+                            <button type="button" class="btn btn-success" onclick="enviarProva()">Enviar Prova</button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -859,8 +862,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <
-                    ul id="curtidasLista" class="list-group"></ul>
+                    <ul id="curtidasLista" class="list-group"></ul>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Fechar</button>
@@ -1032,6 +1034,7 @@
             const correta = document.getElementById('correta').value.trim().toLowerCase();
 
             if (!texto || !opcaoA || !opcaoB || !opcaoC || !opcaoD || !['a', 'b', 'c', 'd'].includes(correta)) {
+                alert('Por favor, preencha todos os campos corretamente. A resposta correta deve ser a, b, c ou d.');
                 return;
             }
 
@@ -1045,6 +1048,32 @@
             document.getElementById('novaPerguntaForm').reset();
             document.getElementById('novaPerguntaModalLabel').textContent = `Pergunta ${perguntasTemp.length + 1}`;
         });
+
+        function enviarProva() {
+            const titulo = document.getElementById('tituloProva').value.trim();
+            if (!titulo || perguntasTemp.length === 0) {
+                alert('Por favor, insira um título e pelo menos uma pergunta.');
+                return;
+            }
+
+            provas.push({
+                id: provas.length + 1,
+                titulo,
+                perguntas: perguntasTemp
+            });
+
+            salvarDados();
+            perguntasTemp = [];
+            document.getElementById('novaProvaForm').reset();
+            atualizarListaPerguntas();
+            const perguntaModal = bootstrap.Modal.getInstance(document.getElementById('novaPerguntaModal'));
+            const provaModal = bootstrap.Modal.getInstance(document.getElementById('novaProvaModal'));
+            perguntaModal.hide();
+            provaModal.hide();
+            document.getElementById('sucessoTexto').textContent = 'Prova enviada!';
+            new bootstrap.Modal(document.getElementById('sucessoModal')).show();
+            atualizarProvas();
+        }
 
         function atualizarListaPerguntas() {
             const lista = document.getElementById('perguntasLista');
@@ -1067,27 +1096,7 @@
 
         document.getElementById('novaProvaForm').addEventListener('submit', (e) => {
             e.preventDefault();
-            const titulo = document.getElementById('tituloProva').value.trim();
-            if (!titulo || perguntasTemp.length === 0) {
-                alert('Por favor, insira um título e pelo menos uma pergunta.');
-                return;
-            }
-
-            provas.push({
-                id: provas.length + 1,
-                titulo,
-                perguntas: perguntasTemp
-            });
-
-            salvarDados();
-            perguntasTemp = [];
-            document.getElementById('novaProvaForm').reset();
-            atualizarListaPerguntas();
-            const modal = bootstrap.Modal.getInstance(document.getElementById('novaProvaModal'));
-            modal.hide();
-            document.getElementById('sucessoTexto').textContent = 'Prova enviada!';
-            new bootstrap.Modal(document.getdt('sucessoModal')).show();
-            atualizarProvas();
+            enviarProva();
         });
 
         document.getElementById('sucessoOkButton').addEventListener('click', () => {
