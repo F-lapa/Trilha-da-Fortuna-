@@ -1131,14 +1131,18 @@
                 return;
             }
 
+            // ALTERAÇÃO: Garantir que o formulário seja visível para admins e configurar evento de submissão
+            console.log('Configurando feed para usuário:', usuarioLogado.username, 'isAdmin:', usuarioLogado.isAdmin);
             if (usuarioLogado.isAdmin) {
                 feedFormContainer.classList.remove('hidden');
+                console.log('Formulário de feed visível para admin');
             } else {
                 feedFormContainer.classList.add('hidden');
+                console.log('Formulário de feed oculto para usuário comum');
             }
 
-            // Limpar event listeners anteriores para evitar múltiplos registros
-            feedForm.removeEventListener('submit', handleFeedSubmit);
+            // ALTERAÇÃO: Remover qualquer listener antigo e adicionar um novo para evitar múltiplos eventos
+            feedForm.removeEventListener('submit', handleFeedSubmit); // Remove listener pré-existente
             feedForm.addEventListener('submit', handleFeedSubmit);
 
             atualizarFeed();
@@ -1146,7 +1150,7 @@
 
         function handleFeedSubmit(e) {
             e.preventDefault();
-            console.log('Submissão do formulário de feed iniciada');
+            console.log('Submissão do formulário de feed iniciada'); // Log para depuração
 
             const feedMessage = document.getElementById('feedMessage');
             const successMessage = document.getElementById('feedSuccess');
@@ -1162,6 +1166,12 @@
                 console.log('Mensagem vazia, exibindo erro');
                 errorMessage.style.display = 'block';
                 setTimeout(() => errorMessage.style.display = 'none', 3000);
+                return;
+            }
+
+            // ALTERAÇÃO: Confirmar que apenas admins podem postar (redundante, mas para segurança)
+            if (!usuarioLogado.isAdmin) {
+                console.error('Tentativa de postagem por usuário não-admin');
                 return;
             }
 
@@ -1181,7 +1191,6 @@
             setTimeout(() => successMessage.style.display = 'none', 3000);
             errorMessage.style.display = 'none';
 
-            // Forçar atualização do feed
             console.log('Atualizando feed após postagem');
             atualizarFeed();
         }
