@@ -732,7 +732,7 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" integrity="sha384-JLLY5MTQwtBav3T6T0RJPs9dVJi0Xju7eE78d0aLIuQ6NB98n26yosQ9C4v6xS0P" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" integrity="sha384-4j20D2tF7w0R3ABnuRLJnp6uZ6sdX01QXjzo2lF9M7Kx0+3xhvZ1h96Gje0e/97" crossorigin="anonymous"></script>
     <script>
         let usuarios = [];
         let provas = [];
@@ -818,6 +818,10 @@
         }
 
         function inicializarGrafico() {
+            if (typeof Chart === 'undefined') {
+                console.error('Chart.js não foi carregado corretamente.');
+                return;
+            }
             const ctx = document.getElementById('progressChart').getContext('2d');
             const usuario = usuarios.find(u => u.username === usuarioLogado.username);
             const pontos = usuario ? usuario.pontos : 0;
@@ -1131,7 +1135,6 @@
                 return;
             }
 
-            // ALTERAÇÃO: Garantir que o formulário seja visível para admins e configurar evento de submissão
             console.log('Configurando feed para usuário:', usuarioLogado.username, 'isAdmin:', usuarioLogado.isAdmin);
             if (usuarioLogado.isAdmin) {
                 feedFormContainer.classList.remove('hidden');
@@ -1141,8 +1144,7 @@
                 console.log('Formulário de feed oculto para usuário comum');
             }
 
-            // ALTERAÇÃO: Remover qualquer listener antigo e adicionar um novo para evitar múltiplos eventos
-            feedForm.removeEventListener('submit', handleFeedSubmit); // Remove listener pré-existente
+            feedForm.removeEventListener('submit', handleFeedSubmit);
             feedForm.addEventListener('submit', handleFeedSubmit);
 
             atualizarFeed();
@@ -1150,7 +1152,7 @@
 
         function handleFeedSubmit(e) {
             e.preventDefault();
-            console.log('Submissão do formulário de feed iniciada'); // Log para depuração
+            console.log('Submissão do formulário de feed iniciada');
 
             const feedMessage = document.getElementById('feedMessage');
             const successMessage = document.getElementById('feedSuccess');
@@ -1169,7 +1171,6 @@
                 return;
             }
 
-            // ALTERAÇÃO: Confirmar que apenas admins podem postar (redundante, mas para segurança)
             if (!usuarioLogado.isAdmin) {
                 console.error('Tentativa de postagem por usuário não-admin');
                 return;
@@ -1231,6 +1232,7 @@
                         </button>
                     </div>
                     <div class="comment-section">
+                        <form class="comment-section">
                         <form class="comment-form" id="commentForm${f.id}">
                             <div class="mb-3">
                                 <textarea class="form-control" id="commentMessage${f.id}" placeholder="Escreva um comentário..." required></textarea>
