@@ -17,6 +17,7 @@
             --card-bg: #ffffff;
             --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             --border-radius: 0.75rem;
+            --transition: all 0.3s ease;
         }
 
         body.dark-theme {
@@ -40,16 +41,17 @@
             background: var(--background-color);
             color: var(--text-color);
             line-height: 1.6;
-            transition: background 0.3s ease, color 0.3s ease;
+            transition: var(--transition);
+            font-size: 16px;
         }
 
+        /* Header */
         header {
             background: var(--card-bg);
-            color: var(--text-color);
-            padding: 1rem 2rem;
+            padding: 1rem;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
             box-shadow: var(--shadow);
             position: sticky;
             top: 0;
@@ -58,7 +60,7 @@
 
         header h1 {
             font-family: 'Roboto', sans-serif;
-            font-size: 1.8rem;
+            font-size: clamp(1.5rem, 5vw, 1.8rem);
             font-weight: 700;
             display: flex;
             align-items: center;
@@ -69,12 +71,23 @@
             color: var(--secondary-color);
         }
 
+        header .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
         #themeToggle {
             background: none;
             border: none;
             color: var(--text-color);
-            font-size: 1.5rem;
+            font-size: 1.25rem;
             cursor: pointer;
+            transition: var(--transition);
+        }
+
+        #themeToggle:hover {
+            color: var(--secondary-color);
         }
 
         #logoutLink {
@@ -83,6 +96,7 @@
             font-weight: 500;
             padding: 0.5rem 1rem;
             border-radius: 0.5rem;
+            transition: var(--transition);
         }
 
         #logoutLink:hover {
@@ -90,12 +104,14 @@
             color: #fff;
         }
 
+        /* Container */
         .container {
             max-width: 1200px;
-            margin: 2rem auto;
+            margin: 1.5rem auto;
             padding: 0 1rem;
         }
 
+        /* Home Section */
         .home-section {
             padding: 2rem;
             text-align: center;
@@ -106,54 +122,60 @@
 
         .home-section h2 {
             font-family: 'Roboto', sans-serif;
-            font-size: 2rem;
+            font-size: clamp(1.8rem, 6vw, 2.2rem);
             color: var(--primary-color);
             margin-bottom: 1rem;
         }
 
         .home-section p {
-            font-size: 1.1rem;
+            font-size: clamp(1rem, 4vw, 1.1rem);
             max-width: 800px;
-            margin: 0 auto 2rem;
+            margin: 0 auto 1.5rem;
             color: #6b7280;
         }
 
-        .home-section .feature-cards {
+        .feature-cards {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
         }
 
-        .home-section .feature-card {
+        .feature-card {
             background: var(--card-bg);
-            color: var(--text-color);
             padding: 1.5rem;
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
         }
 
-        .home-section .feature-card i {
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-card i {
             font-size: 2rem;
             color: var(--secondary-color);
             margin-bottom: 1rem;
         }
 
-        .home-section .feature-card h3 {
-            font-size: 1.5rem;
+        .feature-card h3 {
+            font-size: 1.25rem;
             margin-bottom: 0.5rem;
             color: var(--primary-color);
         }
 
         .progress-chart {
-            max-width: 600px;
+            max-width: 500px;
             margin: 2rem auto;
         }
 
+        /* Navigation Tabs */
         .nav-tabs {
             background: var(--card-bg);
             border-radius: var(--border-radius);
             padding: 0.5rem;
             display: flex;
+            flex-wrap: wrap;
             gap: 0.5rem;
             border-bottom: none;
         }
@@ -161,11 +183,13 @@
         .nav-tabs .nav-link {
             color: var(--text-color);
             font-weight: 500;
-            padding: 0.75rem 1.5rem;
+            padding: 0.5rem 1rem;
             border-radius: 0.5rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            font-size: clamp(0.9rem, 3vw, 1rem);
+            transition: var(--transition);
         }
 
         .nav-tabs .nav-link.active {
@@ -179,11 +203,13 @@
 
         .tab-content {
             background: var(--card-bg);
-            padding: 2rem;
+            padding: 1.5rem;
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
+            margin-top: 1rem;
         }
 
+        /* Table */
         .table {
             border-radius: var(--border-radius);
             overflow: hidden;
@@ -193,15 +219,27 @@
         .table th {
             background: var(--primary-color);
             color: #fff;
+            font-weight: 600;
         }
 
+        .table td {
+            vertical-align: middle;
+        }
+
+        /* List Group */
         .list-group-item {
             border-radius: 0.5rem;
             margin-bottom: 0.5rem;
             padding: 1rem;
             background: var(--card-bg);
+            transition: var(--transition);
         }
 
+        .list-group-item:hover {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        /* Modal */
         .modal-content {
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
@@ -215,9 +253,8 @@
         }
 
         .modal-body {
-            background: var(--card-bg);
             padding: 1.5rem;
-            max-height: 60vh;
+            max-height: 70vh;
             overflow-y: auto;
         }
 
@@ -225,36 +262,17 @@
             filter: brightness(100%) invert(100%);
         }
 
-        .question {
-            background: var(--card-bg);
-            border: 1px solid #e5e7eb;
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-            border-radius: 0.5rem;
-        }
-
-        .question p {
-            font-weight: 500;
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-        }
-
-        footer {
-            background: var(--primary-color);
-            color: #fff;
-            text-align: center;
-            padding: 1.5rem;
-            margin-top: 2rem;
-        }
-
+        /* Forms */
         .form-control {
             border-radius: 0.5rem;
             border: 1px solid #d1d5db;
             padding: 0.75rem;
+            transition: var(--transition);
         }
 
         .form-control:focus {
             border-color: var(--secondary-color);
+            box-shadow: 0 0 0 0.2rem rgba(16, 185, 129, 0.25);
             outline: none;
         }
 
@@ -264,36 +282,54 @@
             padding: 0.75rem 1.5rem;
             border-radius: 0.5rem;
             color: #fff;
+            transition: var(--transition);
+        }
+
+        .btn-primary:hover {
+            background: #0d905d;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            color: #fff;
+            transition: var(--transition);
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+        }
+
+        /* Messages */
+        .success-message,
+        .error-message {
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            display: none;
         }
 
         .success-message {
             color: var(--secondary-color);
-            font-size: 0.875rem;
-            margin-top: 0.5rem;
-            display: none;
         }
 
         .error-message {
             color: #dc3545;
-            font-size: 0.875rem;
-            margin-top: 0.5rem;
-            display: none;
         }
 
         .error-message#corretaError {
             display: none;
-            color: #dc3545;
-            font-size: 0.875rem;
-            margin-top: 0.25rem;
         }
 
         .hidden {
             display: none;
         }
 
+        /* Feed */
         .feed-container {
             max-width: 800px;
-            margin: 2rem auto;
+            margin: 1.5rem auto;
         }
 
         .feed-post {
@@ -301,7 +337,12 @@
             padding: 1.5rem;
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
+            transition: var(--transition);
+        }
+
+        .feed-post:hover {
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
         }
 
         .feed-post-header {
@@ -312,17 +353,13 @@
         }
 
         .feed-post-header h5 {
-            margin: 0;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             color: var(--primary-color);
         }
 
         .feed-post-header small {
             color: #6b7280;
-        }
-
-        .feed-post-menu {
-            position: relative;
+            font-size: 0.85rem;
         }
 
         .feed-post-menu-btn {
@@ -349,22 +386,13 @@
         }
 
         .feed-post-menu-content button {
-            display: block;
-            width: 100%;
             padding: 0.5rem 1rem;
             background: none;
             border: none;
-            text-align: left;
             color: #dc3545;
             cursor: pointer;
-        }
-
-        .btn-danger {
-            background: #dc3545;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 0.5rem;
-            color: #fff;
+            width: 100%;
+            text-align: left;
         }
 
         .feed-actions {
@@ -377,91 +405,76 @@
             background: none;
             border: none;
             color: var(--text-color);
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 0.3rem;
+            transition: var(--transition);
         }
 
         .feed-action-btn.liked {
             color: var(--secondary-color);
         }
 
-        .comment-section {
-            margin-top: 0.3rem;
+        .feed-action-btn:hover {
+            color: var(--secondary-color);
         }
 
-        .comment-form {
-            margin-bottom: 0.3rem;
+        .comment-section {
+            margin-top: 0.5rem;
         }
 
         .comment-form .form-control {
-            font-size: 0.8rem;
-            padding: 0.4rem;
-            height: 2rem;
+            font-size: 0.9rem;
+            padding: 0.5rem;
+            height: 2.5rem;
         }
 
         .comment-form .btn-primary {
-            padding: 0.3rem 0.6rem;
-            font-size: 0.8rem;
-        }
-
-        .comments {
-            margin-top: 0.3rem;
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
         }
 
         .comment {
             background: var(--card-bg);
-            padding: 0.5rem;
-            margin-bottom: 0.3rem;
-            border-radius: 0.3rem;
-            border-left: 2px solid var(--secondary-color);
-        }
-
-        .comment-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.2rem;
-            font-size: 0.85rem;
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            border-radius: 0.5rem;
+            border-left: 3px solid var(--secondary-color);
         }
 
         .comment-header h6 {
-            margin: 0;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             color: var(--primary-color);
         }
 
         .comment-header small {
-            color: #6b7280;
             font-size: 0.75rem;
+            color: #6b7280;
         }
 
         .comment-body {
-            font-size: 0.8rem;
-            color: var(--text-color);
-            margin-bottom: 0.2rem;
+            font-size: 0.85rem;
         }
 
         .comment-actions {
             display: flex;
             gap: 0.5rem;
-            margin-top: 0.2rem;
+            margin-top: 0.3rem;
         }
 
         .btn-reply {
             background: none;
             border: none;
             color: var(--primary-color);
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             cursor: pointer;
-            padding: 0;
         }
 
         .reply-form {
-            margin-top: 0.3rem;
-            margin-left: 0.75rem;
+            margin-top: 0.5rem;
+            margin-left: 1rem;
             display: none;
         }
 
@@ -470,41 +483,120 @@
         }
 
         .reply-form .form-control {
-            font-size: 0.75rem;
-            padding: 0.3rem;
-            height: 1.8rem;
+            font-size: 0.85rem;
+            padding: 0.5rem;
+            height: 2rem;
         }
 
         .reply-form .btn-primary {
-            padding: 0.2rem 0.5rem;
-            font-size: 0.75rem;
+            padding: 0.3rem 0.75rem;
+            font-size: 0.85rem;
         }
 
         .replies {
-            margin-left: 0.75rem;
-            margin-top: 0.3rem;
+            margin-left: 1rem;
+            margin-top: 0.5rem;
         }
 
         .replies .comment {
-            padding: 0.4rem;
-            margin-bottom: 0.2rem;
+            padding: 0.5rem;
         }
 
-        .replies .comment-header {
-            font-size: 0.8rem;
+        /* Footer */
+        footer {
+            background: var(--primary-color);
+            color: #fff;
+            text-align: center;
+            padding: 1rem;
+            margin-top: 2rem;
+            font-size: 0.9rem;
         }
 
-        .replies .comment-body {
-            font-size: 0.75rem;
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            header {
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            .header-actions {
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+
+            .nav-tabs {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .nav-tabs .nav-link {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .home-section {
+                padding: 1.5rem;
+            }
+
+            .feature-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-dialog {
+                margin: 0.5rem;
+            }
+
+            .modal-body {
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            body {
+                font-size: 14px;
+            }
+
+            .container {
+                margin: 1rem auto;
+                padding: 0 0.5rem;
+            }
+
+            .home-section h2 {
+                font-size: 1.5rem;
+            }
+
+            .btn-primary,
+            .btn-danger {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .table th,
+            .table td {
+                font-size: 0.85rem;
+                padding: 0.5rem;
+            }
+
+            .feed-post-header h5 {
+                font-size: 1rem;
+            }
+
+            .feed-action-btn {
+                font-size: 0.85rem;
+            }
         }
     </style>
 </head>
 <body>
     <header id="header">
         <h1><i class="fas fa-coins"></i> Trilha da Fortuna</h1>
-        <div>
-            <button id="themeToggle" title="Alternar Tema"><i class="fas fa-moon"></i></button>
-            <a href="index.html" id="logoutLink">Sair</a>
+        <div class="header-actions">
+            <button id="themeToggle" title="Alternar Tema" aria-label="Alternar tema"><i class="fas fa-moon"></i></button>
+            <a href="index.html" id="logoutLink" aria-label="Sair">Sair</a>
         </div>
     </header>
 
@@ -512,22 +604,22 @@
         <section class="content-section" id="contentSection">
             <ul class="nav nav-tabs mb-0" id="navTabs" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" id="homeTab" data-bs-toggle="tab" href="#home" role="tab"> Home</a>
+                    <a class="nav-link active" id="homeTab" data-bs-toggle="tab" href="#home" role="tab" aria-selected="true">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="provasTab" data-bs-toggle="tab" href="#provas" role="tab"> Provas</a>
+                    <a class="nav-link" id="provasTab" data-bs-toggle="tab" href="#provas" role="tab" aria-selected="false">Provas</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="rankingTab" data-bs-toggle="tab" href="#ranking" role="tab"> Ranking</a>
+                    <a class="nav-link" id="rankingTab" data-bs-toggle="tab" href="#ranking" role="tab" aria-selected="false">Ranking</a>
                 </li>
                 <li class="nav-item" id="comprovanteTabItem">
-                    <a class="nav-link" id="comprovanteTabLink" data-bs-toggle="tab" href="#comprovante" role="tab"> Enviar Comprovante</a>
+                    <a class="nav-link" id="comprovanteTabLink" data-bs-toggle="tab" href="#comprovante" role="tab" aria-selected="false">Enviar Comprovante</a>
                 </li>
                 <li class="nav-item hidden" id="adminTabItem">
-                    <a class="nav-link" id="adminTabLink" data-bs-toggle="tab" href="#administrador" role="tab"> Administrador</a>
+                    <a class="nav-link" id="adminTabLink" data-bs-toggle="tab" href="#administrador" role="tab" aria-selected="false">Administrador</a>
                 </li>
                 <li class="nav-item hidden" id="investimentosTabItem">
-                    <a class="nav-link" id="investimentosTabLink" data-bs-toggle="tab" href="#investimentos" role="tab"> Investimentos</a>
+                    <a class="nav-link" id="investimentosTabLink" data-bs-toggle="tab" href="#investimentos" role="tab" aria-selected="false">Investimentos</a>
                 </li>
             </ul>
 
@@ -575,12 +667,12 @@
                 </section>
 
                 <section class="tab-pane fade" id="provas" role="tabpanel">
-                    <h2 class="mb-4"> Provas Disponíveis</h2>
+                    <h2 class="mb-4">Provas Disponíveis</h2>
                     <ul class="list-group" id="listaProvas"></ul>
                 </section>
 
                 <section class="tab-pane fade" id="ranking" role="tabpanel">
-                    <h2 class="mb-4"> Ranking de Usuários</h2>
+                    <h2 class="mb-4">Ranking de Usuários</h2>
                     <table class="table table-striped">
                         <thead>
                             <tr>
@@ -595,7 +687,7 @@
                 </section>
 
                 <section class="tab-pane fade" id="comprovante" role="tabpanel">
-                    <h2 class="mb-4"> Enviar Comprovante</h2>
+                    <h2 class="mb-4">Enviar Comprovante</h2>
                     <div class="card">
                         <div class="card-body">
                             <form id="comprovanteForm">
@@ -611,7 +703,7 @@
                 </section>
 
                 <section class="tab-pane fade" id="administrador" role="tabpanel">
-                    <h2 class="mb-4"> Gerenciamento</h2>
+                    <h2 class="mb-4">Gerenciamento</h2>
                     <div class="card mb-4">
                         <div class="card-body">
                             <h5>Criar Prova</h5>
@@ -641,7 +733,7 @@
                 </section>
 
                 <section class="tab-pane fade" id="investimentos" role="tabpanel">
-                    <h2 class="mb-4"> Investimentos Recebidos</h2>
+                    <h2 class="mb-4">Investimentos Recebidos</h2>
                     <table class="table table-striped">
                         <thead>
                             <tr>
@@ -658,12 +750,12 @@
         </section>
     </div>
 
-    <div class="modal fade" id="novaProvaModal" tabindex="-1">
+    <div class="modal fade" id="novaProvaModal" tabindex="-1" aria-labelledby="novaProvaModalLabel">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="novaProvaModalLabel">Criar Nova Prova</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
                 </div>
                 <div class="modal-body">
                     <form id="novaProvaForm">
@@ -682,12 +774,12 @@
         </div>
     </div>
 
-    <div class="modal fade" id="novaPerguntaModal" tabindex="-1">
+    <div class="modal fade" id="novaPerguntaModal" tabindex="-1" aria-labelledby="novaPerguntaModalLabel">
         <div class="modal-dialog modal-md">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="novaPerguntaModalLabel">Pergunta 1</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
                 </div>
                 <div class="modal-body">
                     <form id="novaPerguntaForm">
@@ -726,12 +818,12 @@
         </div>
     </div>
 
-    <div class="modal fade" id="provaModal" tabindex="-1">
+    <div class="modal fade" id="provaModal" tabindex="-1" aria-labelledby="provaModalLabel">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="provaModalLabel"> Prova</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <h5 class="modal-title" id="provaModalLabel">Prova</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
                 </div>
                 <div class="modal-body">
                     <form id="provaForm">
@@ -747,12 +839,12 @@
         </div>
     </div>
 
-    <div class="modal fade" id="confirmacaoEnvioModal" tabindex="-1">
+    <div class="modal fade" id="confirmacaoEnvioModal" tabindex="-1" aria-labelledby="confirmacaoEnvioModalLabel">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="confirmacaoEnvioModalLabel">Confirmar Envio</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
                 </div>
                 <div class="modal-body">
                     <p>Tem certeza que deseja enviar a prova? Você não poderá alterar suas respostas após o envio.</p>
@@ -765,12 +857,12 @@
         </div>
     </div>
 
-    <div class="modal fade" id="confirmacaoExclusaoProvaModal" tabindex="-1">
+    <div class="modal fade" id="confirmacaoExclusaoProvaModal" tabindex="-1" aria-labelledby="confirmacaoExclusaoProvaModalLabel">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="confirmacaoExclusaoProvaModalLabel">Confirmação de Exclusão</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
                 </div>
                 <div class="modal-body">
                     <p>Tem certeza que deseja excluir a prova <strong id="tituloProvaExclusao"></strong>?</p>
@@ -783,12 +875,12 @@
         </div>
     </div>
 
-    <div class="modal fade" id="resultadoModal" tabindex="-1">
+    <div class="modal fade" id="resultadoModal" tabindex="-1" aria-labelledby="resultadoModalLabel">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="resultadoModalLabel"> Resultado</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <h5 class="modal-title" id="resultadoModalLabel">Resultado</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
                 </div>
                 <div class="modal-body">
                     <p id="resultadoTexto"></p>
@@ -800,12 +892,12 @@
         </div>
     </div>
 
-    <div class="modal fade" id="sucessoModal" tabindex="-1">
+    <div class="modal fade" id="sucessoModal" tabindex="-1" aria-labelledby="sucessoModalLabel">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="sucessoModalLabel"> Sucesso</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <h5 class="modal-title" id="sucessoModalLabel">Sucesso</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
                 </div>
                 <div class="modal-body">
                     <p id="sucessoTexto">Operação realizada com sucesso!</p>
@@ -817,12 +909,12 @@
         </div>
     </div>
 
-    <div class="modal fade" id="comprovanteModal" tabindex="-1">
+    <div class="modal fade" id="comprovanteModal" tabindex="-1" aria-labelledby="comprovanteModalLabel">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="comprovanteModalLabel"> Visualizar Comprovante</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <h5 class="modal-title" id="comprovanteModalLabel">Visualizar Comprovante</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
                 </div>
                 <div class="modal-body">
                     <p id="comprovanteInfo"></p>
@@ -836,12 +928,12 @@
         </div>
     </div>
 
-    <div class="modal fade" id="confirmacaoExclusaoModal" tabindex="-1">
+    <div class="modal fade" id="confirmacaoExclusaoModal" tabindex="-1" aria-labelledby="confirmacaoExclusaoModalLabel">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="confirmacaoExclusaoModalLabel"> Confirmação de Exclusão</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <h5 class="modal-title" id="confirmacaoExclusaoModalLabel">Confirmação de Exclusão</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
                 </div>
                 <div class="modal-body">
                     <p>Tem certeza que deseja remover o usuário <strong id="nomeUsuarioExclusao"></strong>?</p>
@@ -854,12 +946,12 @@
         </div>
     </div>
 
-    <div class="modal fade" id="curtidasModal" tabindex="-1">
+    <div class="modal fade" id="curtidasModal" tabindex="-1" aria-labelledby="curtidasModalLabel">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="curtidasModalLabel">Usuários que Curtiram</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
                 </div>
                 <div class="modal-body">
                     <ul id="curtidasLista" class="list-group"></ul>
