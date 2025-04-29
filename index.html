@@ -5,28 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Trilha da Fortuna</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://
+
+fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous">
     <style>
         :root {
             --primary-color: #1e3a8a;
             --secondary-color: #10b981;
             --accent-color: #f59e0b;
-            --background-color: #f9fafb;
+            --background-color: #f3f4f6;
             --text-color: #111827;
             --card-bg: #ffffff;
-            --shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            --shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
             --border-radius: 1rem;
+            --transition: all 0.3s ease;
+            --gradient: linear-gradient(135deg, #1e3a8a, #10b981);
         }
 
-        /* Tema Escuro */
         body.dark-theme {
-            --primary-color: #1e40af;
+            --primary-color: #3b82f6;
             --secondary-color: #34d399;
             --accent-color: #facc15;
-            --background-color: #111827;
+            --background-color: #1f2937;
             --text-color: #e5e7eb;
-            --card-bg: #1f2937;
+            --card-bg: #2d3748;
             --shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
         }
 
@@ -39,193 +42,291 @@
         body {
             font-family: 'Inter', sans-serif;
             background: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: var(--transition);
+            font-size: 16px;
+            overflow-x: hidden;
             min-height: 100vh;
             display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: background 0.3s ease, color 0.3s ease;
+            flex-direction: column;
         }
 
-        /* Cartão de login */
-        .login-card {
+        /* Header */
+        header {
+            background: var(--card-bg);
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        header h1 {
+            font-family: 'Roboto', sans-serif;
+            font-size: clamp(1.6rem, 5vw, 2rem);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        header h1 i {
+            color: var(--secondary-color);
+        }
+
+        header .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        #themeToggle {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        #themeToggle:hover {
+            color: var(--secondary-color);
+            transform: scale(1.1);
+        }
+
+        /* Login Section */
+        .login-section {
+            padding: 3rem;
+            text-align: center;
             background: var(--card-bg);
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
-            padding: 2.5rem;
-            max-width: 400px;
+            max-width: 500px;
+            margin: 2rem auto;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .login-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            animation: fadeIn 0.8s ease-out;
+            height: 100%;
+            background: var(--gradient);
+            opacity: 0.05;
+            z-index: -1;
         }
 
-        @keyframes fadeIn {
-            0% { opacity: 0; transform: translateY(20px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Logo */
-        .login-card img {
-            max-width: 120px;
-            margin: 0 auto 1rem;
+        .login-section img {
+            max-width: 140px;
+            margin: 0 auto 1.5rem;
             display: block;
-            border-radius: 8px;
-            transition: transform 0.3s ease;
+            border-radius: 12px;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
         }
 
-        .login-card img:hover {
-            transform: scale(1.05);
+        .login-section img:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
         }
 
-        .login-card h2 {
-            font-size: 1.8rem;
-            font-weight: 700;
+        .login-section h2 {
+            font-family: 'Roboto', sans-serif;
+            font-size: clamp(2rem, 6vw, 2.5rem);
             color: var(--primary-color);
-            text-align: center;
             margin-bottom: 0.5rem;
         }
 
-        .login-card p {
-            color: #6b7280;
-            text-align: center;
+        .login-section p {
+            font-size: clamp(1rem, 4vw, 1.2rem);
             margin-bottom: 2rem;
-            font-size: 1rem;
+            color: #6b7280;
         }
 
-        /* Formulário */
+        /* Form */
         .form-group {
             position: relative;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.8rem;
         }
 
         .form-control {
+            border-radius: 0.75rem;
             border: 1px solid #d1d5db;
-            border-radius: 0.5rem;
             padding: 0.75rem;
-            background: transparent;
-            color: var(--text-color);
+            transition: var(--transition);
             font-size: 1rem;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-color);
+            width: 100%;
+            z-index: 1;
         }
 
         .form-control:focus {
             border-color: var(--secondary-color);
-            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+            box-shadow: 0 0 0 0.25rem rgba(16, 185, 129, 0.25);
             outline: none;
         }
 
         .form-label {
             position: absolute;
             top: 0.75rem;
-            left: 0.75rem;
+            left: 1rem;
             color: #6b7280;
             font-size: 1rem;
             transition: all 0.3s ease;
             pointer-events: none;
+            z-index: 1;
         }
 
         .form-control:focus + .form-label,
         .form-control:not(:placeholder-shown) + .form-label {
-            top: -0.75rem;
-            left: 0.5rem;
-            font-size: 0.75rem;
+            top: -0.8rem;
+            left: 0.75rem;
+            font-size: 0.8rem;
             color: var(--secondary-color);
             background: var(--card-bg);
-            padding: 0 0.25rem;
+            padding: 0 0.3rem;
         }
 
-        /* Toggle senha */
+        /* Password Toggle */
         .password-container {
             position: relative;
         }
 
         .password-container i {
             position: absolute;
-            right: 0.75rem;
+            right: 1rem;
             top: 50%;
             transform: translateY(-50%);
             cursor: pointer;
-            color: var(--primary-color);
-            font-size: 1rem;
+            color: var(--text-color);
+            font-size: 1.2rem;
             transition: color 0.3s ease;
+            z-index: 2;
         }
 
         .password-container i:hover {
             color: var(--secondary-color);
         }
 
-        /* Mensagem de erro */
+        /* Error Message */
         .error-message {
-            color: #dc2626;
-            font-size: 0.875rem;
-            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            margin-top: 0.75rem;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            background: rgba(220, 53, 69, 0.1);
+            color: #dc3545;
             display: none;
             text-align: center;
-            animation: fadeIn 0.3s ease;
+            z-index: 1;
         }
 
-        /* Botão */
+        /* Button */
         .btn-primary {
-            background: var(--secondary-color);
+            background: var(--gradient);
             border: none;
-            padding: 0.75rem;
-            border-radius: 0.5rem;
-            font-weight: 600;
-            font-size: 1rem;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            padding: 0.75rem 2rem;
+            border-radius: 0.75rem;
+            color: #fff;
+            font-weight: 500;
+            transition: var(--transition);
             width: 100%;
-            position: relative;
-            overflow: hidden;
+            cursor: pointer;
+            z-index: 1;
         }
 
         .btn-primary:hover {
+            background: linear-gradient(135deg, #0d905d, #1e3a8a);
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
 
-        .btn-primary::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: width 0.6s ease, height 0.6s ease;
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
         }
 
-        .btn-primary:hover::before {
-            width: 200%;
-            height: 200%;
+        /* Footer */
+        footer {
+            background: var(--gradient);
+            color: #fff;
+            text-align: center;
+            padding: 2rem;
+            margin-top: auto;
+            font-size: 1rem;
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.2);
         }
 
-        /* Responsividade */
-        @media (max-width: 576px) {
-            .login-card {
-                padding: 1.5rem;
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 1rem;
+            }
+
+            header h1 {
+                font-size: 1.6rem;
+            }
+
+            .header-actions {
+                flex-wrap: wrap;
+                gap: 0.75rem;
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .login-section {
+                padding: 2rem;
                 margin: 1rem;
             }
+        }
 
-            .login-card h2 {
-                font-size: 1.5rem;
+        @media (max-width: 576px) {
+            body {
+                font-size: 14px;
             }
 
-            .login-card img {
-                max-width: 100px;
+            .login-section h2 {
+                font-size: 1.8rem;
             }
 
             .btn-primary {
-                padding: 0.65rem;
+                padding: 0.5rem 1rem;
                 font-size: 0.9rem;
+            }
+
+            .form-control {
+                font-size: 0.9rem;
+                padding: 0.5rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="login-card">
+    <header id="header">
+        <h1><i class="fas fa-coins"></i> Trilha da Fortuna</h1>
+        <div class="header-actions">
+            <button id="themeToggle" title="Alternar Tema" aria-label="Alternar tema"><i class="fas fa-moon"></i></button>
+        </div>
+    </header>
+
+    <div class="login-section">
         <img src="logo.png" alt="Logo Trilha da Fortuna">
-        <h2>Bem-vindo</h2>
-        <p>Entre para continuar sua jornada financeira!</p>
+        <h2>Trilha da Fortuna</h2>
+        <p>Entre para explorar sua jornada financeira!</p>
         <form id="loginForm">
             <div class="form-group">
                 <input type="text" id="username" class="form-control" placeholder=" " required>
@@ -237,9 +338,13 @@
                 <i class="fas fa-eye" id="togglePassword" aria-label="Alternar visibilidade da senha"></i>
             </div>
             <div class="error-message" id="errorMessage"></div>
-            <button type="submit" class="btn btn-primary">Entrar</button>
+            <button type="submit" class="btn btn-primary" id="submitButton">Entrar</button>
         </form>
     </div>
+
+    <footer id="footer">
+        <p>© 2025 Trilha da Fortuna. Todos os direitos reservados.</p>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script>
@@ -265,7 +370,6 @@
                 return usuarios;
             } catch (error) {
                 console.error('Erro ao carregar usuários:', error);
-                // Retornar usuários padrão em caso de erro
                 return [
                     { username: "admin123", password: "admin123", nome: "Administrador", isAdmin: true, pontos: 0 },
                     { username: "user1", password: "user123", nome: "João Silva", isAdmin: false, pontos: 100 },
@@ -289,71 +393,60 @@
             }
         });
 
+        // Toggle tema escuro
+        document.getElementById('themeToggle').addEventListener('click', () => {
+            document.body.classList.toggle('dark-theme');
+            const isDark = document.body.classList.contains('dark-theme');
+            document.getElementById('themeToggle').innerHTML = `<i class="fas fa-${isDark ? 'sun' : 'moon'}"></i>`;
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        });
+
+        // Carregar tema salvo
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-theme');
+            document.getElementById('themeToggle').innerHTML = '<i class="fas fa-sun"></i>';
+        }
+
         // Função de Login
         document.getElementById('loginForm').addEventListener('submit', (e) => {
             e.preventDefault();
+            const submitButton = document.getElementById('submitButton');
+            submitButton.disabled = true; // Desativa o botão durante o processamento
+
             const username = document.getElementById('username').value.trim();
             const password = document.getElementById('password').value.trim();
             const errorMessage = document.getElementById('errorMessage');
             errorMessage.style.display = 'none';
 
-            console.log('Tentando login com:', { username, password });
-
             const usuarios = carregarUsuarios();
-            console.log('Usuários carregados:', usuarios);
-
             const usuario = usuarios.find(u => u.username === username);
-            console.log('Usuário encontrado:', usuario);
 
             if (!usuario) {
                 errorMessage.textContent = 'Usuário não encontrado';
                 errorMessage.style.display = 'block';
-                setTimeout(() => {
-                    errorMessage.style.display = 'none';
-                }, 3000);
+                submitButton.disabled = false;
+                setTimeout(() => errorMessage.style.display = 'none', 3000);
                 return;
             }
 
             if (usuario.password !== password) {
                 errorMessage.textContent = 'Senha incorreta';
                 errorMessage.style.display = 'block';
-                setTimeout(() => {
-                    errorMessage.style.display = 'none';
-                }, 3000);
+                submitButton.disabled = false;
+                setTimeout(() => errorMessage.style.display = 'none', 3000);
                 return;
             }
 
             try {
                 localStorage.setItem('usuarioLogado', JSON.stringify(usuario));
-                console.log('Usuário logado salvo no localStorage:', usuario);
-
-                // Verificar se software.html existe (simulação)
-                fetch('software.html', { method: 'HEAD' })
-                    .then(response => {
-                        if (response.ok) {
-                            window.location.href = 'software.html';
-                        } else {
-                            errorMessage.textContent = 'Erro: Página principal não encontrada';
-                            errorMessage.style.display = 'block';
-                            setTimeout(() => {
-                                errorMessage.style.display = 'none';
-                            }, 3000);
-                        }
-                    })
-                    .catch(() => {
-                        errorMessage.textContent = 'Erro: Não foi possível acessar a página principal';
-                        errorMessage.style.display = 'block';
-                        setTimeout(() => {
-                            errorMessage.style.display = 'none';
-                        }, 3000);
-                    });
+                // Simular verificação da página software.html
+                window.location.href = 'software.html';
             } catch (error) {
                 console.error('Erro ao salvar usuário logado:', error);
                 errorMessage.textContent = 'Erro ao realizar login. Tente novamente.';
                 errorMessage.style.display = 'block';
-                setTimeout(() => {
-                    errorMessage.style.display = 'none';
-                }, 3000);
+                submitButton.disabled = false;
+                setTimeout(() => errorMessage.style.display = 'none', 3000);
             }
         });
     </script>
