@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -770,6 +771,18 @@
                 padding: 0.5rem;
             }
         }
+        
+            .list-group-item .btn-sm {
+                margin-left: 0.5rem;
+}
+
+             .list-group-item .d-flex {
+                align-items: center;
+        }
+
+             .list-group-item .badge {
+                margin-right: 0.5rem;
+        }
     </style>
 </head>
 <body>
@@ -889,6 +902,12 @@
                         <div class="card-body">
                             <h5>Criar Prova</h5>
                             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#novaProvaModal">Criar Prova</button>
+                        </div>
+                    </div>
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5>Provas Criadas</h5>
+                            <ul class="list-group" id="listaProvasAdmin"></ul>
                         </div>
                     </div>
                     <div class="card">
@@ -1056,6 +1075,24 @@
         </div>
     </div>
 
+    <div class="modal fade" id="confirmacaoEnvioProvaModal" tabindex="-1" aria-labelledby="confirmacaoEnvioProvaModalLabel">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmacaoEnvioProvaModalLabel">Confirmar Envio da Prova</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Tem certeza que deseja enviar a prova <strong id="tituloProvaEnvio"></strong> para a aba de provas dos usuários?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="confirmarEnvioProvaBtn">Enviar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="modal fade" id="resultadoModal" tabindex="-1" aria-labelledby="resultadoModalLabel">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -1168,6 +1205,9 @@ function carregarDados() {
         usuarios.push({ username: "admin123", password: "admin123", nome: "Administrador", isAdmin: true, pontos: 0 });
     }
 
+    let provas = provasSalvas ? JSON.parse(provasSalvas) : [];
+    provas = provas.map(p => ({ ...p, publicada: p.publicada !== undefined ? p.publicada : false }));
+
     let feeds = feedsSalvos ? JSON.parse(feedsSalvos) : [];
     feeds = feeds.map(f => ({
         ...f,
@@ -1181,7 +1221,7 @@ function carregarDados() {
 
     return {
         usuarios,
-        provas: provasSalvas ? JSON.parse(provasSalvas) : [],
+        provas,
         comprovantes: comprovantesSalvos ? JSON.parse(comprovantesSalvos) : [],
         respostas: respostasSalvas ? JSON.parse(respostasSalvas) : {},
         feeds
@@ -1206,6 +1246,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     ajustarAbas();
     atualizarProvas();
+    atualizarProvasAdmin(); // Adiciona a chamada
     atualizarRanking();
     atualizarInvestimentos();
     inicializarGrafico();
@@ -1335,7 +1376,8 @@ function enviarProva() {
     provas.push({
         id: provas.length + 1,
         titulo,
-        perguntas: perguntasTemp
+        perguntas: perguntasTemp,
+        publicada: false // Prova não publicada inicialmente
     });
 
     salvarDados();
@@ -1346,9 +1388,27 @@ function enviarProva() {
     const provaModal = bootstrap.Modal.getInstance(document.getElementById('novaProvaModal'));
     perguntaModal.hide();
     provaModal.hide();
-    document.getElementById('sucessoTexto').textContent = 'Prova enviada!';
+    document.getElementById('sucessoTexto').textContent = 'Prova criada com sucesso!';
     new bootstrap.Modal(document.getElementById('sucessoModal')).show();
     atualizarProvas();
+    atualizarProvasAdmin(); // Atualiza a lista de provas no administrador
+}
+
+function atualizarProvasAdmin() {
+    const listaProvasAdmin = document.getElementById('listaProvasAdmin');
+    listaProvasAdmin.innerHTML = '';
+    provas.forEach(prova => {
+        const li = document.createElement('li');
+        li.className = 'list-group-item d-flex justify-content-between align-items-center';
+        li.innerHTML = `
+            <span>${prova.titulo} ${prova.publicada ? '<span class="badge bg-success">Publicada</span>' : '<span class="badge bg-warning">Não publicada</span>'}</span>
+            <div>
+                ${!prova.publicada ? `<button class="btn btn-primary btn-sm" onclick="confirmarEnvioProva(${prova.id}, '${prova.titulo}')">Enviar</button>` : ''}
+                <button class="btn btn-danger btn-sm" onclick="confirmarExclusaoProva(${prova.id}, '${prova.titulo}')">Excluir</button>
+            </div>
+        `;
+        listaProvasAdmin.appendChild(li);
+    });
 }
 
 function atualizarListaPerguntas() {
@@ -1386,7 +1446,7 @@ document.getElementById('sucessoOkButton').addEventListener('click', () => {
 function atualizarProvas() {
     const listaProvas = document.getElementById('listaProvas');
     listaProvas.innerHTML = '';
-    provas.forEach(prova => {
+    provas.filter(prova => prova.publicada).forEach(prova => {
         const li = document.createElement('li');
         li.className = 'list-group-item d-flex justify-content-between align-items-center';
         let nota = '';
@@ -1408,6 +1468,24 @@ function atualizarProvas() {
         }
         listaProvas.appendChild(li);
     });
+}
+
+function confirmarEnvioProva(provaId, titulo) {
+    document.getElementById('tituloProvaEnvio').textContent = titulo;
+    const modal = new bootstrap.Modal(document.getElementById('confirmacaoEnvioProvaModal'));
+    document.getElementById('confirmarEnvioProvaBtn').onclick = () => {
+        const prova = provas.find(p => p.id === provaId);
+        if (prova) {
+            prova.publicada = true;
+            salvarDados();
+            atualizarProvas();
+            atualizarProvasAdmin();
+            modal.hide();
+            document.getElementById('sucessoTexto').textContent = 'Prova enviada para os usuários!';
+            new bootstrap.Modal(document.getElementById('sucessoModal')).show();
+        }
+    };
+    modal.show();
 }
 
 function confirmarExclusaoProva(provaId, titulo) {
