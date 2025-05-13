@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -194,13 +193,6 @@
             color: var(--primary-color);
         }
 
-        .progress-chart {
-            max-width: 600px;
-            margin: 3rem auto;
-            position: relative;
-            z-index: 1;
-        }
-
         /* Navigation Tabs */
         .nav-tabs {
             background: var(--card-bg);
@@ -352,7 +344,7 @@
         .btn-secondary {
             background: #6b7280;
             border: none;
-            padding: 0.75rem 1.5rem;
+            padding: 0.75rem 1mee;
             border-radius: 0.75rem;
             color: #fff;
             transition: var(--transition);
@@ -772,17 +764,38 @@
             }
         }
         
-            .list-group-item .btn-sm {
-                margin-left: 0.5rem;
+        .list-group-item .btn-sm {
+            margin-left: 0.5rem;
+        }
+
+        .list-group-item .d-flex {
+            align-items: center;
+        }
+
+        .list-group-item .badge {
+            margin-right: 0.5rem;
+        }
+
+        #feedFormContainer {
+    position: relative;
+    z-index: 10; /* Garante que o formulário esteja acima de outros elementos */
 }
 
-             .list-group-item .d-flex {
-                align-items: center;
-        }
+#feedMessage {
+    pointer-events: auto !important; /* Permite interação com o textarea */
+    user-select: auto !important; /* Permite seleção de texto */
+    opacity: 1 !important; /* Garante visibilidade */
+    resize: vertical; /* Permite redimensionar apenas verticalmente */
+    min-height: 100px; /* Altura mínima para facilitar interação */
+}
 
-             .list-group-item .badge {
-                margin-right: 0.5rem;
-        }
+#feedFormContainer.hidden {
+    display: none !important; /* Reforça a ocultação quando hidden */
+}
+
+#feedForm {
+    pointer-events: auto !important; /* Garante que o formulário seja interativo */
+}
     </style>
 </head>
 <body>
@@ -822,9 +835,6 @@
                     <div class="home-section">
                         <h2>Bem-vindo à Trilha da Fortuna!</h2>
                         <p>Explore sua jornada financeira com aprendizado, competição e recompensas incríveis.</p>
-                        <div class="progress-chart">
-                            <canvas id="progressChart"></canvas>
-                        </div>
                         <div class="feature-cards">
                             <article class="feature-card">
                                 <i class="fas fa-file-alt"></i>
@@ -844,18 +854,17 @@
                         </div>
                         <div id="feedSection" class="mt-5">
                             <h3>Feed de Recados</h3>
-                            <div id="feedFormContainer" class="mb-4 hidden">
-                                <form id="feedForm" novalidate>
+                            <div id="feedFormContainer" class="hidden">
+                                <form id="feedForm">
                                     <div class="mb-3">
-                                        <label for="feedMessage" class="form-label">Novo Recado</label>
-                                        <textarea id="feedMessage" class="form-control" placeholder="Digite seu recado" required></textarea>
+                                        <textarea id="feedMessage" class="form-control" placeholder="Escreva um recado" required></textarea>
                                     </div>
                                     <button type="submit" class="btn btn-primary">Postar</button>
-                                    <div class="success-message" id="feedSuccess">Recado postado com sucesso!</div>
-                                    <div class="error-message" id="feedError">Por favor, insira uma mensagem válida.</div>
+                                    <div id="feedSuccess" class="alert alert-success hidden">Recado postado com sucesso!</div>
+                                    <div id="feedError" class="alert alert-danger hidden">Por favor, escreva uma mensagem.</div>
                                 </form>
                             </div>
-                            <div id="feedContainer" class="feed-container"></div>
+                            <div id="feedContainer"></div>
                         </div>
                     </div>
                 </section>
@@ -868,14 +877,7 @@
                 <section class="tab-pane fade" id="ranking" role="tabpanel">
                     <h2 class="mb-4">Ranking de Usuários</h2>
                     <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Posição</th>
-                                <th>Nome</th>
-                                <th>Pontos</th>
-                                <th>Ação</th>
-                            </tr>
-                        </thead>
+                        <thead id="rankingHead"></thead>
                         <tbody id="rankingBody"></tbody>
                     </table>
                 </section>
@@ -1164,16 +1166,39 @@
         </div>
     </div>
 
+    <div class="modal fade" id="adicionarPontuacaoModal" tabindex="-1" aria-labelledby="adicionarPontuacaoModalLabel">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="adicionarPontuacaoModalLabel">Adicionar Pontuação</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="adicionarPontuacaoForm">
+                        <div class="mb-3">
+                            <label for="pontosInput" class="form-label">Pontos a adicionar</label>
+                            <input type="number" id="pontosInput" class="form-control" min="0" required>
+                            <div class="error-message" id="pontosError" style="display: none;">Por favor, insira um valor numérico válido.</div>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary">Adicionar</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <footer id="footer">
         <p>© 2025 Trilha da Fortuna. Todos os direitos reservados.</p>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" crossorigin="anonymous"></script>
    
-    
-<script>
-       let usuarios = [];
+ <script>
+
+let usuarios = [];
 let provas = [];
 let comprovantes = [];
 let respostas = {};
@@ -1237,6 +1262,8 @@ function salvarDados() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('17. DOMContentLoaded. Usuario logado:', usuarioLogado);
+
     const dados = carregarDados();
     usuarios = dados.usuarios;
     provas = dados.provas;
@@ -1244,19 +1271,23 @@ document.addEventListener('DOMContentLoaded', () => {
     respostas = dados.respostas;
     feeds = dados.feeds;
 
+    if (usuarioLogado.username === 'admin123' && usuarioLogado.isAdmin !== true) {
+        usuarioLogado.isAdmin = true;
+        localStorage.setItem('usuarioLogado', JSON.stringify(usuarioLogado));
+        console.log('18. Corrigido: isAdmin definido como true em DOMContentLoaded.');
+    }
+
     ajustarAbas();
     atualizarProvas();
-    atualizarProvasAdmin(); // Adiciona a chamada
+    atualizarProvasAdmin();
     atualizarRanking();
     atualizarInvestimentos();
-    inicializarGrafico();
     configurarFeed();
 
     document.getElementById('correta').addEventListener('input', (e) => {
         const input = e.target;
         const value = input.value.toLowerCase();
         const errorMessage = document.getElementById('corretaError');
-
         if (value && !['a', 'b', 'c', 'd'].includes(value)) {
             input.value = '';
             errorMessage.style.display = 'block';
@@ -1266,7 +1297,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Close menus on outside click
     document.addEventListener('click', (e) => {
         const menus = document.querySelectorAll('.feed-post-menu-content.show, .comment-menu-content.show');
         menus.forEach(menu => {
@@ -1295,35 +1325,6 @@ function ajustarAbas() {
         investimentosTabItem.classList.add('hidden');
         feedFormContainer.classList.add('hidden');
     }
-}
-
-function inicializarGrafico() {
-    if (typeof Chart === 'undefined') {
-        console.error('Chart.js não foi carregado corretamente.');
-        return;
-    }
-    const ctx = document.getElementById('progressChart').getContext('2d');
-    const usuario = usuarios.find(u => u.username === usuarioLogado.username);
-    const pontos = usuario ? usuario.pontos : 0;
-    new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-            labels: ['Pontos Obtidos', 'Restantes'],
-            datasets: [{
-                data: [pontos, 500 - pontos],
-                backgroundColor: ['#10b981', '#e5e7eb'],
-                borderWidth: 0
-            }]
-        },
-        options: {
-            cutout: '70%',
-            plugins: { legend: { display: false } },
-            animation: {
-                animateScale: true,
-                animateRotate: true
-            }
-        }
-    });
 }
 
 document.getElementById('themeToggle').addEventListener('click', () => {
@@ -1377,7 +1378,7 @@ function enviarProva() {
         id: provas.length + 1,
         titulo,
         perguntas: perguntasTemp,
-        publicada: false // Prova não publicada inicialmente
+        publicada: false
     });
 
     salvarDados();
@@ -1391,7 +1392,7 @@ function enviarProva() {
     document.getElementById('sucessoTexto').textContent = 'Prova criada com sucesso!';
     new bootstrap.Modal(document.getElementById('sucessoModal')).show();
     atualizarProvas();
-    atualizarProvasAdmin(); // Atualiza a lista de provas no administrador
+    atualizarProvasAdmin();
 }
 
 function atualizarProvasAdmin() {
@@ -1599,28 +1600,44 @@ function abrirProva(prova) {
                 new bootstrap.Modal(document.getElementById('resultadoModal')).show();
                 atualizarProvas();
                 atualizarRanking();
-                inicializarGrafico();
             };
         }
     });
 
     modal.show();
 }
-
 function atualizarRanking() {
+    const rankingHead = document.getElementById('rankingHead');
     const rankingBody = document.getElementById('rankingBody');
+
+    // Preenche o cabeçalho da tabela
+    rankingHead.innerHTML = `
+        <tr>
+            <th>Posição</th>
+            <th>Nome</th>
+            <th>Pontos</th>
+            ${usuarioLogado.isAdmin ? '<th>Ação</th>' : ''}
+        </tr>
+    `;
+
+    // Preenche o corpo da tabela
     rankingBody.innerHTML = '';
     const ordenados = [...usuarios].sort((a, b) => b.pontos - a.pontos);
     ordenados.forEach((u, i) => {
         if (!u.isAdmin) {
-            rankingBody.innerHTML += `
-                <tr>
-                    <td>${i + 1}</td>
-                    <td>${u.nome}</td>
-                    <td>${u.pontos}</td>
-                    <td>${usuarioLogado.isAdmin ? `<button class="btn btn-danger btn-sm" onclick="confirmarExclusaoUsuario('${u.username}')">Remover</button>` : ''}</td>
-                </tr>
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${i + 1}</td>
+                <td>${u.nome}</td>
+                <td>${u.pontos}</td>
+                ${usuarioLogado.isAdmin ? `
+                    <td>
+                        <button class="btn btn-primary btn-sm me-2" onclick="abrirModalPontuacao('${u.username}')">Adicionar Pontuação</button>
+                        <button class="btn btn-danger btn-sm" onclick="confirmarExclusaoUsuario('${u.username}')">Remover</button>
+                    </td>
+                ` : ''}
             `;
+            rankingBody.appendChild(row);
         }
     });
 }
@@ -1721,34 +1738,81 @@ function visualizarComprovante(id) {
     new bootstrap.Modal(document.getElementById('comprovanteModal')).show();
 }
 
+function sanitizeInput(input) {
+    const div = document.createElement('div');
+    div.textContent = input;
+    return div.innerHTML.replace(/<[^>]+>/g, '');
+}
+
+// Função para configurar o feed
+
+
 function configurarFeed() {
+    console.log('1. Iniciando configurarFeed');
+
     const feedForm = document.getElementById('feedForm');
     const feedFormContainer = document.getElementById('feedFormContainer');
+    const feedMessage = document.getElementById('feedMessage');
 
-    if (!feedForm || !feedFormContainer) {
-        console.error('Elementos feedForm ou feedFormContainer não encontrados');
+    console.log('2. feedForm:', feedForm);
+    console.log('3. feedFormContainer:', feedFormContainer);
+    console.log('4. feedMessage:', feedMessage);
+    console.log('5. usuarioLogado:', usuarioLogado);
+    console.log('6. É admin?', usuarioLogado?.isAdmin);
+
+    if (!feedForm || !feedFormContainer || !feedMessage) {
+        console.error('Erro: Elementos feedForm, feedFormContainer ou feedMessage não encontrados.');
         return;
     }
 
-    if (usuarioLogado.isAdmin) {
-        feedFormContainer.classList.remove('hidden');
-    } else {
-        feedFormContainer.classList.add('hidden');
+    if (usuarioLogado.username === 'admin123' && usuarioLogado.isAdmin !== true) {
+        usuarioLogado.isAdmin = true;
+        localStorage.setItem('usuarioLogado', JSON.stringify(usuarioLogado));
+        console.log('7. Corrigido: isAdmin definido como true.');
     }
 
-    feedForm.addEventListener('submit', (e) => {
+    feedMessage.removeAttribute('disabled');
+    feedMessage.removeAttribute('readonly');
+    feedMessage.style.pointerEvents = 'auto';
+    console.log('8. Textarea configurado para ser interativo.');
+
+    if (usuarioLogado.isAdmin) {
+        feedFormContainer.classList.remove('hidden');
+        console.log('9. Formulário de feed exibido para admin.');
+    } else {
+        feedFormContainer.classList.add('hidden');
+        console.log('10. Formulário de feed oculto (não é admin).');
+    }
+
+    feedForm.onsubmit = null;
+    feedForm.onsubmit = (e) => {
         e.preventDefault();
-        const mensagem = document.getElementById('feedMessage').value.trim();
+        console.log('11. Submissão do formulário iniciada');
+
+        const mensagem = sanitizeInput(feedMessage.value.trim());
         const successMessage = document.getElementById('feedSuccess');
         const errorMessage = document.getElementById('feedError');
 
+        if (!successMessage || !errorMessage) {
+            console.error('Erro: feedSuccess ou feedError não encontrados.');
+            return;
+        }
+
         if (!mensagem) {
+            console.log('Erro: Mensagem vazia.');
+            errorMessage.textContent = 'Por favor, escreva uma mensagem.';
             errorMessage.style.display = 'block';
             setTimeout(() => errorMessage.style.display = 'none', 3000);
             return;
         }
 
-        if (!usuarioLogado.isAdmin) return;
+        if (!usuarioLogado.isAdmin) {
+            console.error('Erro: Tentativa de postagem por não-admin.');
+            errorMessage.textContent = 'Apenas administradores podem postar.';
+            errorMessage.style.display = 'block';
+            setTimeout(() => errorMessage.style.display = 'none', 3000);
+            return;
+        }
 
         feeds.unshift({
             id: feeds.length + 1,
@@ -1759,24 +1823,66 @@ function configurarFeed() {
             comentarios: []
         });
 
+        console.log('12. Feed adicionado:', feeds[0]);
         salvarDados();
         feedForm.reset();
         successMessage.style.display = 'block';
         setTimeout(() => successMessage.style.display = 'none', 3000);
         atualizarFeed();
+    };
+
+    feedMessage.addEventListener('mouseover', () => {
+        console.log('13. Mouse sobre o textarea.');
+        feedMessage.focus();
     });
 
     atualizarFeed();
 }
 
+// Função para ajustar as abas
+function ajustarAbas() {
+    console.log('14. Ajustando abas. É admin?', usuarioLogado?.isAdmin);
+
+    const comprovanteTabItem = document.getElementById('comprovanteTabItem');
+    const adminTabItem = document.getElementById('adminTabItem');
+    const investimentosTabItem = document.getElementById('investimentosTabItem');
+    const feedFormContainer = document.getElementById('feedFormContainer');
+
+    if (usuarioLogado.isAdmin) {
+        comprovanteTabItem.classList.add('hidden');
+        adminTabItem.classList.remove('hidden');
+        investimentosTabItem.classList.remove('hidden');
+        if (feedFormContainer) {
+            feedFormContainer.classList.remove('hidden');
+            console.log('15. Formulário de feed exibido em ajustarAbas.');
+        }
+    } else {
+        comprovanteTabItem.classList.remove('hidden');
+        adminTabItem.classList.add('hidden');
+        investimentosTabItem.classList.add('hidden');
+        if (feedFormContainer) {
+            feedFormContainer.classList.add('hidden');
+            console.log('16. Formulário de feed oculto em ajustarAbas.');
+        }
+    }
+}
+
+// Função para atualizar o feed
 function atualizarFeed() {
     const container = document.getElementById('feedContainer');
+    if (!container) {
+        console.error('Erro: feedContainer não encontrado.');
+        return;
+    }
+
+    console.log('Atualizando feed. Total de feeds:', feeds.length); // Log para depuração
+
     container.innerHTML = feeds.length ? feeds.map(f => `
         <div class="feed-post">
             <div class="feed-post-header">
                 <div>
-                    <h5>${f.autor}</h5>
-                    <small>${f.data}</small>
+                    <h5>${sanitizeInput(f.autor)}</h5>
+                    <small>${sanitizeInput(f.data)}</small>
                 </div>
                 ${usuarioLogado.isAdmin && f.autor === usuarioLogado.nome ? `
                     <div class="feed-post-menu">
@@ -1789,12 +1895,12 @@ function atualizarFeed() {
                 ` : ''}
             </div>
             <div class="feed-post-body">
-                <p>${f.mensagem}</p>
+                <p>${sanitizeInput(f.mensagem)}</p>
             </div>
             <div class="edit-form hidden" id="edit-feed-form-${f.id}">
                 <form onsubmit="editarFeed(event, ${f.id})">
                     <div class="mb-3">
-                        <textarea class="form-control" placeholder="Edite seu recado" required>${f.mensagem}</textarea>
+                        <textarea class="form-control" placeholder="Edite seu recado" required>${sanitizeInput(f.mensagem)}</textarea>
                     </div>
                     <div class="d-flex gap-2">
                         <button type="submit" class="btn btn-primary">Salvar</button>
@@ -1822,8 +1928,8 @@ function atualizarFeed() {
                         <div class="comment">
                             <div class="comment-header">
                                 <div>
-                                    <h6>${c.autor}</h6>
-                                    <small>${c.data}</small>
+                                    <h6>${sanitizeInput(c.autor)}</h6>
+                                    <small>${sanitizeInput(c.data)}</small>
                                 </div>
                                 ${(c.autor === usuarioLogado.nome || usuarioLogado.username === 'admin123') ? `
                                     <div class="comment-menu">
@@ -1836,12 +1942,12 @@ function atualizarFeed() {
                                 ` : ''}
                             </div>
                             <div class="comment-body">
-                                <p>${c.mensagem}</p>
+                                <p>${sanitizeInput(c.mensagem)}</p>
                             </div>
                             <div class="edit-form hidden" id="edit-comment-form-${f.id}-${i}">
                                 <form onsubmit="editarComentario(event, ${f.id}, ${i})">
                                     <div class="mb-3">
-                                        <input type="text" class="form-control" value="${c.mensagem}" required>
+                                        <input type="text" class="form-control" value="${sanitizeInput(c.mensagem)}" required>
                                     </div>
                                     <div class="d-flex gap-2">
                                         <button type="submit" class="btn btn-primary">Salvar</button>
@@ -1865,11 +1971,11 @@ function atualizarFeed() {
                                 ${c.respostas.map(r => `
                                     <div class="comment">
                                         <div class="comment-header">
-                                            <h6>${r.autor}</h6>
-                                            <small>${r.data}</small>
+                                            <h6>${sanitizeInput(r.autor)}</h6>
+                                            <small>${sanitizeInput(r.data)}</small>
                                         </div>
                                         <div class="comment-body">
-                                            <p>${r.mensagem}</p>
+                                            <p>${sanitizeInput(r.mensagem)}</p>
                                         </div>
                                     </div>
                                 `).join('')}
@@ -1879,35 +1985,17 @@ function atualizarFeed() {
                 </div>
             </div>
         </div>
-    `).join('') : '<p class="text-muted">Nenhum recado no feed.</p>';
+    `).join('') : '<p class="text-center">Nenhum recado no feed.</p>';
 }
 
 function toggleMenu(feedId) {
     const menu = document.getElementById(`menu-${feedId}`);
-    const allMenus = document.querySelectorAll('.feed-post-menu-content, .comment-menu-content');
-    allMenus.forEach(m => {
-        if (m !== menu) m.classList.remove('show');
-    });
     menu.classList.toggle('show');
 }
 
-function toggleCommentMenu(feedId, comentarioIndex) {
-    const menu = document.getElementById(`comment-menu-${feedId}-${comentarioIndex}`);
-    const allMenus = document.querySelectorAll('.feed-post-menu-content, .comment-menu-content');
-    allMenus.forEach(m => {
-        if (m !== menu) m.classList.remove('show');
-    });
+function toggleCommentMenu(feedId, commentIndex) {
+    const menu = document.getElementById(`comment-menu-${feedId}-${commentIndex}`);
     menu.classList.toggle('show');
-}
-
-function toggleCommentForm(feedId) {
-    const form = document.getElementById(`comment-form-${feedId}`);
-    form.classList.toggle('hidden');
-}
-
-function toggleReplyForm(feedId, comentarioIndex) {
-    const form = document.getElementById(`reply-form-${feedId}-${comentarioIndex}`);
-    form.classList.toggle('hidden');
 }
 
 function mostrarEditarFeed(feedId) {
@@ -1916,131 +2004,157 @@ function mostrarEditarFeed(feedId) {
     document.getElementById(`menu-${feedId}`).classList.remove('show');
 }
 
-function cancelarEdicaoFeed(feedId) {
-    const form = document.getElementById(`edit-feed-form-${feedId}`);
-    form.classList.add('hidden');
-}
-
 function editarFeed(event, feedId) {
     event.preventDefault();
-    const mensagem = event.target.querySelector('textarea').value.trim();
+    const form = event.target;
+    const mensagem = form.querySelector('textarea').value.trim();
     if (!mensagem) return;
     const feed = feeds.find(f => f.id === feedId);
-    if (feed && feed.autor === usuarioLogado.nome) {
-        feed.mensagem = mensagem;
-        salvarDados();
-        atualizarFeed();
-    }
+    feed.mensagem = mensagem;
+    salvarDados();
+    form.parentElement.classList.add('hidden');
+    atualizarFeed();
+}
+
+function cancelarEdicaoFeed(feedId) {
+    document.getElementById(`edit-feed-form-${feedId}`).classList.add('hidden');
 }
 
 function excluirFeed(feedId) {
-    if (usuarioLogado.isAdmin) {
-        feeds = feeds.filter(f => f.id !== feedId);
-        salvarDados();
-        atualizarFeed();
-        document.getElementById('sucessoTexto').textContent = 'Recado excluído!';
-        new bootstrap.Modal(document.getElementById('sucessoModal')).show();
-    }
-}
-
-function comentarFeed(event, feedId) {
-    event.preventDefault();
-    const mensagem = event.target.querySelector('input').value.trim();
-    if (!mensagem) return;
-    const feed = feeds.find(f => f.id === feedId);
-    if (feed) {
-        feed.comentarios.push({
-            autor: usuarioLogado.nome,
-            mensagem,
-            data: new Date().toLocaleString('pt-BR'),
-            curtidas: [],
-            respostas: []
-        });
-        salvarDados();
-        event.target.reset();
-        atualizarFeed();
-    }
-}
-
-function excluirComentario(feedId, comentarioIndex) {
-    const feed = feeds.find(f => f.id === feedId);
-    if (feed && (feed.comentarios[comentarioIndex].autor === usuarioLogado.nome || usuarioLogado.username === 'admin123')) {
-        feed.comentarios.splice(comentarioIndex, 1);
-        salvarDados();
-        atualizarFeed();
-        document.getElementById('sucessoTexto').textContent = 'Comentário excluído!';
-        new bootstrap.Modal(document.getElementById('sucessoModal')).show();
-    }
-}
-
-function mostrarEditarComentario(feedId, comentarioIndex) {
-    const form = document.getElementById(`edit-comment-form-${feedId}-${comentarioIndex}`);
-    form.classList.remove('hidden');
-    document.getElementById(`comment-menu-${feedId}-${comentarioIndex}`).classList.remove('show');
-}
-
-function cancelarEdicaoComentario(feedId, comentarioIndex) {
-    const form = document.getElementById(`edit-comment-form-${feedId}-${comentarioIndex}`);
-    form.classList.add('hidden');
-}
-
-function editarComentario(event, feedId, comentarioIndex) {
-    event.preventDefault();
-    const mensagem = event.target.querySelector('input').value.trim();
-    if (!mensagem) return;
-    const feed = feeds.find(f => f.id === feedId);
-    if (feed && feed.comentarios[comentarioIndex].autor === usuarioLogado.nome) {
-        feed.comentarios[comentarioIndex].mensagem = mensagem;
-        salvarDados();
-        atualizarFeed();
-    }
-}
-
-function responderComentario(event, feedId, comentarioIndex) {
-    event.preventDefault();
-    const mensagem = event.target.querySelector('input').value.trim();
-    if (!mensagem) return;
-    const feed = feeds.find(f => f.id === feedId);
-    if (feed) {
-        feed.comentarios[comentarioIndex].respostas.push({
-            autor: usuarioLogado.nome,
-            mensagem,
-            data: new Date().toLocaleString('pt-BR')
-        });
-        salvarDados();
-        event.target.reset();
-        atualizarFeed();
-    }
+    feeds = feeds.filter(f => f.id !== feedId);
+    salvarDados();
+    atualizarFeed();
 }
 
 function curtirFeed(feedId) {
     const feed = feeds.find(f => f.id === feedId);
-    if (feed) {
-        const username = usuarioLogado.username;
-        if (feed.curtidas.includes(username)) {
-            feed.curtidas = feed.curtidas.filter(u => u !== username);
-        } else {
-            feed.curtidas.push(username);
-        }
-        salvarDados();
-        atualizarFeed();
+    const username = usuarioLogado.username;
+    if (feed.curtidas.includes(username)) {
+        feed.curtidas = feed.curtidas.filter(u => u !== username);
+    } else {
+        feed.curtidas.push(username);
     }
+    salvarDados();
+    atualizarFeed();
 }
 
-function curtirComentario(feedId, comentarioIndex) {
-    const feed = feeds.find(f => f.id === feedId);
-    if (feed) {
-        const username = usuarioLogado.username;
-        const comentario = feed.comentarios[comentarioIndex];
-        if (comentario.curtidas.includes(username)) {
-            comentario.curtidas = comentario.curtidas.filter(u => u !== username);
-        } else {
-            comentario.curtidas.push(username);
-        }
-        salvarDados();
-        atualizarFeed();
-    }
+function toggleCommentForm(feedId) {
+    const form = document.getElementById(`comment-form-${feedId}`);
+    form.classList.toggle('hidden');
 }
-    </script>
+
+function comentarFeed(event, feedId) {
+    event.preventDefault();
+    const form = event.target;
+    const mensagem = form.querySelector('input').value.trim();
+    if (!mensagem) return;
+    const feed = feeds.find(f => f.id === feedId);
+    feed.comentarios.push({
+        autor: usuarioLogado.nome,
+        mensagem,
+        data: new Date().toLocaleString('pt-BR'),
+        curtidas: [],
+        respostas: []
+    });
+    salvarDados();
+    form.reset();
+    atualizarFeed();
+}
+
+function mostrarEditarComentario(feedId, commentIndex) {
+    const form = document.getElementById(`edit-comment-form-${feedId}-${commentIndex}`);
+    form.classList.remove('hidden');
+    document.getElementById(`comment-menu-${feedId}-${commentIndex}`).classList.remove('show');
+}
+
+function editarComentario(event, feedId, commentIndex) {
+    event.preventDefault();
+    const form = event.target;
+    const mensagem = form.querySelector('input').value.trim();
+    if (!mensagem) return;
+    const feed = feeds.find(f => f.id === feedId);
+    feed.comentarios[commentIndex].mensagem = mensagem;
+    salvarDados();
+    form.parentElement.classList.add('hidden');
+    atualizarFeed();
+}
+
+function cancelarEdicaoComentario(feedId, commentIndex) {
+    document.getElementById(`edit-comment-form-${feedId}-${commentIndex}`).classList.add('hidden');
+}
+
+function excluirComentario(feedId, commentIndex) {
+    const feed = feeds.find(f => f.id === feedId);
+    feed.comentarios.splice(commentIndex, 1);
+    salvarDados();
+    atualizarFeed();
+}
+
+function curtirComentario(feedId, commentIndex) {
+    const feed = feeds.find(f => f.id === feedId);
+    const comentario = feed.comentarios[commentIndex];
+    const username = usuarioLogado.username;
+    if (comentario.curtidas.includes(username)) {
+        comentario.curtidas = comentario.curtidas.filter(u => u !== username);
+    } else {
+        comentario.curtidas.push(username);
+    }
+    salvarDados();
+    atualizarFeed();
+}
+
+function toggleReplyForm(feedId, commentIndex) {
+    const form = document.getElementById(`reply-form-${feedId}-${commentIndex}`);
+    form.classList.toggle('hidden');
+}
+
+function responderComentario(event, feedId, commentIndex) {
+    event.preventDefault();
+    const form = event.target;
+    const mensagem = form.querySelector('input').value.trim();
+    if (!mensagem) return;
+    const feed = feeds.find(f => f.id === feedId);
+    feed.comentarios[commentIndex].respostas.push({
+        autor: usuarioLogado.nome,
+        mensagem,
+        data: new Date().toLocaleString('pt-BR')
+    });
+    salvarDados();
+    form.reset();
+    atualizarFeed();
+}
+
+function abrirModalPontuacao(username) {
+    const usuario = usuarios.find(u => u.username === username);
+    document.getElementById('adicionarPontuacaoModalLabel').textContent = `Adicionar Pontuação para ${usuario.nome}`;
+    const modal = new bootstrap.Modal(document.getElementById('adicionarPontuacaoModal'));
+    const form = document.getElementById('adicionarPontuacaoForm');
+    const pontosInput = document.getElementById('pontosInput');
+    const pontosError = document.getElementById('pontosError');
+
+    pontosInput.value = '';
+    pontosError.style.display = 'none';
+
+    form.onsubmit = (e) => {
+        e.preventDefault();
+        const pontos = parseInt(pontosInput.value.trim());
+        if (isNaN(pontos) || pontos < 0) {
+            pontosError.style.display = 'block';
+            setTimeout(() => pontosError.style.display = 'none', 3000);
+            return;
+        }
+
+        usuario.pontos += pontos;
+        salvarDados();
+        atualizarRanking();
+        modal.hide();
+        document.getElementById('sucessoTexto').textContent = `Pontuação de ${pontos} pontos adicionada para ${usuario.nome}!`;
+        new bootstrap.Modal(document.getElementById('sucessoModal')).show();
+    };
+
+    modal.show();
+}
+
+ </script>   
 </body>
 </html>
