@@ -47,7 +47,6 @@ body {
     display: flex;
     flex-direction: column;
     transition: var(--transition);
-    overflow-x: hidden;
 }
 
 /* Fundo Dinâmico */
@@ -112,13 +111,14 @@ header h1 i {
 
 /* Login Section */
 .login-section {
-    padding: 2rem;
+    padding: 1.5rem;
     text-align: center;
     background: var(--card-bg);
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
     max-width: 450px;
-    margin: 1.5rem auto;
+    width: 90%;
+    margin: 1rem auto;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
@@ -146,8 +146,8 @@ header h1 i {
 }
 
 .login-section img {
-    max-width: 120px;
-    margin: 0 auto 1.5rem;
+    max-width: 100px;
+    margin: 0 auto 1rem;
     border-radius: 0.5rem;
     transition: var(--transition);
 }
@@ -158,29 +158,29 @@ header h1 i {
 }
 
 .login-section h2 {
-    font-size: 1.75rem;
+    font-size: 1.5rem;
     font-weight: 600;
     color: var(--primary-color);
     margin-bottom: 0.5rem;
 }
 
 .login-section p {
-    font-size: 0.95rem;
-    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
     color: #6b7280;
 }
 
 /* Form */
 .form-group {
     position: relative;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.25rem;
 }
 
 .form-control {
     border-radius: 0.5rem;
     border: 1px solid #d1d5db;
-    padding: 0.75rem 1rem;
-    font-size: 0.95rem;
+    padding: 0.65rem 1rem;
+    font-size: 0.9rem;
     transition: var(--transition);
     background: var(--card-bg);
     color: var(--text-color);
@@ -195,10 +195,10 @@ header h1 i {
 
 .form-label {
     position: absolute;
-    top: 0.75rem;
+    top: 0.65rem;
     left: 1rem;
     color: #6b7280;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     transition: all 0.2s ease;
     pointer-events: none;
 }
@@ -207,7 +207,7 @@ header h1 i {
 .form-control:not(:placeholder-shown) + .form-label {
     top: -0.5rem;
     left: 0.75rem;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     color: var(--secondary-color);
     background: var(--card-bg);
     padding: 0 0.25rem;
@@ -225,7 +225,7 @@ header h1 i {
     transform: translateY(-50%);
     cursor: pointer;
     color: var(--text-color);
-    font-size: 1.1rem;
+    font-size: 1rem;
     transition: var(--transition);
 }
 
@@ -235,7 +235,7 @@ header h1 i {
 
 /* Error Message */
 .error-message {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     margin-top: 0.5rem;
     padding: 0.5rem;
     border-radius: 0.5rem;
@@ -250,11 +250,11 @@ header h1 i {
 .btn-primary {
     background: var(--gradient);
     border: none;
-    padding: 0.75rem 2rem;
+    padding: 0.65rem 1.5rem;
     border-radius: 0.5rem;
     color: #fff;
     font-weight: 500;
-    font-size: 1rem;
+    font-size: 0.95rem;
     transition: var(--transition);
     width: 100%;
     cursor: pointer;
@@ -279,25 +279,19 @@ footer {
     background: var(--gradient);
     color: #fff;
     text-align: center;
-    padding: 1.5rem;
+    padding: 1rem;
     margin-top: auto;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.15);
 }
 
 /* Responsive Adjustments */
-@media (max-width: 992px) {
-    .login-section {
-        max-width: 80%;
-        padding: 1.5rem;
-    }
-}
-
 @media (max-width: 768px) {
     header {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 0.75rem;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.75rem 1rem;
     }
 
     header h1 {
@@ -305,27 +299,30 @@ footer {
     }
 
     .header-actions {
-        width: 100%;
-        justify-content: space-between;
         gap: 0.5rem;
     }
 
     .login-section {
-        padding: 1.5rem;
-        margin: 1rem;
+        max-width: 95%;
+        padding: 1.25rem;
+        margin: 0.75rem auto;
     }
 
     .login-section img {
-        max-width: 100px;
+        max-width: 90px;
     }
 
     .login-section h2 {
-        font-size: 1.5rem;
+        font-size: 1.35rem;
+    }
+
+    .login-section p {
+        font-size: 0.85rem;
     }
 
     .btn-primary {
-        padding: 0.75rem 1.5rem;
-        font-size: 0.95rem;
+        padding: 0.6rem 1.25rem;
+        font-size: 0.9rem;
     }
 }
 
@@ -335,21 +332,30 @@ footer {
     }
 
     header h1 {
-        font-size: 1.25rem;
+        font-size: 1.15rem;
+    }
+
+    #themeToggle {
+        font-size: 1.1rem;
     }
 
     .login-section {
+        max-width: 95%;
         padding: 1rem;
-        margin: 0.75rem;
+        margin: 0.5rem auto;
         border-radius: 0.5rem;
     }
 
+    .login-section img {
+        max-width: 80px;
+    }
+
     .login-section h2 {
-        font-size: 1.25rem;
+        font-size: 1.2rem;
     }
 
     .login-section p {
-        font-size: 0.85rem;
+        font-size: 0.8rem;
     }
 
     .form-control {
@@ -358,21 +364,33 @@ footer {
     }
 
     .form-label {
-        font-size: 0.85rem;
+        font-size: 0.8rem;
+        top: 0.5rem;
+    }
+
+    .form-control:focus + .form-label,
+    .form-control:not(:placeholder-shown) + .form-label {
+        font-size: 0.7rem;
+        top: -0.4rem;
     }
 
     .btn-primary {
         padding: 0.5rem 1rem;
-        font-size: 0.9rem;
+        font-size: 0.85rem;
     }
 
     .password-container i {
-        font-size: 1rem;
+        font-size: 0.9rem;
     }
 
     .error-message {
+        font-size: 0.75rem;
+        padding: 0.4rem;
+    }
+
+    footer {
+        padding: 0.75rem;
         font-size: 0.8rem;
-        padding: 0.5rem;
     }
 }
     </style>
