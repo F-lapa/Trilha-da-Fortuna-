@@ -244,57 +244,63 @@ header h1 i {
 /* Table (Ranking) */
 #rankingTable {
     width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
-    font-size: 1rem;
+    border-collapse: separate;
+    border-spacing: 0;
     background: var(--card-bg);
-    box-shadow: var(--shadow);
     border-radius: var(--border-radius);
     overflow: hidden;
+    box-shadow: var(--shadow);
+    margin: 1rem 0;
 }
 
-#rankingTable th,
-#rankingTable td {
-    padding: 12px 15px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-#rankingTable th {
+#rankingHead th {
     background: var(--gradient);
-    font-weight: bold;
     color: #fff;
+    font-weight: 600;
+    padding: 12px;
+    text-align: left;
+    border-bottom: 2px solid #dee2e6;
 }
 
-#rankingTable tr:hover {
-    background: #f1f1f1;
+.ranking-position,
+.ranking-name,
+.ranking-points,
+.ranking-actions {
+    padding: 10px;
+    border-bottom: 1px solid #e9ecef;
 }
 
 .ranking-position {
     width: 15%;
+    font-weight: bold;
+    color: var(--text-color);
     text-align: center;
 }
 
 .ranking-name {
-    width: 40%;
+    width: 35%;
 }
 
 .ranking-points {
     width: 20%;
+    color: var(--secondary-color);
+    font-weight: 500;
     text-align: center;
 }
 
 .ranking-actions {
-    width: 25%;
-    text-align: center;
+    width: 30%;
+    text-align: right;
 }
 
 .btn-add-points,
 .btn-remove-user {
-    font-size: 0.9rem;
     padding: 6px 12px;
+    font-size: 0.875rem;
     border-radius: 4px;
-    transition: background 0.2s ease;
+    margin-left: 5px;
+    transition: background-color 0.2s, transform 0.1s;
+    color: #fff;
 }
 
 .btn-add-points {
@@ -304,6 +310,7 @@ header h1 i {
 
 .btn-add-points:hover {
     background: #1e3a8a;
+    transform: translateY(-1px);
 }
 
 .btn-remove-user {
@@ -313,6 +320,31 @@ header h1 i {
 
 .btn-remove-user:hover {
     background: #b02a37;
+    transform: translateY(-1px);
+}
+
+.btn-add-points i,
+.btn-remove-user i {
+    margin-right: 5px;
+}
+
+.dark-theme #rankingTable {
+    background: var(--card-bg);
+}
+
+.dark-theme #rankingHead th {
+    background: var(--gradient);
+}
+
+.dark-theme .ranking-position,
+.dark-theme .ranking-name,
+.dark-theme .ranking-points,
+.dark-theme .ranking-actions {
+    border-bottom: 1px solid #444;
+}
+
+.dark-theme .ranking-points {
+    color: var(--secondary-color);
 }
 
 @media (max-width: 768px) {
@@ -320,9 +352,12 @@ header h1 i {
         font-size: 0.9rem;
     }
 
-    #rankingTable th,
-    #rankingTable td {
-        padding: 10px 8px;
+    #rankingHead th,
+    .ranking-position,
+    .ranking-name,
+    .ranking-points,
+    .ranking-actions {
+        padding: 8px;
     }
 
     .ranking-position {
@@ -343,81 +378,113 @@ header h1 i {
 
     .btn-add-points,
     .btn-remove-user {
-        font-size: 0.8rem;
         padding: 5px 8px;
-    }
-
-    @media (max-width: 576px) {
-        #rankingTable thead {
-            display: none;
-        }
-
-        #rankingTable tr {
-            display: block;
-            margin-bottom: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 10px;
-        }
-
-        #rankingTable td {
-            display: block;
-            text-align: left;
-            padding: 5px 10px;
-            border: none;
-        }
-
-        #rankingTable td::before {
-            content: attr(data-label);
-            font-weight: bold;
-            display: inline-block;
-            width: 100px;
-        }
-
-        .ranking-position::before {
-            content: "Posição: ";
-        }
-
-        .ranking-name::before {
-            content: "Nome: ";
-        }
-
-        .ranking-points::before {
-            content: "Pontos: ";
-        }
-
-        .ranking-actions::before {
-            content: "Ações: ";
-        }
-
-        .ranking-actions {
-            text-align: left;
-        }
-
-        .btn-add-points,
-        .btn-remove-user {
-            display: inline-block;
-            margin: 5px 5px 0 0;
-        }
+        font-size: 0.8rem;
     }
 }
 
-.dark-theme #rankingTable {
-    background: #2c2c2c;
-    color: #fff;
-}
+@media (max-width: 576px) {
+    #rankingTable {
+        box-shadow: none;
+        border: 1px solid #e9ecef;
+        margin: 0.5rem 0;
+    }
 
-.dark-theme #rankingTable th {
-    background: var(--gradient);
-    color: #fff;
-}
+    #rankingHead {
+        display: none;
+    }
 
-.dark-theme #rankingTable tr:hover {
-    background: #3a3a3a;
-}
+    #rankingBody tr {
+        display: block;
+        margin-bottom: 10px;
+        border: 1px solid #e9ecef;
+        border-radius: 6px;
+        padding: 8px;
+        background: var(--card-bg);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
 
-.dark-theme #rankingTable td {
-    border-bottom: 1px solid #444;
+    #rankingBody td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 6px 8px;
+        border-bottom: 1px solid #e9ecef;
+        font-size: 0.85rem;
+    }
+
+    #rankingBody td:last-child {
+        border-bottom: none;
+    }
+
+    #rankingBody td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: var(--text-color);
+        flex: 0 0 40%;
+        text-align: left;
+    }
+
+    .ranking-position::before {
+        content: "Posição: ";
+    }
+
+    .ranking-name::before {
+        content: "Nome: ";
+    }
+
+    .ranking-points::before {
+        content: "Pontos: ";
+    }
+
+    .ranking-actions::before {
+        content: "Ações: ";
+    }
+
+    .ranking-position,
+    .ranking-name,
+    .ranking-points,
+    .ranking-actions {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .ranking-actions {
+        text-align: left;
+        display: flex;
+        justify-content: flex-end;
+        gap: 8px;
+    }
+
+    .btn-add-points,
+    .btn-remove-user {
+        padding: 4px 8px;
+        font-size: 0.75rem;
+        line-height: 1.5;
+    }
+
+    .btn-text {
+        display: none;
+    }
+
+    .btn-add-points i,
+    .btn-remove-user i {
+        font-size: 0.9rem;
+        margin-right: 0;
+    }
+
+    .dark-theme #rankingBody tr {
+        background: var(--card-bg);
+        border-color: #444;
+    }
+
+    .dark-theme #rankingBody td {
+        border-bottom: 1px solid #444;
+    }
+
+    .dark-theme #rankingBody td::before {
+        color: var(--text-color);
+    }
 }
 
 /* List Group */
@@ -503,7 +570,7 @@ header h1 i {
 }
 
 .dark-theme .variable-table {
-    background: #2c2c2c;
+    background: var(--card-bg);
 }
 
 .dark-theme .variable-table th {
@@ -515,7 +582,7 @@ header h1 i {
 }
 
 .dark-theme .variable-table tr:hover {
-    background: #3a3a3a;
+    background: rgba(255, 255, 255, 0.1);
 }
 
 /* Forms */
@@ -2206,8 +2273,12 @@ function atualizarRanking() {
                 <td class="ranking-points" data-label="Pontos">${u.pontos}</td>
                 ${usuarioLogado.isAdmin ? `
                     <td class="ranking-actions" data-label="Ações">
-                        <button class="btn btn-primary btn-sm btn-add-points me-1" onclick="abrirModalPontuacao('${sanitizeInput(u.username)}')">Adicionar</button>
-                        <button class="btn btn-danger btn-sm btn-remove-user" onclick="confirmarExclusaoUsuario('${sanitizeInput(u.username)}')">Remover</button>
+                        <button class="btn btn-primary btn-sm btn-add-points" onclick="abrirModalPontuacao('${sanitizeInput(u.username)}')" title="Adicionar Pontos">
+                            <i class="fas fa-plus"></i><span class="btn-text">Adicionar</span>
+                        </button>
+                        <button class="btn btn-danger btn-sm btn-remove-user" onclick="confirmarExclusaoUsuario('${sanitizeInput(u.username)}')" title="Remover Usuário">
+                            <i class="fas fa-trash"></i><span class="btn-text">Remover</span>
+                        </button>
                     </td>
                 ` : ''}
             `;
