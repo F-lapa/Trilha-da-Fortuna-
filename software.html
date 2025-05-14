@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -535,7 +536,11 @@ header h1 i {
 }
 
 .feed-action-btn.liked {
-    color: var(--secondary-color);
+    color: #ff0000;
+}
+
+.feed-action-btn.liked i.fa-heart {
+    color: #ff0000; /* Garante que o ícone de coração seja vermelho */
 }
 
 .feed-action-btn:hover {
@@ -1244,8 +1249,16 @@ function carregarDados() {
         curtidas: Array.isArray(f.curtidas) ? f.curtidas : [],
         comentarios: Array.isArray(f.comentarios) ? f.comentarios.map(c => ({
             ...c,
+            autor: c.autor || '[Desconhecido]',
+            mensagem: c.mensagem || '',
+            data: c.data || new Date().toLocaleString('pt-BR'),
             curtidas: Array.isArray(c.curtidas) ? c.curtidas : [],
-            respostas: Array.isArray(c.respostas) ? c.respostas : []
+            respostas: Array.isArray(c.respostas) ? c.respostas.map(r => ({
+                ...r,
+                autor: r.autor || '[Desconhecido]',
+                mensagem: r.mensagem || '',
+                data: r.data || new Date().toLocaleString('pt-BR')
+            })) : []
         })) : []
     }));
 
@@ -1314,6 +1327,8 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function ajustarAbas() {
+    console.log('14. Ajustando abas. É admin?', usuarioLogado?.isAdmin);
+
     const comprovanteTabItem = document.getElementById('comprovanteTabItem');
     const adminTabItem = document.getElementById('adminTabItem');
     const investimentosTabItem = document.getElementById('investimentosTabItem');
@@ -1323,12 +1338,18 @@ function ajustarAbas() {
         comprovanteTabItem.classList.add('hidden');
         adminTabItem.classList.remove('hidden');
         investimentosTabItem.classList.remove('hidden');
-        feedFormContainer.classList.remove('hidden');
+        if (feedFormContainer) {
+            feedFormContainer.classList.remove('hidden');
+            console.log('15. Formulário de feed exibido em ajustarAbas.');
+        }
     } else {
         comprovanteTabItem.classList.remove('hidden');
         adminTabItem.classList.add('hidden');
         investimentosTabItem.classList.add('hidden');
-        feedFormContainer.classList.add('hidden');
+        if (feedFormContainer) {
+            feedFormContainer.classList.add('hidden');
+            console.log('16. Formulário de feed oculto em ajustarAbas.');
+        }
     }
 }
 
@@ -1611,11 +1632,11 @@ function abrirProva(prova) {
 
     modal.show();
 }
+
 function atualizarRanking() {
     const rankingHead = document.getElementById('rankingHead');
     const rankingBody = document.getElementById('rankingBody');
 
-    // Preenche o cabeçalho da tabela
     rankingHead.innerHTML = `
         <tr>
             <th>Posição</th>
@@ -1625,7 +1646,6 @@ function atualizarRanking() {
         </tr>
     `;
 
-    // Preenche o corpo da tabela
     rankingBody.innerHTML = '';
     const ordenados = [...usuarios].sort((a, b) => b.pontos - a.pontos);
     ordenados.forEach((u, i) => {
@@ -1749,9 +1769,6 @@ function sanitizeInput(input) {
     return div.innerHTML.replace(/<[^>]+>/g, '');
 }
 
-// Função para configurar o feed
-
-
 function configurarFeed() {
     console.log('1. Iniciando configurarFeed');
 
@@ -1759,40 +1776,22 @@ function configurarFeed() {
     const feedFormContainer = document.getElementById('feedFormContainer');
     const feedMessage = document.getElementById('feedMessage');
 
-    console.log('2. feedForm:', feedForm);
-    console.log('3. feedFormContainer:', feedFormContainer);
-    console.log('4. feedMessage:', feedMessage);
-    console.log('5. usuarioLogado:', usuarioLogado);
-    console.log('6. É admin?', usuarioLogado?.isAdmin);
-
     if (!feedForm || !feedFormContainer || !feedMessage) {
         console.error('Erro: Elementos feedForm, feedFormContainer ou feedMessage não encontrados.');
         return;
     }
 
-    if (usuarioLogado.username === 'admin123' && usuarioLogado.isAdmin !== true) {
-        usuarioLogado.isAdmin = true;
-        localStorage.setItem('usuarioLogado', JSON.stringify(usuarioLogado));
-        console.log('7. Corrigido: isAdmin definido como true.');
-    }
-
-    feedMessage.removeAttribute('disabled');
-    feedMessage.removeAttribute('readonly');
+    feedMessage.disabled = false;
+    feedMessage.readOnly = false;
     feedMessage.style.pointerEvents = 'auto';
-    console.log('8. Textarea configurado para ser interativo.');
+    console.log('2. Textarea configurado para ser interativo.');
 
-    if (usuarioLogado.isAdmin) {
-        feedFormContainer.classList.remove('hidden');
-        console.log('9. Formulário de feed exibido para admin.');
-    } else {
-        feedFormContainer.classList.add('hidden');
-        console.log('10. Formulário de feed oculto (não é admin).');
-    }
+    feedFormContainer.classList.toggle('hidden', !usuarioLogado.isAdmin);
+    console.log(`3. Formulário de feed ${usuarioLogado.isAdmin ? 'exibido' : 'oculto'} para ${usuarioLogado.username}.`);
 
-    feedForm.onsubmit = null;
     feedForm.onsubmit = (e) => {
         e.preventDefault();
-        console.log('11. Submissão do formulário iniciada');
+        console.log('4. Submissão do formulário iniciada');
 
         const mensagem = sanitizeInput(feedMessage.value.trim());
         const successMessage = document.getElementById('feedSuccess');
@@ -1828,7 +1827,7 @@ function configurarFeed() {
             comentarios: []
         });
 
-        console.log('12. Feed adicionado:', feeds[0]);
+        console.log('5. Feed adicionado:', feeds[0]);
         salvarDados();
         feedForm.reset();
         successMessage.style.display = 'block';
@@ -1836,43 +1835,9 @@ function configurarFeed() {
         atualizarFeed();
     };
 
-    feedMessage.addEventListener('mouseover', () => {
-        console.log('13. Mouse sobre o textarea.');
-        feedMessage.focus();
-    });
-
     atualizarFeed();
 }
 
-// Função para ajustar as abas
-function ajustarAbas() {
-    console.log('14. Ajustando abas. É admin?', usuarioLogado?.isAdmin);
-
-    const comprovanteTabItem = document.getElementById('comprovanteTabItem');
-    const adminTabItem = document.getElementById('adminTabItem');
-    const investimentosTabItem = document.getElementById('investimentosTabItem');
-    const feedFormContainer = document.getElementById('feedFormContainer');
-
-    if (usuarioLogado.isAdmin) {
-        comprovanteTabItem.classList.add('hidden');
-        adminTabItem.classList.remove('hidden');
-        investimentosTabItem.classList.remove('hidden');
-        if (feedFormContainer) {
-            feedFormContainer.classList.remove('hidden');
-            console.log('15. Formulário de feed exibido em ajustarAbas.');
-        }
-    } else {
-        comprovanteTabItem.classList.remove('hidden');
-        adminTabItem.classList.add('hidden');
-        investimentosTabItem.classList.add('hidden');
-        if (feedFormContainer) {
-            feedFormContainer.classList.add('hidden');
-            console.log('16. Formulário de feed oculto em ajustarAbas.');
-        }
-    }
-}
-
-// Função para atualizar o feed
 function atualizarFeed() {
     const container = document.getElementById('feedContainer');
     if (!container) {
@@ -1880,7 +1845,7 @@ function atualizarFeed() {
         return;
     }
 
-    console.log('Atualizando feed. Total de feeds:', feeds.length); // Log para depuração
+    console.log('Atualizando feed. Total de feeds:', feeds.length);
 
     container.innerHTML = feeds.length ? feeds.map(f => `
         <div class="feed-post">
@@ -1889,7 +1854,7 @@ function atualizarFeed() {
                     <h5>${sanitizeInput(f.autor)}</h5>
                     <small>${sanitizeInput(f.data)}</small>
                 </div>
-                ${usuarioLogado.isAdmin && f.autor === usuarioLogado.nome ? `
+                ${f.autor === usuarioLogado.nome || usuarioLogado.isAdmin ? `
                     <div class="feed-post-menu">
                         <button class="feed-post-menu-btn" onclick="toggleMenu(${f.id})"><i class="fas fa-ellipsis-v"></i></button>
                         <div class="feed-post-menu-content" id="menu-${f.id}">
@@ -1922,7 +1887,7 @@ function atualizarFeed() {
                 </button>
             </div>
             <div class="comment-section" id="comment-section-${f.id}">
-                <form class="comment-form hidden" id="comment-form-${f.id}" onsubmit="comentarFeed(event, ${f.id})">
+                <form class="comment-form" id="comment-form-${f.id}" onsubmit="comentarFeed(event, ${f.id})">
                     <div class="d-flex gap-2">
                         <input type="text" class="form-control" placeholder="Escreva um comentário" required>
                         <button type="submit" class="btn btn-primary">Comentar</button>
@@ -1936,7 +1901,7 @@ function atualizarFeed() {
                                     <h6>${sanitizeInput(c.autor)}</h6>
                                     <small>${sanitizeInput(c.data)}</small>
                                 </div>
-                                ${(c.autor === usuarioLogado.nome || usuarioLogado.username === 'admin123') ? `
+                                ${c.autor === usuarioLogado.nome || usuarioLogado.isAdmin ? `
                                     <div class="comment-menu">
                                         <button class="feed-post-menu-btn" onclick="toggleCommentMenu(${f.id}, ${i})"><i class="fas fa-ellipsis-v"></i></button>
                                         <div class="comment-menu-content" id="comment-menu-${f.id}-${i}">
@@ -1966,7 +1931,7 @@ function atualizarFeed() {
                                 </button>
                                 <button class="btn-reply" onclick="toggleReplyForm(${f.id}, ${i})">Responder</button>
                             </div>
-                            <form class="reply-form hidden" id="reply-form-${f.id}-${i}" onsubmit="responderComentario(event, ${f.id}, ${i})">
+                            <form class="reply-form" id="reply-form-${f.id}-${i}" onsubmit="responderComentario(event, ${f.id}, ${i})">
                                 <div class="d-flex gap-2">
                                     <input type="text" class="form-control" placeholder="Escreva uma resposta" required>
                                     <button type="submit" class="btn btn-primary">Responder</button>
@@ -2032,28 +1997,51 @@ function excluirFeed(feedId) {
 }
 
 function curtirFeed(feedId) {
+    console.log(`Tentando curtir feed ${feedId} por ${usuarioLogado.username}`);
     const feed = feeds.find(f => f.id === feedId);
+    if (!feed) {
+        console.error(`Feed ${feedId} não encontrado.`);
+        return;
+    }
+
     const username = usuarioLogado.username;
     if (feed.curtidas.includes(username)) {
         feed.curtidas = feed.curtidas.filter(u => u !== username);
+        console.log(`Curtida removida do feed ${feedId}`);
     } else {
         feed.curtidas.push(username);
+        console.log(`Curtida adicionada ao feed ${feedId}`);
     }
     salvarDados();
     atualizarFeed();
 }
 
 function toggleCommentForm(feedId) {
+    console.log(`Alternando formulário de comentário para feed ${feedId}`);
     const form = document.getElementById(`comment-form-${feedId}`);
-    form.classList.toggle('hidden');
+    if (form) {
+        form.classList.toggle('hidden');
+    } else {
+        console.error(`Formulário de comentário para feed ${feedId} não encontrado.`);
+    }
 }
 
 function comentarFeed(event, feedId) {
     event.preventDefault();
+    console.log(`Tentando comentar no feed ${feedId} por ${usuarioLogado.username}`);
     const form = event.target;
-    const mensagem = form.querySelector('input').value.trim();
-    if (!mensagem) return;
+    const mensagem = sanitizeInput(form.querySelector('input').value.trim());
+    if (!mensagem) {
+        console.log('Erro: Comentário vazio.');
+        return;
+    }
+
     const feed = feeds.find(f => f.id === feedId);
+    if (!feed) {
+        console.error(`Feed ${feedId} não encontrado.`);
+        return;
+    }
+
     feed.comentarios.push({
         autor: usuarioLogado.nome,
         mensagem,
@@ -2061,6 +2049,8 @@ function comentarFeed(event, feedId) {
         curtidas: [],
         respostas: []
     });
+
+    console.log(`Comentário adicionado ao feed ${feedId}`);
     salvarDados();
     form.reset();
     atualizarFeed();
@@ -2096,34 +2086,60 @@ function excluirComentario(feedId, commentIndex) {
 }
 
 function curtirComentario(feedId, commentIndex) {
+    console.log(`Tentando curtir comentário ${commentIndex} do feed ${feedId} por ${usuarioLogado.username}`);
     const feed = feeds.find(f => f.id === feedId);
+    if (!feed || !feed.comentarios[commentIndex]) {
+        console.error(`Feed ${feedId} ou comentário ${commentIndex} não encontrado.`);
+        return;
+    }
+
     const comentario = feed.comentarios[commentIndex];
     const username = usuarioLogado.username;
+
     if (comentario.curtidas.includes(username)) {
         comentario.curtidas = comentario.curtidas.filter(u => u !== username);
+        console.log(`Curtida removida do comentário ${commentIndex} do feed ${feedId}`);
     } else {
         comentario.curtidas.push(username);
+        console.log(`Curtida adicionada ao comentário ${commentIndex} do feed ${feedId}`);
     }
     salvarDados();
     atualizarFeed();
 }
 
 function toggleReplyForm(feedId, commentIndex) {
+    console.log(`Alternando formulário de resposta para comentário ${commentIndex} do feed ${feedId}`);
     const form = document.getElementById(`reply-form-${feedId}-${commentIndex}`);
-    form.classList.toggle('hidden');
+    if (form) {
+        form.classList.toggle('hidden');
+    } else {
+        console.error(`Formulário de resposta para feed ${feedId}, comentário ${commentIndex} não encontrado.`);
+    }
 }
 
 function responderComentario(event, feedId, commentIndex) {
     event.preventDefault();
+    console.log(`Tentando responder comentário ${commentIndex} do feed ${feedId} por ${usuarioLogado.username}`);
     const form = event.target;
-    const mensagem = form.querySelector('input').value.trim();
-    if (!mensagem) return;
+    const mensagem = sanitizeInput(form.querySelector('input').value.trim());
+    if (!mensagem) {
+        console.log('Erro: Resposta vazia.');
+        return;
+    }
+
     const feed = feeds.find(f => f.id === feedId);
+    if (!feed || !feed.comentarios[commentIndex]) {
+        console.error(`Feed ${feedId} ou comentário ${commentIndex} não encontrado.`);
+        return;
+    }
+
     feed.comentarios[commentIndex].respostas.push({
         autor: usuarioLogado.nome,
         mensagem,
         data: new Date().toLocaleString('pt-BR')
     });
+
+    console.log(`Resposta adicionada ao comentário ${commentIndex} do feed ${feedId}`);
     salvarDados();
     form.reset();
     atualizarFeed();
