@@ -250,84 +250,125 @@ header h1 i {
     border-radius: var(--border-radius);
     overflow: hidden;
     box-shadow: var(--shadow);
-    margin: 1rem 0;
+    margin: 1.5rem 0;
 }
 
 #rankingHead th {
     background: var(--gradient);
     color: #fff;
     font-weight: 600;
-    padding: 12px;
-    text-align: left;
+    padding: 14px 16px;
+    text-align: center;
     border-bottom: 2px solid #dee2e6;
+    text-transform: uppercase;
+    font-size: 0.95rem;
 }
 
 .ranking-position,
 .ranking-name,
 .ranking-points,
 .ranking-actions {
-    padding: 10px;
+    padding: 12px 16px;
     border-bottom: 1px solid #e9ecef;
+    text-align: center;
 }
 
 .ranking-position {
     width: 15%;
     font-weight: bold;
     color: var(--text-color);
-    text-align: center;
+    position: relative;
 }
 
 .ranking-name {
-    width: 35%;
+    width: 40%;
+    font-weight: 500;
 }
 
 .ranking-points {
     width: 20%;
     color: var(--secondary-color);
-    font-weight: 500;
-    text-align: center;
+    font-weight: 600;
 }
 
 .ranking-actions {
-    width: 30%;
-    text-align: right;
+    width: 25%;
 }
 
+/* Medalhas para Top 3 */
+.ranking-position[data-label="Posição: 1"]::before,
+.ranking-position[data-label="Posição: 1"]::after {
+    content: '🥇';
+    color: #ffd700;
+    font-size: 1.2rem;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+.ranking-position[data-label="Posição: 2"]::before,
+.ranking-position[data-label="Posição: 2"]::after {
+    content: '🥈';
+    color: #c0c0c0;
+    font-size: 1.2rem;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+.ranking-position[data-label="Posição: 3"]::before,
+.ranking-position[data-label="Posição: 3"]::after {
+    content: '🥉';
+    color: #cd7f32;
+    font-size: 1.2rem;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+/* Botões de Ação */
 .btn-add-points,
 .btn-remove-user {
     padding: 6px 12px;
-    font-size: 0.875rem;
+    font-size: 0.9rem;
     border-radius: 4px;
-    margin-left: 5px;
+    margin: 0 4px;
     transition: background-color 0.2s, transform 0.1s;
     color: #fff;
+    border: none;
 }
 
 .btn-add-points {
     background: var(--primary-color);
-    border: none;
 }
 
 .btn-add-points:hover {
-    background: #1e3a8a;
+    background: #1e40af;
     transform: translateY(-1px);
 }
 
 .btn-remove-user {
     background: #dc3545;
-    border: none;
 }
 
 .btn-remove-user:hover {
-    background: #b02a37;
+    background: #b91c1c;
     transform: translateY(-1px);
 }
 
 .btn-add-points i,
 .btn-remove-user i {
-    margin-right: 5px;
+    margin-right: 4px;
 }
 
+.btn-text {
+    display: inline;
+}
+
+#rankingTable tr:hover {
+    background: rgba(0, 0, 0, 0.05);
+    transform: translateY(-2px);
+    transition: var(--transition);
+}
+
+/* Tema Escuro */
 .dark-theme #rankingTable {
     background: var(--card-bg);
 }
@@ -343,10 +384,11 @@ header h1 i {
     border-bottom: 1px solid #444;
 }
 
-.dark-theme .ranking-points {
-    color: var(--secondary-color);
+.dark-theme #rankingTable tr:hover {
+    background: rgba(255, 255, 255, 0.1);
 }
 
+/* Media Queries */
 @media (max-width: 768px) {
     #rankingTable {
         font-size: 0.9rem;
@@ -357,7 +399,7 @@ header h1 i {
     .ranking-name,
     .ranking-points,
     .ranking-actions {
-        padding: 8px;
+        padding: 10px 12px;
     }
 
     .ranking-position {
@@ -378,16 +420,16 @@ header h1 i {
 
     .btn-add-points,
     .btn-remove-user {
-        padding: 5px 8px;
-        font-size: 0.8rem;
+        padding: 5px 10px;
+        font-size: 0.85rem;
     }
 }
 
 @media (max-width: 576px) {
     #rankingTable {
         box-shadow: none;
-        border: 1px solid #e9ecef;
-        margin: 0.5rem 0;
+        border: none;
+        margin: 1rem 0;
     }
 
     #rankingHead {
@@ -396,19 +438,34 @@ header h1 i {
 
     #rankingBody tr {
         display: block;
-        margin-bottom: 10px;
+        margin-bottom: 12px;
         border: 1px solid #e9ecef;
-        border-radius: 6px;
+        border-radius: 8px;
         padding: 8px;
         background: var(--card-bg);
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* Gradiente sutil para Top 3 no mobile */
+    #rankingBody tr:has(.ranking-position[data-label="Posição: 1"]) {
+        background: linear-gradient(90deg, rgba(255, 215, 0, 0.1), var(--card-bg));
+    }
+
+    #rankingBody tr:has(.ranking-position[data-label="Posição: 2"]) {
+        background: linear-gradient(90deg, rgba(192, 192, 192, 0.1), var(--card-bg));
+    }
+
+    #rankingBody tr:has(.ranking-position[data-label="Posição: 3"]) {
+        background: linear-gradient(90deg, rgba(205, 127, 50, 0.1), var(--card-bg));
     }
 
     #rankingBody td {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 6px 8px;
+        padding: 6px 10px;
         border-bottom: 1px solid #e9ecef;
         font-size: 0.85rem;
     }
@@ -450,7 +507,6 @@ header h1 i {
     }
 
     .ranking-actions {
-        text-align: left;
         display: flex;
         justify-content: flex-end;
         gap: 8px;
@@ -476,6 +532,18 @@ header h1 i {
     .dark-theme #rankingBody tr {
         background: var(--card-bg);
         border-color: #444;
+    }
+
+    .dark-theme #rankingBody tr:has(.ranking-position[data-label="Posição: 1"]) {
+        background: linear-gradient(90deg, rgba(255, 215, 0, 0.15), var(--card-bg));
+    }
+
+    .dark-theme #rankingBody tr:has(.ranking-position[data-label="Posição: 2"]) {
+        background: linear-gradient(90deg, rgba(192, 192, 192, 0.15), var(--card-bg));
+    }
+
+    .dark-theme #rankingBody tr:has(.ranking-position[data-label="Posição: 3"]) {
+        background: linear-gradient(90deg, rgba(205, 127, 50, 0.15), var(--card-bg));
     }
 
     .dark-theme #rankingBody td {
