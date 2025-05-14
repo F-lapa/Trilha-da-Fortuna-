@@ -23,6 +23,9 @@
     --border-radius: 0.75rem;
     --transition: all 0.2s ease;
     --gradient: linear-gradient(135deg, #2563eb, #10b981);
+    --gold: #ffd700;
+    --silver: #c0c0c0;
+    --bronze: #cd7f32;
 }
 
 body.dark-theme {
@@ -33,6 +36,9 @@ body.dark-theme {
     --text-color: #d1d5db;
     --card-bg: #1f2937;
     --shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    --gold: #ffd700;
+    --silver: #c0c0c0;
+    --bronze: #cd7f32;
 }
 
 * {
@@ -249,90 +255,131 @@ header h1 i {
     background: var(--card-bg);
     border-radius: var(--border-radius);
     overflow: hidden;
-    box-shadow: var(--shadow);
-    margin: 1.5rem 0;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    margin: 2rem 0;
+    position: relative;
+}
+
+#rankingTable::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--gradient);
+    opacity: 0.05;
+    z-index: 0;
+}
+
+#rankingHead {
+    position: relative;
+    z-index: 1;
 }
 
 #rankingHead th {
-    background: var(--gradient);
+    background: linear-gradient(135deg, #1e293b, #374151);
     color: #fff;
-    font-weight: 600;
-    padding: 14px 16px;
+    font-weight: 700;
+    padding: 16px;
     text-align: center;
-    border-bottom: 2px solid #dee2e6;
+    border-bottom: 3px solid var(--primary-color);
     text-transform: uppercase;
-    font-size: 0.95rem;
+    font-size: 1rem;
+    letter-spacing: 1px;
+}
+
+#rankingHead th::before {
+    content: '🏆 ';
+    font-size: 1.2rem;
+    vertical-align: middle;
 }
 
 .ranking-position,
 .ranking-name,
 .ranking-points,
 .ranking-actions {
-    padding: 12px 16px;
+    padding: 14px 16px;
     border-bottom: 1px solid #e9ecef;
     text-align: center;
+    position: relative;
+    z-index: 1;
 }
 
 .ranking-position {
     width: 15%;
     font-weight: bold;
     color: var(--text-color);
-    position: relative;
 }
 
 .ranking-name {
     width: 40%;
-    font-weight: 500;
+    font-weight: 600;
+    color: var(--primary-color);
 }
 
 .ranking-points {
     width: 20%;
     color: var(--secondary-color);
-    font-weight: 600;
+    font-weight: 700;
+    font-size: 1.1rem;
 }
 
 .ranking-actions {
     width: 25%;
 }
 
-/* Medalhas para Top 3 */
-.ranking-position[data-label="Posição: 1"]::before,
-.ranking-position[data-label="Posição: 1"]::after {
-    content: '🥇';
-    color: #ffd700;
-    font-size: 1.2rem;
-    margin-right: 8px;
+/* Estilo do Pódio */
+#rankingBody tr:nth-child(1) {
+    background: linear-gradient(90deg, rgba(255, 215, 0, 0.2), var(--card-bg));
+    border-left: 4px solid var(--gold);
+}
+
+#rankingBody tr:nth-child(2) {
+    background: linear-gradient(90deg, rgba(192, 192, 192, 0.2), var(--card-bg));
+    border-left: 4px solid var(--silver);
+}
+
+#rankingBody tr:nth-child(3) {
+    background: linear-gradient(90deg, rgba(205, 127, 50, 0.2), var(--card-bg));
+    border-left: 4px solid var(--bronze);
+}
+
+.ranking-position[data-label="Posição: 1"]::before {
+    content: '🥇 ';
+    color: var(--gold);
+    font-size: 1.3rem;
+    margin-right: 6px;
     vertical-align: middle;
 }
 
-.ranking-position[data-label="Posição: 2"]::before,
-.ranking-position[data-label="Posição: 2"]::after {
-    content: '🥈';
-    color: #c0c0c0;
-    font-size: 1.2rem;
-    margin-right: 8px;
+.ranking-position[data-label="Posição: 2"]::before {
+    content: '🥈 ';
+    color: var(--silver);
+    font-size: 1.3rem;
+    margin-right: 6px;
     vertical-align: middle;
 }
 
-.ranking-position[data-label="Posição: 3"]::before,
-.ranking-position[data-label="Posição: 3"]::after {
-    content: '🥉';
-    color: #cd7f32;
-    font-size: 1.2rem;
-    margin-right: 8px;
+.ranking-position[data-label="Posição: 3"]::before {
+    content: '🥉 ';
+    color: var(--bronze);
+    font-size: 1.3rem;
+    margin-right: 6px;
     vertical-align: middle;
 }
 
 /* Botões de Ação */
 .btn-add-points,
 .btn-remove-user {
-    padding: 6px 12px;
-    font-size: 0.9rem;
-    border-radius: 4px;
-    margin: 0 4px;
-    transition: background-color 0.2s, transform 0.1s;
+    padding: 8px 14px;
+    font-size: 0.95rem;
+    border-radius: 6px;
+    margin: 0 6px;
+    transition: background-color 0.2s, transform 0.1s, box-shadow 0.2s;
     color: #fff;
-    border: none;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .btn-add-points {
@@ -341,7 +388,8 @@ header h1 i {
 
 .btn-add-points:hover {
     background: #1e40af;
-    transform: translateY(-1px);
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .btn-remove-user {
@@ -350,22 +398,28 @@ header h1 i {
 
 .btn-remove-user:hover {
     background: #b91c1c;
-    transform: translateY(-1px);
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .btn-add-points i,
 .btn-remove-user i {
-    margin-right: 4px;
+    font-size: 1rem;
+    margin-right: 5px;
 }
 
 .btn-text {
     display: inline;
 }
 
+#rankingTable tr {
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
 #rankingTable tr:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
     background: rgba(0, 0, 0, 0.05);
-    transform: translateY(-2px);
-    transition: var(--transition);
 }
 
 /* Tema Escuro */
@@ -374,18 +428,32 @@ header h1 i {
 }
 
 .dark-theme #rankingHead th {
-    background: var(--gradient);
+    background: linear-gradient(135deg, #374151, #4b5563);
+    border-bottom: 3px solid var(--primary-color);
 }
 
 .dark-theme .ranking-position,
 .dark-theme .ranking-name,
 .dark-theme .ranking-points,
 .dark-theme .ranking-actions {
-    border-bottom: 1px solid #444;
+    border-bottom: 1px solid #555;
+}
+
+.dark-theme #rankingBody tr:nth-child(1) {
+    background: linear-gradient(90deg, rgba(255, 215, 0, 0.25), var(--card-bg));
+}
+
+.dark-theme #rankingBody tr:nth-child(2) {
+    background: linear-gradient(90deg, rgba(192, 192, 192, 0.25), var(--card-bg));
+}
+
+.dark-theme #rankingBody tr:nth-child(3) {
+    background: linear-gradient(90deg, rgba(205, 127, 50, 0.25), var(--card-bg));
 }
 
 .dark-theme #rankingTable tr:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 
 /* Media Queries */
@@ -399,7 +467,7 @@ header h1 i {
     .ranking-name,
     .ranking-points,
     .ranking-actions {
-        padding: 10px 12px;
+        padding: 12px;
     }
 
     .ranking-position {
@@ -420,8 +488,8 @@ header h1 i {
 
     .btn-add-points,
     .btn-remove-user {
-        padding: 5px 10px;
-        font-size: 0.85rem;
+        padding: 6px 12px;
+        font-size: 0.9rem;
     }
 }
 
@@ -438,27 +506,29 @@ header h1 i {
 
     #rankingBody tr {
         display: block;
-        margin-bottom: 12px;
-        border: 1px solid #e9ecef;
-        border-radius: 8px;
+        margin-bottom: 16px;
+        border-radius: 10px;
         padding: 8px;
         background: var(--card-bg);
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
         position: relative;
         overflow: hidden;
+        border: 2px solid #e9ecef;
     }
 
-    /* Gradiente sutil para Top 3 no mobile */
-    #rankingBody tr:has(.ranking-position[data-label="Posição: 1"]) {
-        background: linear-gradient(90deg, rgba(255, 215, 0, 0.1), var(--card-bg));
+    #rankingBody tr:nth-child(1) {
+        border: 2px solid var(--gold);
+        background: linear-gradient(90deg, rgba(255, 215, 0, 0.3), var(--card-bg));
     }
 
-    #rankingBody tr:has(.ranking-position[data-label="Posição: 2"]) {
-        background: linear-gradient(90deg, rgba(192, 192, 192, 0.1), var(--card-bg));
+    #rankingBody tr:nth-child(2) {
+        border: 2px solid var(--silver);
+        background: linear-gradient(90deg, rgba(192, 192, 192, 0.3), var(--card-bg));
     }
 
-    #rankingBody tr:has(.ranking-position[data-label="Posição: 3"]) {
-        background: linear-gradient(90deg, rgba(205, 127, 50, 0.1), var(--card-bg));
+    #rankingBody tr:nth-child(3) {
+        border: 2px solid var(--bronze);
+        background: linear-gradient(90deg, rgba(205, 127, 50, 0.3), var(--card-bg));
     }
 
     #rankingBody td {
@@ -467,7 +537,7 @@ header h1 i {
         align-items: center;
         padding: 6px 10px;
         border-bottom: 1px solid #e9ecef;
-        font-size: 0.85rem;
+        font-size: 0.8rem;
     }
 
     #rankingBody td:last-child {
@@ -478,7 +548,7 @@ header h1 i {
         content: attr(data-label);
         font-weight: 600;
         color: var(--text-color);
-        flex: 0 0 40%;
+        flex: 0 0 45%;
         text-align: left;
     }
 
@@ -509,14 +579,20 @@ header h1 i {
     .ranking-actions {
         display: flex;
         justify-content: flex-end;
-        gap: 8px;
+        gap: 10px;
     }
 
     .btn-add-points,
     .btn-remove-user {
-        padding: 4px 8px;
-        font-size: 0.75rem;
-        line-height: 1.5;
+        padding: 6px;
+        font-size: 0.8rem;
+        line-height: 1;
+        border-radius: 50%;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .btn-text {
@@ -525,29 +601,32 @@ header h1 i {
 
     .btn-add-points i,
     .btn-remove-user i {
-        font-size: 0.9rem;
+        font-size: 1rem;
         margin-right: 0;
     }
 
     .dark-theme #rankingBody tr {
         background: var(--card-bg);
-        border-color: #444;
+        border-color: #555;
     }
 
-    .dark-theme #rankingBody tr:has(.ranking-position[data-label="Posição: 1"]) {
-        background: linear-gradient(90deg, rgba(255, 215, 0, 0.15), var(--card-bg));
+    .dark-theme #rankingBody tr:nth-child(1) {
+        border-color: var(--gold);
+        background: linear-gradient(90deg, rgba(255, 215, 0, 0.35), var(--card-bg));
     }
 
-    .dark-theme #rankingBody tr:has(.ranking-position[data-label="Posição: 2"]) {
-        background: linear-gradient(90deg, rgba(192, 192, 192, 0.15), var(--card-bg));
+    .dark-theme #rankingBody tr:nth-child(2) {
+        border-color: var(--silver);
+        background: linear-gradient(90deg, rgba(192, 192, 192, 0.35), var(--card-bg));
     }
 
-    .dark-theme #rankingBody tr:has(.ranking-position[data-label="Posição: 3"]) {
-        background: linear-gradient(90deg, rgba(205, 127, 50, 0.15), var(--card-bg));
+    .dark-theme #rankingBody tr:nth-child(3) {
+        border-color: var(--bronze);
+        background: linear-gradient(90deg, rgba(205, 127, 50, 0.35), var(--card-bg));
     }
 
     .dark-theme #rankingBody td {
-        border-bottom: 1px solid #444;
+        border-bottom: 1px solid #555;
     }
 
     .dark-theme #rankingBody td::before {
@@ -646,11 +725,11 @@ header h1 i {
 }
 
 .dark-theme .variable-table td {
-    border-bottom: 1px solid #444;
+    border-bottom: 1px solid #555;
 }
 
 .dark-theme .variable-table tr:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.15);
 }
 
 /* Forms */
@@ -1280,7 +1359,7 @@ footer {
 
                 <section class="tab-pane fade" id="ranking" role="tabpanel">
                     <h2 class="mb-4">Ranking de Usuários</h2>
-                    <table class="table table-striped">
+                    <table id="rankingTable">
                         <thead id="rankingHead"></thead>
                         <tbody id="rankingBody"></tbody>
                     </table>
