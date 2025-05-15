@@ -8,7 +8,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous">
-    
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     
     <style>
 
@@ -127,13 +128,29 @@ header h1 i {
 /* Home Section */
 .home-section {
     padding: 2rem;
-    text-align: center;
     background: var(--card-bg);
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
     position: relative;
     overflow: hidden;
+    min-height: 100vh;
 }
+
+.home-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    animation: fadeInDown 0.5s ease;
+}
+
+.home-header h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
 
 .home-section::before {
     content: '';
@@ -156,6 +173,13 @@ header h1 i {
     z-index: 1;
 }
 
+.home-header p {
+    font-size: 1.1rem;
+    color: #6b7280;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
 .home-section p {
     font-size: 1rem;
     max-width: 700px;
@@ -165,44 +189,248 @@ header h1 i {
     z-index: 1;
 }
 
+.feature-cards-container {
+    margin-bottom: 3rem;
+}
+
 .feature-cards {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
-    position: relative;
-    z-index: 1;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
 }
 
 .feature-card {
     background: var(--card-bg);
-    padding: 1.5rem;
+    padding: 2rem;
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
+    text-align: center;
     transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--gradient);
+    opacity: 0.1;
+    transition: opacity 0.3s ease;
+}
+
+.feature-card:hover::before {
+    opacity: 0.2;
 }
 
 .feature-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    transform: translateY(-10px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
 }
 
 .feature-card i {
-    font-size: 2rem;
+    font-size: 2.5rem;
     color: var(--secondary-color);
     margin-bottom: 1rem;
+    transition: transform 0.3s ease;
 }
 
+.feature-card:hover i {
+    transform: scale(1.2);
+}
+
+
 .feature-card h3 {
-    font-size: 1.25rem;
-    font-weight: 500;
-    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+    font-weight: 600;
     color: var(--primary-color);
+    margin-bottom: 0.75rem;
 }
 
 .feature-card p {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     color: #6b7280;
 }
+
+/* Feed Section */
+.feed-section {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.feed-section h3 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.feed-form-container {
+    background: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 2rem;
+    transition: var(--transition);
+}
+
+.feed-form-container:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.feed-form-container .form-control {
+    border-radius: 0.5rem;
+    border: 1px solid #d1d5db;
+    padding: 0.75rem;
+    font-size: 0.95rem;
+    resize: vertical;
+    min-height: 100px;
+}
+
+.feed-form-container .form-label {
+    color: var(--primary-color);
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.feed-form-container .form-label i {
+    margin-right: 0.5rem;
+}
+
+.feed-post {
+    background: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 1.5rem;
+    transition: var(--transition);
+    position: relative;
+    animation: fadeInUp 0.5s ease;
+}
+
+.feed-post:hover {
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+    transform: translateY(-5px);
+}
+
+.feed-post-media {
+    max-width: 100%;
+    border-radius: 0.5rem;
+    margin-top: 1rem;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.feed-post-media:hover {
+    transform: scale(1.02);
+}
+
+.feed-post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.feed-post-header h5 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.feed-post-header small {
+    font-size: 0.85rem;
+    color: #6b7280;
+}
+
+.feed-actions {
+    display: flex;
+    gap: 1.5rem;
+    padding: 0.75rem 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.feed-action-btn {
+    background: none;
+    border: none;
+    color: #6b7280;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.feed-action-btn:hover {
+    color: var(--secondary-color);
+    transform: scale(1.1);
+}
+
+.feed-action-btn.liked {
+    color: #ff0000;
+    animation: pulse 0.3s ease;
+}
+
+.feed-action-btn.liked i.fa-heart {
+    color: #ff0000;
+    fill: #ff0000;
+}
+
+.comment-section {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.comment-form, .reply-form {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.comment-form .form-control, .reply-form .form-control {
+    font-size: 0.9rem;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+}
+
+.comment {
+    background: rgba(0, 0, 0, 0.03);
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 0.5rem;
+    border-left: 3px solid var(--secondary-color);
+    transition: var(--transition);
+}
+
+.comment:hover {
+    background: rgba(0, 0, 0, 0.06);
+}
+
+/* Animações */
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
 
 /* Navigation Tabs */
 .nav-tabs {
@@ -494,6 +722,25 @@ header h1 i {
 }
 
 @media (max-width: 576px) {
+
+
+    .home-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .home-header p {
+        font-size: 0.95rem;
+    }
+
+    .feature-card {
+        padding: 1.5rem;
+    }
+
+    .feed-action-btn {
+        font-size: 0.9rem;
+    }
+
+
     #rankingTable {
         box-shadow: none;
         border: none;
@@ -1166,6 +1413,10 @@ footer {
         padding: 1.5rem;
     }
 
+    .home-header h2 {
+        font-size: 2rem;
+    }
+
     .feature-cards {
         grid-template-columns: 1fr;
     }
@@ -1206,6 +1457,10 @@ footer {
     }
 
     .feed-post {
+        padding: 1rem;
+    }
+
+    .feed-form-container {
         padding: 1rem;
     }
 
@@ -1316,38 +1571,48 @@ footer {
             <div class="tab-content">
                 <section class="tab-pane fade show active" id="home" role="tabpanel">
                     <div class="home-section">
-                        <h2>Bem-vindo à Trilha da Fortuna!</h2>
-                        <p>Explore sua jornada financeira com aprendizado, competição e recompensas incríveis.</p>
-                        <div class="feature-cards">
-                            <article class="feature-card">
-                                <i class="fas fa-file-alt"></i>
-                                <h3>Provas</h3>
-                                <p>Teste seus conhecimentos financeiros e acumule pontos.</p>
-                            </article>
-                            <article class="feature-card">
-                                <i class="fas fa-trophy"></i>
-                                <h3>Ranking</h3>
-                                <p>Compare sua pontuação e conquiste o topo do ranking.</p>
-                            </article>
-                            <article class="feature-card">
-                                <i class="fas fa-file-invoice-dollar"></i>
-                                <h3>Comprovantes</h3>
-                                <p>Envie comprovantes de investimentos e acompanhe seu progresso.</p>
-                            </article>
+                        <div class="home-header">
+                            <h2>Trilha da Fortuna</h2>
+                            <p>Junte-se à sua jornada financeira com aprendizado e competição!</p>
                         </div>
-                        <div id="feedSection" class="mt-5">
-                            <h3>Feed de Recados</h3>
-                            <div id="feedFormContainer" class="hidden">
-                                <form id="feedForm">
+                        <div class="feature-cards-container">
+                            <div class="feature-cards">
+                                <article class="feature-card" data-aos="fade-up">
+                                    <i class="fas fa-file-alt"></i>
+                                    <h3>Provas</h3>
+                                    <p>Teste seus conhecimentos financeiros e acumule pontos.</p>
+                                </article>
+                                <article class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                                    <i class="fas fa-trophy"></i>
+                                    <h3>Ranking</h3>
+                                    <p>Compare sua pontuação e conquiste o topo do ranking.</p>
+                                </article>
+                                <article class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                                    <i class="fas fa-file-invoice-dollar"></i>
+                                    <h3>Comprovantes</h3>
+                                    <p>Envie comprovantes de investimentos e acompanhe seu progresso.</p>
+                                </article>
+                            </div>
+                        </div>
+                        <div id="feedSection" class="feed-section">
+                            <h3>Feed de Atividades</h3>
+                            <div id="feedFormContainer" class="feed-form-container">
+                                <form id="feedForm" enctype="multipart/form-data">
                                     <div class="mb-3">
-                                        <textarea id="feedMessage" class="form-control" placeholder="Escreva um recado" required></textarea>
+                                        <textarea id="feedMessage" class="form-control" placeholder="O que você quer compartilhar?" required></textarea>
                                     </div>
-                                    <button type="submit" class="btn btn-primary">Postar</button>
-                                    <div id="feedSuccess" class="alert alert-success hidden">Recado postado com sucesso!</div>
-                                    <div id="feedError" class="alert alert-danger hidden">Por favor, escreva uma mensagem.</div>
+                                    <div class="mb-3">
+                                        <label for="feedMedia" class="form-label"><i class="fas fa-image"></i> Anexar Imagem</label>
+                                        <input type="file" id="feedMedia" class="form-control" accept="image/*">
+                                    </div>
+                                    <div class="d-flex gap-2">
+                                        <button type="submit" class="btn btn-primary">Postar</button>
+                                    </div>
+                                    <div id="feedSuccess" class="alert alert-success hidden">Postagem publicada com sucesso!</div>
+                                    <div id="feedError" class="alert alert-danger hidden">Por favor, preencha a mensagem.</div>
                                 </form>
                             </div>
-                            <div id="feedContainer"></div>
+                            <div class="feed-container" id="feedContainer"></div>
                         </div>
                     </div>
                 </section>
@@ -2542,27 +2807,24 @@ function configurarFeed() {
     const feedForm = document.getElementById('feedForm');
     const feedFormContainer = document.getElementById('feedFormContainer');
     const feedMessage = document.getElementById('feedMessage');
+    const feedMedia = document.getElementById('feedMedia');
 
     if (!feedForm || !feedFormContainer || !feedMessage) {
         console.error('Erro: Elementos feedForm, feedFormContainer ou feedMessage não encontrados.');
         return;
     }
 
-    feedMessage.disabled = false;
-    feedMessage.readOnly = false;
-    feedMessage.style.pointerEvents = 'auto';
-    console.log('2. Textarea configurado para ser interativo.');
-
     feedFormContainer.classList.toggle('hidden', !usuarioLogado.isAdmin);
-    console.log(`3. Formulário de feed ${usuarioLogado.isAdmin ? 'exibido' : 'oculto'} para ${usuarioLogado.username}.`);
+    console.log(`2. Formulário de feed ${usuarioLogado.isAdmin ? 'exibido' : 'oculto'} para ${usuarioLogado.username}.`);
 
     feedForm.onsubmit = (e) => {
         e.preventDefault();
-        console.log('4. Submissão do formulário iniciada');
+        console.log('3. Submissão do formulário iniciada');
 
         const mensagem = sanitizeInput(feedMessage.value.trim());
         const successMessage = document.getElementById('feedSuccess');
         const errorMessage = document.getElementById('feedError');
+        const mediaFile = feedMedia.files[0];
 
         if (!successMessage || !errorMessage) {
             console.error('Erro: feedSuccess ou feedError não encontrados.');
@@ -2585,21 +2847,36 @@ function configurarFeed() {
             return;
         }
 
-        feeds.unshift({
+        const newFeed = {
             id: feeds.length + 1,
             autor: usuarioLogado.nome,
             mensagem,
             data: new Date().toLocaleString('pt-BR'),
             curtidas: [],
-            comentarios: []
-        });
+            comentarios: [],
+            media: null
+        };
 
-        console.log('5. Feed adicionado:', feeds[0]);
-        salvarDados();
-        feedForm.reset();
-        successMessage.style.display = 'block';
-        setTimeout(() => successMessage.style.display = 'none', 3000);
-        atualizarFeed();
+        if (mediaFile) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                newFeed.media = e.target.result; // Armazena a imagem como base64
+                feeds.unshift(newFeed);
+                salvarDados();
+                feedForm.reset();
+                successMessage.style.display = 'block';
+                setTimeout(() => successMessage.style.display = 'none', 3000);
+                atualizarFeed();
+            };
+            reader.readAsDataURL(mediaFile);
+        } else {
+            feeds.unshift(newFeed);
+            salvarDados();
+            feedForm.reset();
+            successMessage.style.display = 'block';
+            setTimeout(() => successMessage.style.display = 'none', 3000);
+            atualizarFeed();
+        }
     };
 
     atualizarFeed();
@@ -2615,7 +2892,7 @@ function atualizarFeed() {
     console.log('Atualizando feed. Total de feeds:', feeds.length);
 
     container.innerHTML = feeds.length ? feeds.map(f => `
-        <div class="feed-post">
+        <div class="feed-post" data-aos="fade-up">
             <div class="feed-post-header">
                 <div>
                     <h5>${sanitizeInput(f.autor)}</h5>
@@ -2633,6 +2910,7 @@ function atualizarFeed() {
             </div>
             <div class="feed-post-body">
                 <p>${sanitizeInput(f.mensagem)}</p>
+                ${f.media ? `<img src="${sanitizeInput(f.media)}" alt="Postagem" class="feed-post-media">` : ''}
             </div>
             <div class="edit-form hidden" id="edit-feed-form-${f.id}">
                 <form onsubmit="editarFeed(event, ${f.id})">
@@ -2659,7 +2937,7 @@ function atualizarFeed() {
                 </form>
                 <div class="comments">
                     ${f.comentarios.map((c, i) => `
-                        <div class="comment">
+                        <div class="comment" data-aos="fade-up" data-aos-delay="${i * 100}">
                             <div class="comment-header">
                                 <div>
                                     <h6>${sanitizeInput(c.autor)}</h6>
@@ -2720,6 +2998,9 @@ function atualizarFeed() {
             </div>
         </div>
     `).join('') : '<p class="text-center">Nenhum recado no feed.</p>';
+
+    // Inicializar AOS após renderizar o feed
+    AOS.refresh();
 }
 
 function toggleMenu(feedId) {
@@ -2930,5 +3211,14 @@ function abrirModalPontuacao(username) {
     modal.show();
 }
  </script>   
+
+<script>
+    AOS.init({
+        duration: 800,
+        once: true,
+        offset: 100
+    });
+</script>
+
 </body>
 </html>
